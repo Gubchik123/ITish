@@ -241,7 +241,6 @@ ITish
 │       ├── index.html
 │       ├── error.html
 │       ├── _messages.html
-│       ├── _pagination.html
 │       ├── _forms_macros.html
 │       ├── _alerts_macros.html
 │       │
@@ -256,7 +255,9 @@ ITish
 │       │   ├── tag.html
 │       │   ├── post.html
 │       │   ├── add_post.html
-│       │   └── edit_post.html
+│       │   ├── edit_post.html
+│       │   ├── _pagination.html
+│       │   └── _post_macros.html
 │       └── profile
 │           ├── index.html
 │           ├── edit.html
