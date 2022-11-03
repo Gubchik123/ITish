@@ -245,6 +245,8 @@ ITish
 │       ├── _forms_macros.html
 │       ├── _alerts_macros.html
 │       │
+│       ├── admin
+│       │   └── master.html
 │       ├── auth
 │       │   ├── login.html
 │       │   ├── admin_login.html
@@ -257,7 +259,10 @@ ITish
 │       │   └── edit_post.html
 │       └── profile
 │           ├── index.html
-│           └── edit.html
+│           ├── edit.html
+│           ├── posts.html
+│           ├── likes.html
+│           └── comments.html
 ├── env
 ├── run.py
 ├── README.md
