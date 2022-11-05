@@ -282,6 +282,8 @@ ITish
 
 ## 2.10. Database structure
 
+<img title="DB" alt="Database structure image" src="./md_images/db_structure.jpg">
+
 # 3. Technology stack
 
 To implement the site, the following stack of technologies is proposed:
