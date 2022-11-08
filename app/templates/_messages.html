@@ -1,0 +1,5 @@
+{%- from '_alerts_macros.html' import dismissible_alert %} 
+
+{% for category, message in get_flashed_messages(with_categories=true) %}
+    {{ dismissible_alert(message, category) }}
+{% endfor %}
