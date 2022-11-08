@@ -4,4 +4,4 @@ from . import config
 
 
 app = Flask(__name__)
-app.config.from_object(config.ForTesting)
+app.config.from_object(config.ForDevelopment)
