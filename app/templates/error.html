@@ -1,0 +1,9 @@
+{%- extends 'base.html' %} 
+
+{%- block title -%} {{ error.code }} {%- endblock title -%}
+
+{%- block content_title -%} {{ error.name }} {%- endblock content_title -%} 
+
+{%- block content -%} 
+    {{ error.description }}
+{%- endblock content -%} 

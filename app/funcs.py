@@ -3,3 +3,15 @@ import flask
 
 def get_home_page():
     return flask.render_template("index.html")
+
+
+def get_FAQs_page():
+    return flask.render_template("FAQs.html")
+
+
+def get_about_page():
+    return flask.render_template("about.html")
+
+
+def get_error_page(error):
+    return flask.render_template("error.html", error=error), error.code
