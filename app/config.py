@@ -17,6 +17,7 @@ class ForProduction(_Config):
     SECRET_KEY=os.getenv("SECRET_KEY")
 
 class ForDevelopment(_Config):
+    DEBUG = True
     DEVELOPMENT = True
     ENV = "development"
     SECRET_KEY = "secret_for_development_environment"
