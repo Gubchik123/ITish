@@ -1,0 +1,40 @@
+{%- macro _get_alert_icon_with_(category) %} 
+    {%- if category == "info" %}
+        <ion-icon name="alert-circle"></ion-icon>
+    {%- elif category == "success" %}
+        <ion-icon name="checkmark-circle"></ion-icon>
+    {%- else %}
+        <ion-icon name="warning"></ion-icon>
+    {%- endif %} 
+{%- endmacro %} 
+
+{%- macro not_dismissible_alert(message, category) %}
+    <div class="alert alert-{{ category }}" role="alert">
+        <div class="float_left me-3">
+            {{ _get_alert_icon_with_(category) }}
+        </div>
+        <div class="h-100 d-flex justify-content-center align-items-center">
+            <h6>{{ message }}</h6>
+        </div>
+    </div>
+{%- endmacro %} 
+
+{%- macro dismissible_alert(message, category) %}
+    <div
+        class="alert alert-{{ category }} alert-dismissible fade show"
+        role="alert"
+    >
+        <div class="float_left me-3">
+            {{ _get_alert_icon_with_(category) }}
+        </div>
+        <div class="h-100 d-flex justify-content-center align-items-center">
+            <h6>{{ message }}</h6>
+        </div>
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        ></button>
+    </div>
+{%- endmacro %}
