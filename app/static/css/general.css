@@ -2,16 +2,19 @@
 :root {
 	--my-text-color: #2f3542;
 	--my-body-bg-color: #eee;
+    --my-form-bg-color: var(--bs-secondary);
 	--my-panel-bg-color: #2f3542;
 }
 :root[theme="dark"] {
 	--my-text-color: rgb(240, 240, 240);
 	--my-body-bg-color: var(--bs-secondary);
+    --my-form-bg-color: #2f3542;
 	--my-panel-bg-color: var(--bs-dark);
 }
 
 .my-text-color { color: var(--my-text-color); }
 .my-body-bg-color { background-color: var(--my-body-bg-color); }
+.my-form-bg-color { background-color: var(--my-form-bg-color); }
 .my-panel-bg-color { background-color: var(--my-panel-bg-color); }
 
 .float_left { float: left; }
