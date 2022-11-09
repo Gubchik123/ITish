@@ -1,0 +1,28 @@
+{%- extends 'base.html' %}
+
+{%- block title -%} Registration {%- endblock -%} 
+
+{%- block content_title -%} Sign Up {%- endblock -%} 
+{%- block content_title_classes -%} &nbsp; text-center &nbsp; {%- endblock -%} 
+
+
+{%- block content -%}
+    <div 
+        class="d-flex flex-column align-items-center mt-3"
+    >
+        <div class="col-lg-6 col-sm-12 rounded my-form-bg-color">
+            {% from "_forms_macros.html" import render_ %}
+            {% include "_messages.html" %}
+            <form
+                action=""
+                method="POST"
+                name="registration_form"
+                class="text-white py-3 px-3"
+            >
+                {{ render_(form) }}
+            </form>
+        </div>
+    </div>
+{%- endblock content -%} 
+
+{%- block footer -%}{%- endblock -%} 
