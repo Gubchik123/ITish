@@ -1,6 +1,11 @@
 from . import funcs
 from .app import app
 
+from .auth import blueprint
+
+
+app.register_blueprint(blueprint.auth, url_prefix="/auth")
+
 
 @app.route("/")
 def get_home_page():
@@ -9,7 +14,7 @@ def get_home_page():
 
 @app.route("/FAQs")
 def get_FAQs_page():
-    return funcs.get_FAQs_page() 
+    return funcs.get_FAQs_page()
 
 
 @app.route("/about")
