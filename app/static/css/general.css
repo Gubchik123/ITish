@@ -20,6 +20,8 @@
 .float_left { float: left; }
 .disabled { cursor: not-allowed; }
 
+
+/* Global styles */
 html,
 body {
 	height: 100%;
@@ -37,6 +39,23 @@ a {
 	text-decoration: none;
 }
 a:hover { opacity: 1; }
+
+
+/* Custom scrollbar */
+::-webkit-scrollbar { 
+    width: 15px; 
+    background-color: var(--bs-dark);
+}
+::-webkit-scrollbar-track { 
+    border-radius: 7px;
+    background-color: var(--bs-dark); 
+}
+::-webkit-scrollbar-thumb {
+    opacity: 0.7;
+    border-radius: 7px;
+    background: darkgray; 
+}
+::-webkit-scrollbar-thumb:hover { opacity: 1; }
 
 
 /* Styles in header */
