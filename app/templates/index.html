@@ -7,8 +7,14 @@
 
 {%- block content -%}
 
-{%- include '_messages.html' %} 
-
-<h2>Some content</h2>
+<div class="d-flex justify-content-center">
+    <div class="w-75">
+        <img
+            alt="Site header"
+            class="img-fluid rounded-4"
+            src="{{ url_for('static', filename='images/site_header.png') }}"
+        >
+    </div>
+</div>
 
 {%- endblock content -%} 
