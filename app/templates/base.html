@@ -198,7 +198,14 @@
 							{%- block content_title -%}{%- endblock -%}
 						</h1>
 					</div>
-					<div class="row">{%- block content -%}{%- endblock -%}</div>
+					<div class="row">
+                        {%- block flashed_messages -%}
+                            {%- include '_messages.html' %} 
+                        {%- endblock -%}
+                        
+                        
+                        {%- block content -%}{%- endblock -%}
+                    </div>
 					{%- block additional_content -%}{%- endblock -%}
 				</div>
 			</main>
