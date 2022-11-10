@@ -24,5 +24,6 @@ def log_out_user():
 
 
 @auth.route("/login-admin", methods=["GET", "POST"])
+@flog.login_required
 def log_in_admin():
     return funcs.log_in_admin()

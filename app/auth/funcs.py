@@ -1,3 +1,4 @@
+import os
 import flask
 import flask_login as flog
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -39,6 +40,9 @@ def _add_user_with_data_from_(form: RegistrationForm):
 
 def sign_up_user():
     form = RegistrationForm()
+
+    if flog.current_user.is_authenticated:
+        return flask.redirect(flask.url_for("profile.get_main_page"))
 
     if form.validate_on_submit() and _check_registration_data_from_(form):
         return _add_user_with_data_from_(form)
@@ -86,6 +90,20 @@ def log_out_user():
     )
 
 
+def _check_admin_password_from_(form: LoginAdminForm):
+    if _get_striped_(form.password.data) == os.getenv("ADMIN_PASSWORD"):
+        return True
+
+    flask.flash("Wrong admin password!", category="danger")
+    return False
+
+
 def log_in_admin():
     form = LoginAdminForm()
-    return flask.render_template("auth/login_admin.html")
+
+    if form.validate_on_submit() and _check_admin_password_from_(form):
+        flask.session["admin_logged"] = True
+
+        return flask.redirect(flask.url_for("/admin"))
+
+    return flask.render_template("auth/login_admin.html", form=form)
