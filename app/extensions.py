@@ -18,6 +18,10 @@ from . import models
 
 login_manager = LoginManager(app)
 
+login_manager.login_view = "auth.log_in_user"
+login_manager.login_message = "Please log in to access this page"
+login_manager.login_message_category = "warning"
+
 
 @login_manager.user_loader
 def _load_user(id):
