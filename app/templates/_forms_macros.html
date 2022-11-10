@@ -6,8 +6,10 @@
                 {{ field.label(placeholder="some", class="text-black") }}
             </div>
         {%- else %}
-            {{ field.label }}
-            {{ field(**kwargs)|safe }}
+            <div class="text-center">
+                {{ field.label }}
+                {{ field(**kwargs)|safe }}
+            </div>
         {%- endif %}
 
         {% for error in field.errors %}

@@ -71,7 +71,10 @@ def log_in_user():
         return flask.redirect(flask.url_for("profile.get_main_page"))
 
     if form.validate_on_submit() and _check_login_data_from_(form):
-        flog.login_user(User.query.filter(User.email == form.email.data).first())
+        flog.login_user(
+            User.query.filter(User.email == form.email.data).first(),
+            remember=form.remember.data,
+        )
 
         flask.flash("You have successfully logged in!", category="success")
         return flask.redirect(

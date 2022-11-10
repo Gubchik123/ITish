@@ -52,6 +52,7 @@ class LoginForm(FlaskForm):
     password = wtf.PasswordField(
         "Password", validators=[required, validator.Length(min=5)]
     )
+    remember = wtf.BooleanField("Remember me")
     submit = wtf.SubmitField("Log In")
 
 
