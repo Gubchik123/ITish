@@ -1,11 +1,9 @@
 {%- extends 'base.html' %}
 
-{%- block content_title_classes -%} &nbsp; text-center &nbsp; {%- endblock -%}
+{%- block content_title_classes -%} &nbsp; text-center {%- endblock -%}
 
 {%- block content -%}
-    <div 
-        class="d-flex flex-column align-items-center mt-3"
-    >
+    <div class="d-flex flex-column align-items-center mt-3">
         <div class="col-md-6 col-sm-12 rounded my-form-bg-color">
             {% from "_forms_macros.html" import render_ %}
             {% include "_messages.html" %}
@@ -17,6 +15,8 @@
             >
                 {{ render_(form) }}
             </form>
+            <!-- Block for extending in other templates -->
+            {%- block adding_form_content -%}{%- endblock -%} 
         </div>
     </div>
 {%- endblock content -%} 

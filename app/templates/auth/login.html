@@ -5,3 +5,17 @@
 {%- block content_title -%} Log In {%- endblock -%}
 
 {%- block form_name -%} login_form {%- endblock -%}
+
+{%- block adding_form_content -%}
+<div class="text-center mb-4 px-3">
+    <a href="{{ url_for('auth.log_in_admin') }}" class="my-text-color">
+        Login as admin
+    </a>
+    
+    <hr class="my-text-color">
+    
+    <a href="{{ url_for('auth.sign_up_user') }}" class="btn btn-primary btn-lg">
+        Create new account
+    </a>
+</div>
+{%- endblock adding_form_content -%} 
