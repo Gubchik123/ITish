@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<title>{%- block title -%}{%- endblock title -%} &nbsp;| ITish</title>
+		<title>{%- block title -%}{%- endblock -%} &nbsp;| ITish</title>
 
 		<!-- Site favicon -->
 		<link
@@ -29,7 +29,7 @@
 		/>
 
 		<!-- Block for extending for other CSS files or block styles -->
-		{%- block styles -%}{%- endblock styles -%}
+		{%- block styles -%}{%- endblock -%}
 	</head>
 	<body>
 		<div class="wrapper d-flex flex-column min-vh-100">
@@ -82,8 +82,7 @@
 								</li>
 
 								<!-- Block for extending for search form -->
-								{%- block search_form -%}{%- endblock
-								search_form -%}
+								{%- block search_form -%}{%- endblock -%}
 
 								<!-- <form class="d-flex" role="search">
                                     <input
@@ -116,18 +115,73 @@
 									</button>
 								</li>
 								<li class="nav-item">
+									{%- if current_user.is_authenticated %}
+									<div class="dropdown text-end">
+										<a
+											href="#"
+											class="d-block link-light text-decoration-none dropdown-toggle"
+											data-bs-toggle="dropdown"
+											aria-expanded="false"
+										>
+											<ion-icon
+												name="person-circle-outline"
+											></ion-icon>
+										</a>
+										<ul
+											class="dropdown-menu text-small position-absolute mt-3"
+										>
+											<li>
+												<a
+													class="dropdown-item d-flex justify-content-between align-items-center"
+													href="#"
+												>
+													Profile
+													<ion-icon
+														name="person-outline"
+													></ion-icon>
+												</a>
+											</li>
+											<li>
+												<a
+													class="dropdown-item d-flex justify-content-between align-items-center"
+													href="#"
+												>
+													New post...
+													<ion-icon
+														name="add-circle-outline"
+													></ion-icon>
+												</a>
+											</li>
+											<li>
+												<hr class="dropdown-divider" />
+											</li>
+											<li>
+												<a
+													class="dropdown-item d-flex justify-content-between align-items-center"
+													href="{{ url_for('auth.log_out_user', next=request.url) }}"
+												>
+													Log out
+													<ion-icon
+														name="log-out-outline"
+													></ion-icon>
+												</a>
+											</li>
+										</ul>
+									</div>
+									{%- else %}
 									<a
-										href="{{ url_for('auth.log_in_user') }}"
+										href="{{ url_for('auth.log_in_user', next=request.url) }}"
 										class="btn btn-outline-success me-2"
 									>
-										Login
+										Log In
 									</a>
-									<a 
-                                        href="{{ url_for('auth.sign_up_user') }}" 
-                                        class="btn btn-primary"
-                                    >
-										Sign-up
+									<a
+										href="{{ url_for('auth.sign_up_user') }}"
+										class="btn btn-primary"
+									>
+										Sign Up
 									</a>
+									{%- endif %}
 								</li>
 							</ul>
 						</div>
@@ -141,13 +195,11 @@
 						<h1
 							class="mb-4 {%- block content_title_classes -%}{%- endblock -%}"
 						>
-							{%- block content_title -%}{%- endblock content_title-%}
+							{%- block content_title -%}{%- endblock -%}
 						</h1>
 					</div>
-					<div class="row">
-						{%- block content -%}{%- endblock content -%}
-					</div>
-					{%- block additional_content -%}{%- endblock additional_content -%}
+					<div class="row">{%- block content -%}{%- endblock -%}</div>
+					{%- block additional_content -%}{%- endblock -%}
 				</div>
 			</main>
 
@@ -219,6 +271,6 @@
 		></script>
 
 		<!-- Block for extending for other scripts -->
-		{%- block scripts -%}{%- endblock scripts -%}
+		{%- block scripts -%}{%- endblock -%}
 	</body>
 </html>
