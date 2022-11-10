@@ -117,12 +117,15 @@
 								</li>
 								<li class="nav-item">
 									<a
-										href="#"
+										href="{{ url_for('auth.log_in_user') }}"
 										class="btn btn-outline-success me-2"
 									>
 										Login
 									</a>
-									<a href="#" class="btn btn-primary">
+									<a 
+                                        href="{{ url_for('auth.sign_up_user') }}" 
+                                        class="btn btn-primary"
+                                    >
 										Sign-up
 									</a>
 								</li>
