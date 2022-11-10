@@ -13,5 +13,9 @@ def get_about_page():
     return flask.render_template("about.html")
 
 
+def abort_to_login_page():
+    return flask.redirect(flask.url_for("auth.log_in_user"))
+
+
 def get_error_page(error):
     return flask.render_template("error.html", error=error), error.code

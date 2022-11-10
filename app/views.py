@@ -22,8 +22,12 @@ def get_about_page():
     return funcs.get_about_page()
 
 
-@app.errorhandler(400)
 @app.errorhandler(401)
+def abort_to_login_page(error):
+    return funcs.abort_to_login_page()
+
+
+@app.errorhandler(400)
 @app.errorhandler(403)
 @app.errorhandler(404)
 @app.errorhandler(500)
