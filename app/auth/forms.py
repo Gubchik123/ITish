@@ -14,7 +14,7 @@ class RegistrationForm(FlaskForm):
             validator.Regexp(
                 # (no _ or . at the beginning)[allowed allowed characters](no _ or . at the end)
                 r"^(?![_.])[a-zA-Z0-9._]+(?<![_.])$",
-                message="Wrong name (must be no spaces)!",
+                message="Wrong username (must be neither spaces nor _ or . at the beginning and at the end)!",
             ),
         ],
     )
