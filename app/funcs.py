@@ -13,8 +13,13 @@ def get_about_page():
     return flask.render_template("about.html")
 
 
+def _get_logout_page_url():
+    return flask.request.url_root[:-1] + flask.url_for("auth.log_out_user")
+
+
 def abort_to_login_page():
-    return flask.redirect(flask.url_for("auth.log_in_user"))
+    next = flask.request.url if flask.request.url != _get_logout_page_url() else None
+    return flask.redirect(flask.url_for("auth.log_in_user", next=next))
 
 
 def get_error_page(error):
