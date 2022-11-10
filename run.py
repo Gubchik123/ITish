@@ -1,6 +1,5 @@
 import app.views
 import app.extensions
-import app.models
 
 from app import app
 
