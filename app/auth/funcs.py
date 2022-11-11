@@ -1,7 +1,7 @@
 import os
 import flask
 import flask_login as flog
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 
 from ..models import User
 from ..extensions import db
@@ -10,18 +10,6 @@ from .forms import RegistrationForm, LoginAdminForm, LoginForm
 
 def _get_striped_(string: str) -> str:
     return str(string).strip()
-
-
-def _check_registration_data_from_(form: RegistrationForm):
-    if User.query.filter(User.email == _get_striped_(form.email.data)).first():
-        flask.flash("There is the user with such email!", category="danger")
-        return False
-
-    if User.query.filter(User.username == _get_striped_(form.username.data)).first():
-        flask.flash("There is the user with such username!", category="danger")
-        return False
-
-    return True
 
 
 def _add_user_with_data_from_(form: RegistrationForm):
@@ -44,24 +32,10 @@ def sign_up_user():
     if flog.current_user.is_authenticated:
         return flask.redirect(flask.url_for("profile.get_main_page"))
 
-    if form.validate_on_submit() and _check_registration_data_from_(form):
+    if form.validate_on_submit():
         return _add_user_with_data_from_(form)
 
     return flask.render_template("auth/registration.html", form=form)
-
-
-def _check_login_data_from_(form: LoginForm):
-    user = User.query.filter(User.email == form.email.data).first()
-
-    if not user:
-        flask.flash("There is not the user with such email!", category="danger")
-        return False
-
-    if not check_password_hash(user.password, _get_striped_(form.password.data)):
-        flask.flash("Wrong password!", category="danger")
-        return False
-
-    return True
 
 
 def log_in_user():
@@ -70,7 +44,7 @@ def log_in_user():
     if flog.current_user.is_authenticated:
         return flask.redirect(flask.url_for("profile.get_main_page"))
 
-    if form.validate_on_submit() and _check_login_data_from_(form):
+    if form.validate_on_submit():
         flog.login_user(
             User.query.filter(User.email == form.email.data).first(),
             remember=form.remember.data,
@@ -93,18 +67,10 @@ def log_out_user():
     )
 
 
-def _check_admin_password_from_(form: LoginAdminForm):
-    if _get_striped_(form.password.data) == os.getenv("ADMIN_PASSWORD"):
-        return True
-
-    flask.flash("Wrong admin password!", category="danger")
-    return False
-
-
 def log_in_admin():
     form = LoginAdminForm()
 
-    if form.validate_on_submit() and _check_admin_password_from_(form):
+    if form.validate_on_submit():
         flask.session["admin_logged"] = True
 
         return flask.redirect(flask.url_for("/admin"))
