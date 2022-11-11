@@ -205,6 +205,13 @@
                         
                         
                         {%- block content -%}{%- endblock -%}
+
+                        <button 
+                            name="Go to top"
+                            id="go-to-top-btn"
+                        >
+                            <ion-icon name="arrow-up-outline"></ion-icon>
+                        </button>
                     </div>
 					{%- block additional_content -%}{%- endblock -%}
 				</div>
@@ -266,6 +273,9 @@
 
 		<!-- Light dark toggle script -->
 		<script src="{{ url_for('static', filename='js/toggle_theme.js') }}"></script>
+
+        <!-- Scrolling script -->
+        <script src="{{ url_for('static', filename='js/scrolling.js') }}"></script>
 
 		<!-- Scripts for icons from "https://ionic.io/ionicons" -->
 		<script

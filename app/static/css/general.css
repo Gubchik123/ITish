@@ -26,6 +26,7 @@ html,
 body {
 	height: 100%;
 	font-size: 1.1em;
+    scroll-behavior: smooth;
 
 	color: var(--my-text-color);
 	background-color: var(--my-body-bg-color);
@@ -67,6 +68,19 @@ a.my-logo:hover { color: lightblue; }
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+.top-menu a,
+.top-menu a:hover { color: var(--bs-light); }
+.top-menu li a::after {
+    content: "";
+    display: block;
+    width: 100%;
+    background-color: var(--bs-light);
+    height: 1px;
+    transition: all 0.5s;
+    transform: scale(0);
+}
+.top-menu li a:hover::after { transform: scale(1); }
+
 #toggle-theme { transition: 0.3s; }
 #toggle-theme:hover { box-shadow: 0 0 10px 1px yellow; }
 #toggle-theme ion-icon { color: yellow; }
@@ -75,28 +89,31 @@ a.my-logo:hover { color: lightblue; }
     right: 0;
 	left: auto;
 }
-.navbar-nav .dropdown-menu ion-icon {
-    font-size: 1.5em;
-}
+.navbar-nav .dropdown-menu ion-icon { font-size: 1.5em; }
 
 /* Styles in main */
-main { flex: 1 1 auto; }
+main { flex: 1 1 auto; height: 2000px; }
 
-.top-menu a,
-.top-menu a:hover { color: var(--bs-light); }
-.top-menu li a::after {
-    content: "";
-	display: block;
-	width: 100%;
-	background-color: var(--bs-light);
-	height: 1px;
-	transition: all 0.5s;
-	transform: scale(0);
+#go-to-top-btn {
+    z-index: 80; 
+    border: none;
+    opacity: 0.8;
+    outline: none;
+    position: fixed;
+    transition: 0.2s;
+    width: 50px; height: 50px;
+    right: 30px; bottom: 30px;
+    display: none; /* Hidden by default */
+
+    color: var(--my-text-color);
+    background-color: var(--my-form-bg-color);
 }
-.top-menu li a:hover::after { transform: scale(1); }
+#go-to-top-btn:hover { opacity: 1; }
 
 
 /* Styles in footer */
+footer { z-index: 90; }
+
 ion-icon[name="aperture"],
 ion-icon[name="logo-instagram"],
 ion-icon[name="logo-linkedin"],
