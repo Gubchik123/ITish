@@ -26,11 +26,20 @@ def _add_user_with_data_from_(form: RegistrationForm):
     return flask.redirect(flask.url_for(".log_in_user"))
 
 
+def check_if_user_is_already_authenticated(func):
+    def inner():
+        return (
+            flask.redirect(flask.url_for("profile.get_main_page"))
+            if flog.current_user.is_authenticated
+            else func()
+        )
+
+    return inner
+
+
+@check_if_user_is_already_authenticated
 def sign_up_user():
     form = RegistrationForm()
-
-    if flog.current_user.is_authenticated:
-        return flask.redirect(flask.url_for("profile.get_main_page"))
 
     if form.validate_on_submit():
         return _add_user_with_data_from_(form)
@@ -38,11 +47,9 @@ def sign_up_user():
     return flask.render_template("auth/registration.html", form=form)
 
 
+@check_if_user_is_already_authenticated
 def log_in_user():
     form = LoginForm()
-
-    if flog.current_user.is_authenticated:
-        return flask.redirect(flask.url_for("profile.get_main_page"))
 
     if form.validate_on_submit():
         flog.login_user(
