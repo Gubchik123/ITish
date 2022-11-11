@@ -92,7 +92,7 @@ a.my-logo:hover { color: lightblue; }
 .navbar-nav .dropdown-menu ion-icon { font-size: 1.5em; }
 
 /* Styles in main */
-main { flex: 1 1 auto; height: 2000px; }
+main { flex: 1 1 auto; }
 
 #go-to-top-btn {
     z-index: 80; 
