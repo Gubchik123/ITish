@@ -1,10 +1,12 @@
 from . import funcs
 from .app import app
 
-from .auth import blueprint
+from .auth.blueprint import auth
+from .blog.blueprint import blog
 
 
-app.register_blueprint(blueprint.auth, url_prefix="/auth")
+app.register_blueprint(auth, url_prefix="/auth")
+app.register_blueprint(blog, url_prefix="/blog")
 
 
 @app.route("/")
