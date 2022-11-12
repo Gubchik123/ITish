@@ -1,0 +1,35 @@
+{%- extends 'base.html' %} 
+
+{%- block title -%} Blog {%- endblock title -%}
+
+
+{%- block content -%}
+<div
+	class="site-header sticky-top py-2 d-flex justify-content-end mb-4 border-2 border-bottom border-info my-text-color"
+>
+	<div class="btn-group btn-group-lg">
+		<a
+			href="./?tab=posts"
+            {%- if not request.args.get('tab') or request.args.get('tab') == "posts" %}
+                class="btn btn-primary active"
+                aria-current="page"
+            {%- else %}
+                class="btn btn-primary"
+            {%- endif %}
+		>
+            Posts
+        </a>
+		<a
+			href="./?tab=tags"
+			{%- if request.args.get('tab') == "tags" %}
+                class="btn btn-primary active"
+                aria-current="page"
+            {%- else %}
+                class="btn btn-primary"
+            {%- endif %}
+		>
+            Tags
+        </a>
+	</div>
+</div>
+{%- endblock content -%}
