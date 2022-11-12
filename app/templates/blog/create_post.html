@@ -1,0 +1,100 @@
+{%- extends 'base.html' %} 
+
+{%- block title -%} Create post {%- endblock -%} 
+
+{%- block styles -%}
+<style>
+    textarea { height: 200px; }
+
+    .content { min-height: 200px; }
+
+    .form-control { width: 40%; }
+
+    #post_tags { width: 90%; }
+</style>
+{%- endblock styles -%}
+
+{%- block content_title -%} Create post {%- endblock -%} 
+
+
+{%- block content -%}
+    {%- from '_alerts_macros.html' import not_dismissible_alert %} 
+    {{
+        not_dismissible_alert(
+            message="Fill this area out using buttons below",
+            category="primary"
+        )
+    }}
+
+    <div class="content border border-dark rounded py-2 my-3">
+        {%- block content_block -%}{%- endblock -%} 
+    </div>
+
+    <div class="my-3 adding_buttons">
+        <button
+            id="add_subtitle1_btn"
+            class="btn btn-primary btn-lg mb-2 me-2 float_left"
+        >
+            Subtitle I
+        </button>
+        <button
+            id="add_subtitle2_btn"
+            class="btn btn-primary btn-lg mb-2 me-2 float_left"
+        >
+            Subtitle II
+        </button>
+        <button
+            id="add_paragraph_btn"
+            class="btn btn-primary btn-lg mb-2 me-2 float_left"
+        >
+            Paragraph
+        </button>
+        <button
+            id="add_code_btn"
+            class="btn btn-primary btn-lg mb-2 me-2 float_left"
+        >
+            Code block
+        </button>
+        <button
+            id="add_image_btn"
+            class="btn btn-primary btn-lg mb-2 me-2 float_left"
+        >
+            Image
+        </button>
+        <button
+            id="add_alert_btn"
+            class="btn btn-primary btn-lg mb-2 me-2 float_left"
+        >
+            Alert (note)
+        </button>
+        <button
+            id="add_line_btn"
+            class="btn btn-primary btn-lg mb-2 me-2"
+        >
+            Line
+        </button>
+    </div>
+
+    <div class="my-3 processing_form">
+        {%- from '_forms_macros.html' import render_field, render_field_with_errors %}
+
+        <form 
+            action="" 
+            method="post"
+            class="d-flex justify-content-between align-items-center"
+        >
+            <div>
+                {{ form.hidden_tag() }}
+                <!-- Loop for invisible form fields -->
+                {%- for field in form if field.name not in ["csrf_token", "post_submit", "post_tags"] %}
+                    {{ render_field(field, class="d-none") }}
+                {%- endfor %}
+                <!-- Visible form fields -->
+                {{ render_field_with_errors(form.post_tags, class="form-control") }}
+            </div>
+            <div>
+                {{ render_field(form.post_submit, class="btn btn-success btn-lg mt-2") }}
+            </div>
+        </form>
+    </div>
+{%- endblock content -%} 
