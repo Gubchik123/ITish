@@ -1,0 +1,39 @@
+{%- extends 'blog/_blog.html' %}
+
+{%- block content_title -%} All posts {%- endblock content_title -%} 
+
+{%- block search_form -%}
+    {%- if posts %}
+        <form role="search">
+            <input
+                class="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                />
+            <button
+                class="btn btn-outline-success"
+                type="submit"
+                >
+                Search
+            </button>
+        </form>
+    {%- endif %} 
+{%- endblock search_form -%} 
+
+
+{%- block content -%}
+    {{ super() }}
+
+    {%- if posts %}
+        <!-- Empty -->
+    {%- else %}
+        {%- from '_alerts_macros.html' import not_dismissible_alert %} 
+        {{ 
+            not_dismissible_alert(
+                message="There are not any posts yet",
+                category="primary"
+            ) 
+        }}
+    {%- endif %}
+{%- endblock content -%} 

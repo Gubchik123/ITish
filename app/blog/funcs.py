@@ -1,13 +1,30 @@
 import flask
 import flask_login as flog
 
-
-def get_all_posts():
-    pass
+from ..models import Post, Tag
 
 
-def get_all_tags():
-    pass
+def get_blog_page():
+    tab = flask.request.args.get("tab")
+    tab = tab if tab else "posts"
+
+    return (
+        _get_all_posts()
+        if tab == "posts"
+        else (_get_all_tags() if tab == "tags" else flask.abort(404))
+    )
+
+
+def _get_all_posts():
+    return flask.render_template(
+        "blog/all_posts.html", posts=Post.query.order_by(Post.created.desc()).all()
+    )
+
+
+def _get_all_tags():
+    return flask.render_template(
+        "blog/all_tags.html", tags=Tag.query.order_by(Tag.url).all()
+    )
 
 
 @flog.login_required

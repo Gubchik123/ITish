@@ -1,0 +1,20 @@
+{%- extends 'blog/_blog.html' %}
+
+{%- block content_title -%} All tags {%- endblock content_title -%} 
+
+
+{%- block content -%}
+    {{ super() }}
+
+    {%- if tags %}
+        <!-- Empty -->
+    {%- else %}
+        {%- from '_alerts_macros.html' import not_dismissible_alert %} 
+        {{ 
+            not_dismissible_alert(
+                message="There are not any tags yet",
+                category="primary"
+            ) 
+        }}
+    {%- endif %} 
+{%- endblock content -%} 
