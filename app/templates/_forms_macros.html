@@ -1,4 +1,4 @@
-{% macro _render_field_with_errors(field) %}
+{% macro render_field_with_errors(field) %}
     <div class="mt-3">
         {%- if field.type != "BooleanField" %}
             <div class="form-floating">
@@ -18,7 +18,7 @@
     </div>
 {% endmacro %}
 
-{% macro _render_field(field) %}
+{% macro render_field(field) %}
     <div class="mt-2">
         {{ field(**kwargs)|safe }}
     </div>
@@ -28,10 +28,10 @@
     {{ form.hidden_tag() }}
 
     {%- for field in form if field.name not in ["csrf_token", "submit"] %}
-        {{ _render_field_with_errors(field) }}
+        {{ render_field_with_errors(field) }}
     {%- endfor %}
 
     <div class="text-center">
-        {{ _render_field(form.submit, class="btn btn-success btn-lg mt-2") }}
+        {{ render_field(form.submit, class="btn btn-success btn-lg mt-2") }}
     </div>
 {%- endmacro %} 
