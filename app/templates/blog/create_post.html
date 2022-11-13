@@ -8,7 +8,7 @@
 
     .content { min-height: 200px; }
 
-    .form-control { width: 40%; }
+    .form-control { width: 30%; }
 
     #post_tags { width: 90%; }
 </style>
@@ -85,10 +85,9 @@
         >
             <div>
                 {{ form.hidden_tag() }}
-                <!-- Loop for invisible form fields -->
-                {%- for field in form if field.name not in ["csrf_token", "post_submit", "post_tags"] %}
-                    {{ render_field(field, class="d-none") }}
-                {%- endfor %}
+                <!-- Invisible form fields -->
+                {{ render_field(form.post_title, class="d-none") }}
+                {{ render_field(form.post_body, class="d-none") }}
                 <!-- Visible form fields -->
                 {{ render_field_with_errors(form.post_tags, class="form-control") }}
             </div>
@@ -96,5 +95,13 @@
                 {{ render_field(form.post_submit, class="btn btn-success btn-lg mt-2") }}
             </div>
         </form>
+        <p>Separator - space</p>
     </div>
 {%- endblock content -%} 
+
+{%- block scripts -%}
+<script
+    type="module"
+    src="{{ url_for('blog.get_js_file', filename='blog/create_post.js') }}"
+></script>
+{%- endblock scripts -%} 
