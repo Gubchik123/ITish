@@ -129,7 +129,7 @@
 											<li>
 												<a
 													class="dropdown-item d-flex justify-content-between align-items-center"
-													href="#"
+													href="{{ url_for('blog.create_post') }}"
 												>
 													New post...
 													<ion-icon
@@ -183,7 +183,7 @@
 							{%- block content_title -%}{%- endblock -%}
 						</h1>
 					</div>
-					<div class="row">
+					<div class="row content_block">
                         {%- block flashed_messages -%}
                             {%- include '_messages.html' %} 
                         {%- endblock -%}
