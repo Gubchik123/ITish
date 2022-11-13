@@ -7,6 +7,11 @@ from . import funcs
 blog = Blueprint("blog", __name__)
 
 
+@blog.route("/js-file/<path:filename>")
+def get_js_file(filename: str):
+    return funcs.get_js_file(filename)
+
+
 @blog.route("/")
 def get_blog_page():
     return funcs.get_blog_page()
