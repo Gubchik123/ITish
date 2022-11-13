@@ -1,7 +1,18 @@
 import flask
 import flask_login as flog
 
+from ..app import app
 from ..models import Post, Tag
+from .forms import PostCreateForm, PostEditForm
+
+
+def get_js_file(filename: str):
+    return flask.send_from_directory(
+        app.config["UPLOAD_FOLDER"],
+        f"js/{filename}",
+        as_attachment=True,
+        mimetype="text/javascript",
+    )
 
 
 def get_blog_page():
@@ -29,7 +40,8 @@ def _get_all_tags():
 
 @flog.login_required
 def create_post():
-    pass
+    form = PostCreateForm()
+    return flask.render_template("blog/create_post.html", form=form)
 
 
 def get_all_posts_with_(tag: str):
