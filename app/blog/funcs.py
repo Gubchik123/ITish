@@ -9,7 +9,7 @@ from .forms import PostCreateForm, PostEditForm
 def get_js_file(filename: str):
     return flask.send_from_directory(
         app.config["UPLOAD_FOLDER"],
-        f"js/{filename}",
+        f"js/{filename}" if ".js" in filename else f"js/{filename}.js",
         as_attachment=True,
         mimetype="text/javascript",
     )
