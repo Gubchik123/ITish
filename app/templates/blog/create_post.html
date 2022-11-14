@@ -4,11 +4,15 @@
 
 {%- block styles -%}
 <style>
-    textarea { height: 200px; }
+    textarea { height: 20vh; }
 
     .content { min-height: 200px; }
 
-    .form-control { width: 30%; }
+    .form-control, 
+    .form-range, 
+    .form-select { width: 30%; min-width: 150px; }
+
+    .form-control-color { min-width: 30px; max-width: 50px; }
 
     #post_tags { width: 90%; }
 </style>
@@ -26,8 +30,10 @@
         )
     }}
 
+    {%- block post_title -%}  {%- endblock post_title -%} 
+
     <div class="content border border-dark rounded py-2 my-3">
-        {%- block content_block -%}{%- endblock -%} 
+        {%- block post_body -%}{%- endblock -%} 
     </div>
 
     <div class="my-3 adding_buttons">
