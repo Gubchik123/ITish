@@ -3,6 +3,7 @@ import flask_login as flog
 
 from ..app import app
 from ..models import Post, Tag
+from ..extensions import db
 from .forms import PostCreateForm, PostEditForm
 
 
@@ -38,9 +39,26 @@ def _get_all_tags():
     )
 
 
+def _add_post_in_db_from_(form: PostCreateForm):
+    db.session.add(
+        Post(
+            title=form.post_title.data,
+            body=form.post_body.data,
+            user_id=flog.current_user.id,
+        )
+    )
+    db.session.commit()
+
+
 @flog.login_required
 def create_post():
     form = PostCreateForm()
+
+    if form.validate_on_submit():
+        print(form.post_title)
+        _add_post_in_db_from_(form)
+        flask.flash("Post has successfully added", category="success")
+
     return flask.render_template("blog/create_post.html", form=form)
 
 
