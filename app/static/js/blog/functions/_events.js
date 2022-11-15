@@ -9,15 +9,18 @@ import { content_block, hidden_post_body_field } from "../_global_variables.js";
 import { get_div_block } from "./_getting.js";
 
 export function get_click_event_on_create_post_btn(e) {
-	for (let element_content of content_block.querySelectorAll(
-		".element-content"
-	)) {
-		let element = get_div_block();
-		element.appendChild(element_content);
-		hidden_post_body_field.value += element.innerHTML;
-	}
-
-	console.log(hidden_post_body_field.value);
+	if (
+		content_block.innerHTML.length != 0 &&
+		!content_block.querySelector(".element-form")
+	) {
+		for (let element_content of content_block.querySelectorAll(
+			".element-content"
+		)) {
+			let element = get_div_block();
+			element.appendChild(element_content);
+			hidden_post_body_field.value += element.innerHTML;
+		}
+	} else e.preventDefault();
 }
 
 export function get_click_event_on_apply_btn() {
