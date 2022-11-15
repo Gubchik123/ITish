@@ -1,9 +1,18 @@
 import { check_filling_of_ } from "./_processing.js";
-import { content_block } from "../_global_variables.js";
 import { title, add_needed_element_with_data_from } from "../create_post.js";
+import { content_block, hidden_post_body_field } from "../_global_variables.js";
+import { get_div_block } from "./_getting.js";
 
-export function get_click_event_on_create_post_btn() {
-	// TODO: Event for button which create post and send data on the server
+export function get_click_event_on_create_post_btn(e) {
+	for (let element_content of content_block.querySelectorAll(
+		".element-content"
+	)) {
+		let element = get_div_block();
+		element.appendChild(element_content);
+		hidden_post_body_field.value += element.innerHTML;
+	}
+
+    console.log(hidden_post_body_field.value);
 }
 
 export function get_click_event_on_apply_btn() {
@@ -47,10 +56,10 @@ export function get_click_event_on_align_btn(e, align) {
 
 	for (const position of ["start", "center", "end"]) {
 		if (class_list.toString().includes(position)) {
-            if (position == align) break;
+			if (position == align) break;
 			element_btns_block.previousElementSibling.classList = class_list
 				.toString()
-				.replace(new RegExp(`${position}`, 'g'), align);
+				.replace(new RegExp(`${position}`, "g"), align);
 			break;
 		}
 	}

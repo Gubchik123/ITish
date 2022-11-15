@@ -7,6 +7,7 @@ import { Line } from "./element_classes/_line.js";
 
 import { content_block } from "./_global_variables.js";
 import { check_is_there_element_form } from "./functions/_processing.js";
+import { get_click_event_on_create_post_btn } from "./functions/_events.js";
 
 export const title = new Title();
 
@@ -41,3 +42,6 @@ for (let adding_button of document.querySelector(".adding_buttons").children) {
 		}
 	});
 }
+
+const post_submit_btn = document.getElementById("post_submit");
+post_submit_btn.addEventListener("click", get_click_event_on_create_post_btn);
