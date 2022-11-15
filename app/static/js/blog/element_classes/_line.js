@@ -1,19 +1,16 @@
 import {
-	set_click_event_for_apply_btn,
-	set_click_event_for_cancel_btn,
-} from "../functions/_events.js";
+    add_apply_and_cancel_btns_wrapped_in_,
+    get_wrapped_,
+} from "../functions/_improving.js";
 
 import {
 	get_div_block,
-	get_apply_btn,
-	get_cancel_btn,
 	get_element_form_block,
 	get_select_color_block,
 	get_range_input_with_label_,
 } from "../functions/_getting.js";
 
 import { content_block } from "../_global_variables.js";
-import { get_wrapped_ } from "../functions/_improving.js";
 
 function _get_block_with_fields() {
 	let block_with_fields = get_div_block();
@@ -53,11 +50,6 @@ export class Line {
 
 		block.appendChild(_get_block_with_fields());
 
-		block.appendChild(get_apply_btn());
-		block.appendChild(get_cancel_btn());
-
-		content_block.appendChild(block);
-		set_click_event_for_apply_btn();
-		set_click_event_for_cancel_btn();
+		add_apply_and_cancel_btns_wrapped_in_(block);
 	}
 }

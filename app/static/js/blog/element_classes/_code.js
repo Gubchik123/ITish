@@ -1,17 +1,14 @@
 import {
-	set_click_event_for_apply_btn,
-	set_click_event_for_cancel_btn,
-} from "../functions/_events.js";
-
-import {
-	get_apply_btn,
-	get_cancel_btn,
-	get_input_area_,
 	get_element_form_block,
+	get_input_area_,
 } from "../functions/_getting.js";
 
+import {
+	get_wrapped_,
+	add_apply_and_cancel_btns_wrapped_in_,
+} from "../functions/_improving.js";
+
 import { content_block } from "../_global_variables.js";
-import { get_wrapped_ } from "../functions/_improving.js";
 
 export class Code {
 	id = "code";
@@ -38,12 +35,7 @@ export class Code {
 		let block = get_element_form_block();
 		block.id = this.id;
 
-		block.appendChild(get_input_area_("textarea", this.placeholder));
-		block.appendChild(get_apply_btn());
-		block.appendChild(get_cancel_btn());
-
-		content_block.appendChild(block);
-		set_click_event_for_apply_btn();
-		set_click_event_for_cancel_btn();
+		block.appendChild(get_input_area_("textarea", "Code block"));
+		add_apply_and_cancel_btns_wrapped_in_(block);
 	}
 }

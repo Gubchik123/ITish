@@ -125,3 +125,23 @@ export function get_select_color_block() {
     `;
     return select;
 }
+
+export function get_block_with_fields(input_areas=[], adding_element) {
+	let block_with_fields = get_div_block();
+	block_with_fields.classList = "w-100 mb-3";
+    for (const input of input_areas) {
+        block_with_fields.appendChild(get_input_area_(input.tag, input.placeholder, input.is_float_left))
+    }
+	block_with_fields.appendChild(adding_element);
+	return block_with_fields;
+}
+
+export function get_element_data_from_form_control_and_(class_) {
+    let form_controls = content_block.querySelectorAll(".form-control");
+
+    return {
+        first: form_controls[0].value,
+        second: form_controls[1].value,
+        third: content_block.querySelector(class_).value,
+    };
+}

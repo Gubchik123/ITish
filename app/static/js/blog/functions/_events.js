@@ -50,7 +50,7 @@ export function get_click_event_on_align_btn(e, align) {
             if (position == align) break;
 			element_btns_block.previousElementSibling.classList = class_list
 				.toString()
-				.replace(position, align);
+				.replace(new RegExp(`${position}`, 'g'), align);
 			break;
 		}
 	}

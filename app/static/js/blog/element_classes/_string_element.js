@@ -4,7 +4,6 @@ import {
 } from "../functions/_events.js";
 
 import {
-	get_div_block,
 	get_apply_btn,
 	get_cancel_btn,
 	get_color_input,
@@ -15,24 +14,24 @@ import {
 import { content_block } from "../_global_variables.js";
 import { get_wrapped_ } from "../functions/_improving.js";
 
-export class Subtitle {
-	constructor(level) {
-		this.id = level == 1 ? "subtitle1" : "subtitle2";
-		this.tag = level == 1 ? "h2" : "h4";
-		this.placeholder =
-			level == 1 ? "Post subtitle (I)" : "Post subtitle (II)";
+export class StringElement {
+	constructor(id, tag, placeholder, input_tag="input") {
+		this.id = id;
+		this.tag = tag;
+		this.input_tag = input_tag;
+		this.placeholder = placeholder;
 	}
 
 	add_element_block() {
-		let content = this.get_element_data_from_form();
+		let data = this.get_element_data_from_form();
 
-		let subtitle = document.createElement(this.tag);
-		subtitle.classList.add("mb-2");
-		subtitle.innerText = content.text;
+		let string_element = document.createElement(this.tag);
+		string_element.classList = "mb-2";
+		string_element.innerText = data.text;
 
-		if (content.color != "#000000") subtitle.style.color = content.color;
+		if (data.color != "#000000") string_element.style.color = data.color;
 
-		content_block.appendChild(get_wrapped_(subtitle));
+		content_block.appendChild(get_wrapped_(string_element));
 	}
 
 	get_element_data_from_form() {
@@ -48,7 +47,7 @@ export class Subtitle {
 		let block = get_element_form_block();
 		block.id = this.id;
 
-		block.appendChild(get_input_area_("input", this.placeholder));
+		block.appendChild(get_input_area_(this.input_tag, this.placeholder));
 		block.appendChild(get_color_input());
 		block.appendChild(get_apply_btn());
 		block.appendChild(get_cancel_btn());

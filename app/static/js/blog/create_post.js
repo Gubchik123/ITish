@@ -1,6 +1,5 @@
 import { Title } from "./element_classes/_title.js";
-import { Subtitle } from "./element_classes/_subtitle.js";
-import { Paragraph } from "./element_classes/_paragraph.js";
+import { StringElement } from "./element_classes/_string_element.js";
 import { Code } from "./element_classes/_code.js";
 import { Image } from "./element_classes/_image.js";
 import { Alert } from "./element_classes/_alert.js";
@@ -14,9 +13,9 @@ export const title = new Title();
 function _get_needed_element_from_(block_id) {
 	return {
 		title: title,
-		subtitle1: new Subtitle(1),
-		subtitle2: new Subtitle(2),
-		paragraph: new Paragraph(),
+		subtitle1: new StringElement("subtitle1", "h2", "Subtitle I"),
+		subtitle2: new StringElement("subtitle2", "h4", "Subtitle II"),
+		paragraph: new StringElement("paragraph", "p", "Paragraph", "textarea"),
 		code: new Code(),
 		image: new Image(),
 		alert: new Alert(),
