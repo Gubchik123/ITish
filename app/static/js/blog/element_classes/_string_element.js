@@ -15,7 +15,7 @@ import { content_block } from "../_global_variables.js";
 import { get_wrapped_ } from "../functions/_improving.js";
 
 export class StringElement {
-	constructor(id, tag, placeholder, input_tag="input") {
+	constructor(id, tag, placeholder, input_tag = "input") {
 		this.id = id;
 		this.tag = tag;
 		this.input_tag = input_tag;
@@ -31,7 +31,9 @@ export class StringElement {
 
 		if (data.color != "#000000") string_element.style.color = data.color;
 
-		content_block.appendChild(get_wrapped_(string_element));
+		content_block
+			.querySelector(".element-form")
+			.after(get_wrapped_(string_element, this.id));
 	}
 
 	get_element_data_from_form() {
@@ -43,17 +45,17 @@ export class StringElement {
 		};
 	}
 
-	add_form_for_getting_element_data() {
+	get_form_for_getting_element_data(value = "") {
 		let block = get_element_form_block();
 		block.id = this.id;
 
-		block.appendChild(get_input_area_(this.input_tag, this.placeholder));
+		block.appendChild(
+			get_input_area_(this.input_tag, this.placeholder, value)
+		);
 		block.appendChild(get_color_input());
 		block.appendChild(get_apply_btn());
 		block.appendChild(get_cancel_btn());
 
-		content_block.appendChild(block);
-		set_click_event_for_apply_btn();
-		set_click_event_for_cancel_btn();
+		return block;
 	}
 }

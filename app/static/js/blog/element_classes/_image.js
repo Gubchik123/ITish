@@ -5,8 +5,8 @@ import {
 } from "../functions/_getting.js";
 
 import {
-    get_wrapped_,
-	add_form_for_getting_element_data_with_,
+	get_wrapped_,
+	get_form_for_getting_element_data_with_,
 } from "../functions/_improving.js";
 
 import { content_block } from "../_global_variables.js";
@@ -24,30 +24,34 @@ export class Image {
 		image.alt = data.second;
 		image.style.width = `${data.third}%`;
 
-		content_block.appendChild(get_wrapped_(image));
+		content_block
+			.querySelector(".element-form")
+			.after(get_wrapped_(image, this.id));
 	}
 
 	get_element_data_from_form() {
 		return get_element_data_from_form_control_and_(".form-range");
 	}
 
-	add_form_for_getting_element_data() {
-		add_form_for_getting_element_data_with_(
+	get_form_for_getting_element_data(value = ["", "", ""]) {
+		return get_form_for_getting_element_data_with_(
 			this.id,
 			get_block_with_fields(
 				[
 					{
 						tag: "input",
 						placeholder: "Image url",
+						value: value[0],
 						is_float_left: false,
 					},
 					{
 						tag: "input",
 						placeholder: "Image description",
+						value: value[1],
 						is_float_left: false,
 					},
 				],
-				get_range_input_with_label_("Image width")
+				get_range_input_with_label_("Image width", value[2])
 			)
 		);
 	}

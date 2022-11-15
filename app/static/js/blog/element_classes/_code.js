@@ -5,7 +5,7 @@ import {
 
 import {
 	get_wrapped_,
-	add_apply_and_cancel_btns_wrapped_in_,
+	get_apply_and_cancel_btns_wrapped_in_,
 } from "../functions/_improving.js";
 
 import { content_block } from "../_global_variables.js";
@@ -24,18 +24,20 @@ export class Code {
 		pre.classList = "p-2 rounded-4 text-white text-start my-form-bg-color";
 		pre.appendChild(code);
 
-		content_block.appendChild(get_wrapped_(pre));
+		content_block
+			.querySelector(".element-form")
+			.after(get_wrapped_(pre, this.id));
 	}
 
 	get_element_data_from_form() {
 		return content_block.querySelector(".form-control").value;
 	}
 
-	add_form_for_getting_element_data() {
+	get_form_for_getting_element_data(value = "") {
 		let block = get_element_form_block();
 		block.id = this.id;
 
-		block.appendChild(get_input_area_("textarea", "Code block"));
-		add_apply_and_cancel_btns_wrapped_in_(block);
+		block.appendChild(get_input_area_("textarea", "Code block", value));
+		return get_apply_and_cancel_btns_wrapped_in_(block);
 	}
 }

@@ -46,7 +46,7 @@ export class Title {
 		return content_block.querySelector("#title .form-control").value;
 	}
 
-	add_form_for_getting_element_data() {
+	get_form_for_getting_element_data() {
 		let block = get_element_form_block();
 		block.id = this.id;
 

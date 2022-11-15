@@ -1,3 +1,9 @@
+import {
+	get_click_event_on_create_post_btn,
+	set_click_event_for_apply_btn,
+	set_click_event_for_cancel_btn,
+} from "./functions/_events.js";
+
 import { Title } from "./element_classes/_title.js";
 import { StringElement } from "./element_classes/_string_element.js";
 import { Code } from "./element_classes/_code.js";
@@ -7,11 +13,10 @@ import { Line } from "./element_classes/_line.js";
 
 import { content_block } from "./_global_variables.js";
 import { check_is_there_element_form } from "./functions/_processing.js";
-import { get_click_event_on_create_post_btn } from "./functions/_events.js";
 
 export const title = new Title();
 
-function _get_needed_element_from_(block_id) {
+export function get_needed_element_from_(block_id) {
 	return {
 		title: title,
 		subtitle1: new StringElement("subtitle1", "h2", "Subtitle I"),
@@ -25,20 +30,25 @@ function _get_needed_element_from_(block_id) {
 }
 
 export function add_needed_element_with_data_from(block) {
-	_get_needed_element_from_(block.id).add_element_block();
+	get_needed_element_from_(block.id).add_element_block();
 }
 
 if (!content_block.previousElementSibling.classList.element)
-	title.add_form_for_getting_element_data();
+	title.get_form_for_getting_element_data();
 
 // Loop for adding buttons to add click event
 // for adding element in the content block
 for (let adding_button of document.querySelector(".adding_buttons").children) {
 	adding_button.addEventListener("click", function () {
 		if (!check_is_there_element_form()) {
-			_get_needed_element_from_(
-				adding_button.id.split("_")[1] // Element title
-			).add_form_for_getting_element_data();
+			content_block.appendChild(
+				get_needed_element_from_(
+					adding_button.id.split("_")[1] // Element title
+				).get_form_for_getting_element_data()
+			);
+
+			set_click_event_for_apply_btn();
+			set_click_event_for_cancel_btn();
 		}
 	});
 }

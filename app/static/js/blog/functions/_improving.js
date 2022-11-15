@@ -18,7 +18,10 @@ import {
 
 import { content_block } from "../_global_variables.js";
 
-export function get_wrapped_(element) {
+let block_id;
+
+export function get_wrapped_(element, id) {
+    block_id = id
 	let block = _get_result_element_block_with_(element);
 
 	block = add_mouse_over_and_leave_event_for_(block);
@@ -26,27 +29,25 @@ export function get_wrapped_(element) {
 	return block;
 }
 
-export function add_apply_and_cancel_btns_wrapped_in_(block) {
+export function get_apply_and_cancel_btns_wrapped_in_(block) {
 	block.appendChild(get_apply_btn());
 	block.appendChild(get_cancel_btn());
 
-	content_block.appendChild(block);
-	set_click_event_for_apply_btn();
-	set_click_event_for_cancel_btn();
+	return block;
 }
 
-export function add_form_for_getting_element_data_with_(id, fields) {
+export function get_form_for_getting_element_data_with_(id, fields) {
 	let block = get_element_form_block();
 	block.id = id;
 
 	block.appendChild(fields);
 
-	add_apply_and_cancel_btns_wrapped_in_(block);
+	return get_apply_and_cancel_btns_wrapped_in_(block);
 }
 
 function _get_result_element_block_with_(element) {
 	let element_block = get_div_block();
-	element_block.classList = "element my-1 px-2";
+	element_block.classList = "element my-1 px-2 w-100";
 
 	element_block.appendChild(_get_element_content(element));
 	element_block.appendChild(_get_block_with_element_btns());
@@ -58,7 +59,7 @@ export function _get_element_content(element) {
 	let element_content = get_div_block();
 	element_content.appendChild(element);
 	element_content.classList =
-		"element-content d-flex justify-content-start text-start";
+		`element-content ${block_id} d-flex justify-content-start text-start`;
 	return element_content;
 }
 
