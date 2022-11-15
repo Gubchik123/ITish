@@ -30,7 +30,7 @@ export class Alert {
 	}
 
 	get_element_data_from_form() {
-		return get_element_data_from_form_control_and_(".form-control");
+		return get_element_data_from_form_control_and_(".form-select");
 	}
 
 	add_form_for_getting_element_data() {

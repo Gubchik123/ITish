@@ -18,10 +18,10 @@ export class Code {
 	add_element_block() {
 		let code = document.createElement(this.tag);
 		code.classList += "my-1";
-		code.innerText = this.get_element_data_from_form();
+		code.innerText = this.get_element_data_from_form().replace(/	/g, '  ');
 
 		let pre = document.createElement("pre");
-		pre.classList = "p-2 rounded-4 text-white my-form-bg-color";
+		pre.classList = "p-2 rounded-4 text-white text-start my-form-bg-color";
 		pre.appendChild(code);
 
 		content_block.appendChild(get_wrapped_(pre));

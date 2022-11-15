@@ -28,7 +28,7 @@ export class Image {
 	}
 
 	get_element_data_from_form() {
-		return get_element_data_from_form_control_and_(".from-range");
+		return get_element_data_from_form_control_and_(".form-range");
 	}
 
 	add_form_for_getting_element_data() {

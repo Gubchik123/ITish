@@ -1,8 +1,9 @@
 import {
-	get_click_event_on_close_btn,
+    get_click_event_on_close_btn,
 	get_click_event_on_align_btn,
 } from "./_events.js";
 import { set_for_ } from "./_processing.js";
+import { content_block } from "../_global_variables.js";
 
 export function get_input_area_(tag, placeholder, float_left = true) {
 	let input_area = document.createElement(tag);
