@@ -4,21 +4,21 @@ import {
 } from "../_global_variables.js";
 
 import {
-    get_div_block,
+	get_div_block,
 	get_apply_btn,
 	get_close_btn,
 	get_input_area_,
 	get_element_form_block,
 } from "../functions/_getting.js";
 
-import { _get_element_content } from "../functions/_improving.js"
+import { _get_element_content } from "../functions/_improving.js";
 import { set_click_event_for_apply_btn } from "../functions/_events.js";
 
 function get_wrapped_(element) {
 	let block = get_div_block();
 	block.classList = "element mb-2 p-1 d-flex justify-content-between";
 	block.appendChild(_get_element_content(element));
-    block.appendChild(get_close_btn());
+	block.appendChild(get_close_btn());
 
 	return block;
 }
@@ -50,7 +50,10 @@ export class Title {
 		let block = get_element_form_block();
 		block.id = this.id;
 
-		block.appendChild(get_input_area_("input", this.placeholder));
+		let input = get_input_area_("input", this.placeholder);
+		input.maxLength = 70;
+
+		block.appendChild(input);
 		block.appendChild(get_apply_btn());
 
 		content_block.prepend(block);
