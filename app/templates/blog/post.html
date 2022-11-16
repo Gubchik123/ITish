@@ -1,0 +1,16 @@
+{%- extends 'base.html' %} 
+
+{%- block title -%} Post - {{ post.title }} {%- endblock title -%} 
+
+{%- block content_title -%} {{ post.title }} {%- endblock content_title -%} 
+
+
+{%- block content -%} 
+{{ post.body | safe }} 
+
+<hr>
+
+{%- from 'blog/_post_macros.html' import show_info_about_ %}
+{{ show_info_about_(post) }}
+
+{%- endblock content -%} 

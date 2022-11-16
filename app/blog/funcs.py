@@ -67,7 +67,8 @@ def get_all_posts_with_(tag: str):
 
 
 def get_post_by_(post_url: str):
-    pass
+    post = Post.query.filter(Post.url == post_url).first_or_404()
+    return flask.render_template("blog/post.html", post=post)
 
 
 @flog.login_required

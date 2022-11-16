@@ -9,21 +9,25 @@
                     <p>{{ post.body[:200] | striptags }}...</p>
                 </div>
             </a>
-            <div class="post_info text-white d-flex justify-content-between">
-                <div class="post_author me-3">
-                    <b>Author:</b> &nbsp; 
-                    <a 
-                        href=""
-                        class="text-decoration-underline"
-                    >
-                        {{ post.user.username }}
-                    </a>
-                </div>
-                <div class="post_created">
-                    <b>Created:</b> &nbsp; 
-                    {{ post.created.strftime("%d.%m.%Y") }}
-                </div>
-            </div>
+            {{ show_info_about_(post) }}
         </div>
     {%- endfor %} 
+{%- endmacro %} 
+
+{%- macro show_info_about_(post) %}
+    <div class="post_info d-flex justify-content-between">
+        <div class="post_author me-3">
+            <b>Author:</b> &nbsp; 
+            <a 
+                href=""
+                class="text-decoration-underline my-text-color"
+            >
+                {{ post.user.username }}
+            </a>
+        </div>
+        <div class="post_created">
+            <b>Created:</b> &nbsp; 
+            {{ post.created.strftime("%d.%m.%Y") }}
+        </div>
+    </div>
 {%- endmacro %} 
