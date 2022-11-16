@@ -1,5 +1,17 @@
 {%- extends 'blog/_blog.html' %}
 
+{%- block styles -%}
+    <style>
+        .post a { color: #eee; }
+
+        .post { 
+            transition: 0.3s;
+            box-shadow: 0 0 10px 0.5px var(--my-text-color); 
+        }
+        .post:hover { box-shadow: 0 0 15px 2px var(--my-text-color); }
+    </style>
+{%- endblock styles -%}
+
 {%- block content_title -%} All posts {%- endblock content_title -%} 
 
 {%- block search_form -%}
@@ -26,7 +38,8 @@
     {{ super() }}
 
     {%- if posts %}
-        <!-- Empty -->
+        {%- from 'blog/_post_macros.html' import show_all_ %} 
+        {{ show_all_(posts) }}
     {%- else %}
         {%- from '_alerts_macros.html' import not_dismissible_alert %} 
         {{ 
