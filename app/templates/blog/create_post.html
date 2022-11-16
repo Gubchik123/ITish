@@ -3,19 +3,11 @@
 {%- block title -%} Create post {%- endblock -%} 
 
 {%- block styles -%}
-<style>
-    textarea { height: 20vh; }
-
-    .content { min-height: 200px; }
-
-    .form-control, 
-    .form-range, 
-    .form-select { width: 30%; min-width: 150px; }
-
-    .form-control-color { min-width: 30px; max-width: 50px; }
-
-    #post_tags { width: 90%; }
-</style>
+<link 
+    type='text/css' 
+    rel='stylesheet' 
+    href='{{ url_for("static", filename="css/blog/create_post.css") }}'
+/>
 {%- endblock styles -%}
 
 {%- block content_title -%} Create post {%- endblock -%} 
@@ -39,45 +31,50 @@
     <div class="my-3 adding_buttons">
         <button
             id="add_subtitle1_btn"
-            class="btn btn-primary btn-lg mb-2 me-2 float_left"
+            class="btn btn-lg btn-primary mb-2 me-2"
         >
             Subtitle I
         </button>
         <button
             id="add_subtitle2_btn"
-            class="btn btn-primary btn-lg mb-2 me-2 float_left"
+            class="btn btn-lg btn-primary mb-2 me-2"
         >
             Subtitle II
         </button>
         <button
             id="add_paragraph_btn"
-            class="btn btn-primary btn-lg mb-2 me-2 float_left"
+            class="btn btn-lg btn-primary mb-2 me-2"
         >
-            Paragraph
+            Paragraph &nbsp;
+            <ion-icon name="reorder-four-outline"></ion-icon>
         </button>
         <button
             id="add_code_btn"
-            class="btn btn-primary btn-lg mb-2 me-2 float_left"
+            class="btn btn-lg btn-primary mb-2 me-2"
         >
-            Code block
+            Code &nbsp;
+            <ion-icon name="code-outline"></ion-icon>
         </button>
         <button
             id="add_image_btn"
-            class="btn btn-primary btn-lg mb-2 me-2 float_left"
+            class="btn btn-lg btn-primary mb-2 me-2"
         >
-            Image
+            Image &nbsp;
+            <ion-icon name="image-outline"></ion-icon>
         </button>
         <button
             id="add_alert_btn"
-            class="btn btn-primary btn-lg mb-2 me-2 float_left"
+            class="btn btn-lg btn-primary mb-2 me-2"
         >
-            Alert (note)
+            Alert &nbsp;
+            <ion-icon name="alert-circle-outline"></ion-icon>
         </button>
         <button
             id="add_line_btn"
-            class="btn btn-primary btn-lg mb-2 me-2"
+            class="btn btn-lg btn-primary mb-2 me-2"
         >
-            Line
+            Line &nbsp;
+            <ion-icon name="remove-outline"></ion-icon>
         </button>
     </div>
 
