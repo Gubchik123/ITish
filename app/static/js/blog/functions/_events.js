@@ -46,6 +46,11 @@ function _get_element_value_from_(element_content) {
 		return element_content.querySelector("h4").innerText;
 	else if (id == "paragraph")
 		return element_content.querySelector("p").innerText;
+	else if (id == "link")
+		return [
+			element_content.querySelector("a").innerText,
+			element_content.querySelector("a").href,
+		];
 	else if (id == "code")
 		return element_content.querySelector("code").innerText;
 	else if (id == "image")

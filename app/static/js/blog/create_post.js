@@ -10,6 +10,7 @@ import { Code } from "./element_classes/_code.js";
 import { Image } from "./element_classes/_image.js";
 import { Alert } from "./element_classes/_alert.js";
 import { Line } from "./element_classes/_line.js";
+import { Link } from "./element_classes/_link.js";
 
 import { content_block } from "./_global_variables.js";
 import { check_is_there_element_form } from "./functions/_processing.js";
@@ -26,6 +27,7 @@ export function get_needed_element_from_(block_id) {
 		image: new Image(),
 		alert: new Alert(),
 		line: new Line(),
+		link: new Link(),
 	}[block_id];
 }
 
