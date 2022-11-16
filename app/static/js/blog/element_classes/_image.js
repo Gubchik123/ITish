@@ -42,13 +42,11 @@ export class Image {
 						tag: "input",
 						placeholder: "Image url",
 						value: value[0],
-						is_float_left: false,
 					},
 					{
 						tag: "input",
 						placeholder: "Image description",
 						value: value[1],
-						is_float_left: false,
 					},
 				],
 				get_range_input_with_label_("Image width", value[2])

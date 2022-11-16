@@ -51,6 +51,7 @@ export class Title {
 		block.id = this.id;
 
 		let input = get_input_area_("input", this.placeholder);
+        input.classList += " float_left";
 		input.maxLength = 70;
 
 		block.appendChild(input);

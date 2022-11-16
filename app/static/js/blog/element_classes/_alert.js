@@ -44,13 +44,11 @@ export class Alert {
 						tag: "input",
 						placeholder: "Alert title",
 						value: value[0],
-						is_float_left: false,
 					},
 					{
 						tag: "textarea",
 						placeholder: "Alert body",
 						value: value[1],
-						is_float_left: false,
 					},
 				],
 				get_select_color_block()

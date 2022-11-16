@@ -47,13 +47,11 @@ export class Link {
 						tag: "input",
 						placeholder: "Link text",
 						value: value[0],
-						is_float_left: false,
 					},
 					{
 						tag: "input",
 						placeholder: "Link url",
 						value: value[1],
-						is_float_left: false,
 					},
 				],
 				document.createElement("span")

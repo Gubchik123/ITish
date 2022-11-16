@@ -9,13 +9,11 @@ import { content_block } from "../_global_variables.js";
 export function get_input_area_(
 	tag,
 	placeholder,
-	value = "",
-	float_left = true
+	value = ""
 ) {
 	let input_area = document.createElement(tag);
 	input_area.value = value;
 	input_area.classList = "form-control me-2 mb-2";
-	if (float_left) input_area.classList += " float_left";
 
 	set_for_(input_area, placeholder);
 
@@ -148,8 +146,7 @@ export function get_block_with_fields(input_areas = [], adding_element) {
 			get_input_area_(
 				input.tag,
 				input.placeholder,
-				input.value,
-				input.is_float_left
+				input.value
 			)
 		);
 	}

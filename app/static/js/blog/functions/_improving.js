@@ -10,18 +10,12 @@ import {
 	get_element_form_block,
 } from "./_getting.js";
 
-import {
-	add_mouse_over_and_leave_event_for_,
-	set_click_event_for_apply_btn,
-	set_click_event_for_cancel_btn,
-} from "./_events.js";
-
-import { content_block } from "../_global_variables.js";
+import { add_mouse_over_and_leave_event_for_ } from "./_events.js";
 
 let block_id;
 
 export function get_wrapped_(element, id) {
-    block_id = id
+	block_id = id;
 	let block = _get_result_element_block_with_(element);
 
 	block = add_mouse_over_and_leave_event_for_(block);
@@ -47,7 +41,7 @@ export function get_form_for_getting_element_data_with_(id, fields) {
 
 function _get_result_element_block_with_(element) {
 	let element_block = get_div_block();
-	element_block.classList = "element my-1 px-2 w-100";
+	element_block.classList = "element my-1 px-2";
 
 	element_block.appendChild(_get_element_content(element));
 	element_block.appendChild(_get_block_with_element_btns());
@@ -58,15 +52,14 @@ function _get_result_element_block_with_(element) {
 export function _get_element_content(element) {
 	let element_content = get_div_block();
 	element_content.appendChild(element);
-	element_content.classList =
-		`element-content ${block_id} d-flex justify-content-start text-start`;
+	element_content.classList = `element-content ${block_id} d-flex justify-content-start text-start`;
 	return element_content;
 }
 
 function _get_block_with_element_btns() {
 	let block_with_element_btns = get_div_block();
 
-	block_with_element_btns.classList = "element-btns justify-content-between";
+	block_with_element_btns.classList = "element-btns justify-content-between mt-3";
 	block_with_element_btns.style.display = "none";
 	block_with_element_btns.appendChild(_get_align_btns_block());
 	block_with_element_btns.appendChild(_get_processing_btns());
