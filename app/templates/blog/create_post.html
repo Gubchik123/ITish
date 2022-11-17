@@ -14,13 +14,16 @@
 
 
 {%- block content -%}
-    {%- from '_alerts_macros.html' import not_dismissible_alert %} 
-    {{
-        not_dismissible_alert(
-            message="Fill this area out using buttons below",
-            category="primary"
-        )
-    }}
+    {%- block page_alert -%}  
+        {%- from '_alerts_macros.html' import not_dismissible_alert %}
+        
+        {{
+            not_dismissible_alert(
+                message="Fill this area out using buttons below",
+                category="primary"
+            )
+        }}
+    {%- endblock page_alert -%}
 
     {%- block post_title -%}{%- endblock -%} 
 
