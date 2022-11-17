@@ -28,9 +28,19 @@ def get_blog_page():
 
 
 def _get_all_posts():
-    return flask.render_template(
-        "blog/all_posts.html", posts=Post.query.order_by(Post.created.desc()).all()
+    q = flask.request.args.get("q", "")
+
+    posts = (
+        Post.query.filter(Post.title.contains(q) | Post.body.contains(q)).order_by(
+            Post.created.desc()
+        ).all()
+        if q
+        else Post.query.order_by(Post.created.desc()).all()
     )
+
+    print(posts)
+
+    return flask.render_template("blog/all_posts.html", posts=posts)
 
 
 def _get_all_tags():
