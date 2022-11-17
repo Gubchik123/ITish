@@ -14,9 +14,9 @@ import { add_mouse_over_and_leave_event_for_ } from "./_events.js";
 
 let block_id;
 
-export function get_wrapped_(element, id) {
+export function get_wrapped_(element, id, adding=true) {
 	block_id = id;
-	let block = _get_result_element_block_with_(element);
+	let block = _get_result_element_block_with_(element, adding);
 
 	block = add_mouse_over_and_leave_event_for_(block);
 
@@ -39,11 +39,13 @@ export function get_form_for_getting_element_data_with_(id, fields) {
 	return get_apply_and_cancel_btns_wrapped_in_(block);
 }
 
-function _get_result_element_block_with_(element) {
+function _get_result_element_block_with_(element, adding) {
 	let element_block = get_div_block();
 	element_block.classList = "element my-1 px-2";
 
-	element_block.appendChild(_get_element_content(element));
+    if (adding) element_block.appendChild(_get_element_content(element));
+    else element_block.appendChild(element)
+    
 	element_block.appendChild(_get_block_with_element_btns());
 
 	return element_block;
