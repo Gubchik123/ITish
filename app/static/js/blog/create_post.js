@@ -35,7 +35,7 @@ export function add_needed_element_with_data_from(block) {
 	get_needed_element_from_(block.id).add_element_block();
 }
 
-if (!content_block.previousElementSibling.classList.element)
+if (content_block.previousElementSibling.id != "title")
 	title.get_form_for_getting_element_data();
 
 // Loop for adding buttons to add click event
