@@ -80,14 +80,17 @@
 								<li class="nav-item me-lg-2 me-sm-4">
 									<a class="nav-link" href="/about">About</a>
 								</li>
-
-								<!-- Block for extending for search form -->
-								{%- block search_form -%}{%- endblock -%}
+                                <li class="nav-item me-lg-2 me-sm-4">
+									<!-- Search form -->
+								    <div class="search_form d-flex justify-content-center">
+                                        {%- block search_form -%}{%- endblock -%}
+                                    </div>
+								</li>
 							</ul>
 
 							<!-- Right navbar menu -->
 							<ul
-								class="navbar-nav list-group-horizontal justify-content-between mt-md-0 mt-sm-5"
+								class="navbar-nav list-group-horizontal justify-content-between mt-lg-0 mt-md-3 mt-sm-3"
 							>
 								<li class="nav-item me-3">
 									<button

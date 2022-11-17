@@ -2,33 +2,36 @@
 
 {%- block styles -%}
     <style>
-        .post a { color: #eee; }
+        .search { max-width: 70%; }
 
-        .post { 
-            transition: 0.3s;
-            box-shadow: 0 0 10px 0 var(--my-text-color); 
+        @media screen and (max-width: 576px) {
+            .search_form { margin-bottom: 25px; }
         }
-        .post:hover { box-shadow: 0 0 15px 3px var(--my-text-color); }
 
+        .post a { color: #eee; }
+        .post { transition: 0.5s; }
+        .post:hover { box-shadow: 0 0 10px 0 var(--my-text-color); }
         .post_info { color: white; }
     </style>
 {%- endblock styles -%}
 
-{%- block content_title -%} All posts {%- endblock content_title -%} 
+{%- block content_title -%} All posts {%- endblock -%} 
 
 {%- block search_form -%}
-    {%- if posts %}
-        <form role="search">
+    {%- if posts or request.args.get("q", "")%}
+        <form role="search" class="d-flex align-items-center">
             <input
-                class="form-control me-2"
+                name="q"
                 type="search"
-                placeholder="Search"
                 aria-label="Search"
-                />
+                placeholder="Search"
+			    value="{{ request.args.get('q', '') }}"
+                class="form-control search me-2 ms-lg-3 ms-sm-0"
+            />
             <button
-                class="btn btn-outline-success"
                 type="submit"
-                >
+                class="btn btn-outline-success mt-1"
+            >
                 Search
             </button>
         </form>
@@ -40,15 +43,28 @@
     {{ super() }}
 
     {%- if posts %}
+
         {%- from 'blog/_post_macros.html' import show_all_ %} 
         {{ show_all_(posts) }}
+        
     {%- else %}
-        {%- from '_alerts_macros.html' import not_dismissible_alert %} 
-        {{ 
-            not_dismissible_alert(
-                message="There are not any posts yet",
-                category="primary"
-            ) 
-        }}
+        {%- from '_alerts_macros.html' import not_dismissible_alert %}
+
+        {%- if request.args.get("q", "") %}
+            {{ 
+                not_dismissible_alert(
+                    message="There are not such posts with '" 
+                            + request.args.get('q', '') + "' yet",
+                    category="danger"
+                ) 
+            }}
+        {%- else %}
+            {{ 
+                not_dismissible_alert(
+                    message="There are not any posts yet",
+                    category="primary"
+                ) 
+            }}
+        {%- endif %} 
     {%- endif %}
 {%- endblock content -%} 
