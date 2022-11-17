@@ -14,7 +14,7 @@ import {
 import { _get_element_content } from "../functions/_improving.js";
 import { set_click_event_for_apply_btn } from "../functions/_events.js";
 
-function get_wrapped_(element) {
+export function get_wrapped_(element) {
 	let block = get_div_block();
 	block.classList = "element mb-2 p-1 d-flex justify-content-between";
 	block.appendChild(_get_element_content(element));
