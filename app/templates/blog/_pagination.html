@@ -1,0 +1,41 @@
+{%- if request.args.get('q', '') %}
+    {% set needed_url = "?q=" + request.args.get('q') + "&" %}
+{%- else %}
+    {% set needed_url = "?" %} 
+{%- endif %}
+
+<nav class="d-flex justify-content-center mt-4">
+	<ul class="pagination pagination-sm">
+		<li
+			class="page-item {%- if not posts.has_prev %} disabled {%- endif %}"
+		>
+			<a
+				class="page-link"
+				href="./{{ needed_url }}page={{ posts.prev_num }}"
+			>
+				&laquo;
+			</a>
+		</li>
+
+		{%- for page in posts.iter_pages(left_edge=1, left_current=1, right_current=1, right_edge=1) %}
+            <li class="page-item {%- if page == posts.page %} active {%- endif %}">
+                <a
+                    class="page-link"
+                    href="./{{ needed_url }}page={{ page }}"
+                    >{{ page }}</a
+                >
+            </li>
+		{%- endfor %}
+
+		<li
+			class="page-item {%- if not posts.has_next %} disabled {%- endif %}"
+		>
+			<a
+				class="page-link"
+				href="./{{ needed_url }}page={{ posts.next_num }}"
+			>
+				&raquo;
+			</a>
+		</li>
+	</ul>
+</nav>
