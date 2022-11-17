@@ -55,7 +55,6 @@ def create_post():
     form = PostCreateForm()
 
     if form.validate_on_submit():
-        print(form.post_title)
         _add_post_in_db_from_(form)
         flask.flash("Post has successfully added", category="success")
 
@@ -83,4 +82,15 @@ def comment_post_with_(post_url: str):
 
 @flog.login_required
 def edit_post_with_(post_url: str):
-    pass
+    form = PostEditForm()
+    post = Post.query.filter(Post.url == post_url).first_or_404()
+
+    if form.validate_on_submit():
+        post.title = form.post_title.data
+        post.body = form.post_body.data
+        db.session.commit()
+
+        flask.flash("Post has successfully edited", category="success")
+        return flask.redirect(flask.url_for("blog.get_post_by_", post_url=post_url))
+
+    return flask.render_template("blog/edit_post.html", form=form, post=post)

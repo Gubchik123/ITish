@@ -1,0 +1,30 @@
+{%- extends 'blog/create_post.html' %} 
+
+{%- block title -%} Edit post {%- endblock -%}
+
+{%- block content_title -%} Edit post {%- endblock -%} 
+
+{%- block page_alert -%}  
+    {%- from '_alerts_macros.html' import not_dismissible_alert %}
+    
+    {{
+        not_dismissible_alert(
+            message="If you want, you can change or add some elements",
+            category="primary"
+        )
+    }}
+{%- endblock page_alert -%}
+
+
+{%- block post_title -%} <h2 id="title">{{ post.title }}</h2> {%- endblock -%}
+{%- block post_body -%} {{ post.body | safe }} {%- endblock -%}
+
+
+{%- block scripts -%}
+{{ super() }}
+
+<script
+type="module"
+src="{{ url_for('blog.get_js_file', filename='blog/edit_post.js') }}"
+></script>
+{%- endblock scripts -%} 
