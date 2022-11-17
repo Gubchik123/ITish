@@ -6,11 +6,12 @@
 
 
 {%- block content -%} 
-{{ post.body | safe }} 
 
 <hr>
-
 {%- from 'blog/_post_macros.html' import show_info_about_ %}
 {{ show_info_about_(post) }}
+<hr class="mt-3">
+
+{{ post.body | safe }}
 
 {%- endblock content -%} 
