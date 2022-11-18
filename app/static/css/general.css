@@ -20,6 +20,8 @@
 .float_left { float: left; }
 .disabled { cursor: not-allowed; }
 
+.site-header { z-index: 90; }
+
 
 /* Global styles */
 html,
@@ -88,6 +90,7 @@ a.my-logo:hover { color: lightblue; }
 .navbar-nav .dropdown-menu {
     right: 0;
 	left: auto;
+    z-index: 100;
 }
 .navbar-nav .dropdown-menu ion-icon { font-size: 1.5em; }
 

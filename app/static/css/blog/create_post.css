@@ -26,3 +26,10 @@ textarea { height: 20vh; }
 		height: 35px;
 	}
 }
+
+@media screen and (max-width: 452px) {
+	.element-btns button {
+        float: none;
+        margin-right: 0;
+    }
+}
