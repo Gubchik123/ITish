@@ -35,3 +35,17 @@
         {{ render_field(form.submit, class="btn btn-success btn-lg mt-2") }}
     </div>
 {%- endmacro %} 
+
+{%- macro get_ready_(form, action, method="POST") %}
+    <div class="d-flex flex-column align-items-center mt-3">
+        <div class="col-md-6 col-sm-12 rounded my-form-bg-color">
+            <form
+                action="{{ action }}"
+                method="{{ method }}"
+                class="text-white py-3 px-3"
+            >
+                {{ render_(form) }}
+            </form>
+        </div>
+    </div>
+{%- endmacro %} 
