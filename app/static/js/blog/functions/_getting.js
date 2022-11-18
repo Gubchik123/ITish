@@ -1,7 +1,9 @@
 import {
+    get_click_event_on_up_btn,
+    get_click_event_on_down_btn,
+    get_click_event_on_edit_btn,
 	get_click_event_on_close_btn,
 	get_click_event_on_align_btn,
-    get_click_event_on_edit_btn,
 } from "./_events.js";
 import { set_for_ } from "./_processing.js";
 import { content_block } from "../_global_variables.js";
@@ -38,8 +40,8 @@ export function get_btn_with_(inner_html, classList) {
 	return button;
 }
 
-function _get_btn_with_icon(icon_name, color_name, type = "") {
-	let classes = `btn ${type} btn-${color_name} btn-sm mb-2 me-2 `;
+function _get_btn_with_icon(icon_name, color_name, type = "", me=2) {
+	let classes = `btn ${type} btn-${color_name} btn-sm mb-2 me-${me} `;
 	classes += `float_left d-flex justify-content-center align-items-center`;
 
 	return get_btn_with_(`<ion-icon name='${icon_name}'></ion-icon>`, classes);
@@ -88,8 +90,20 @@ export function get_right_btn() {
 	return button;
 }
 
+export function get_up_btn() {
+	let button = _get_btn_with_icon("chevron-up-outline", "info");
+	button.addEventListener("click", get_click_event_on_up_btn);
+	return button;
+}
+
+export function get_down_btn() {
+	let button = _get_btn_with_icon("chevron-down-outline", "info");
+	button.addEventListener("click", get_click_event_on_down_btn);
+	return button;
+}
+
 export function get_close_btn() {
-	let close_btn = _get_btn_with_icon("trash-outline", "danger");
+	let close_btn = _get_btn_with_icon("trash-outline", "danger", "", 0);
 	close_btn.addEventListener("click", get_click_event_on_close_btn);
 	return close_btn;
 }

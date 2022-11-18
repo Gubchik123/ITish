@@ -142,6 +142,32 @@ export function set_click_event_for_cancel_btn() {
 		cancel_btn.addEventListener("click", get_click_event_on_cancel_btn);
 }
 
+export function get_click_event_on_up_btn(e) {
+	let element = _get_parent_from_(e.target);
+	let previous_element = element.previousElementSibling;
+
+	if (
+		previous_element &&
+		previous_element.classList.toString().includes("element ")
+	) {
+		element.remove();
+		previous_element.before(element);
+	}
+}
+
+export function get_click_event_on_down_btn(e) {
+	let element = _get_parent_from_(e.target);
+	let previous_element = element.nextElementSibling;
+
+	if (
+		previous_element &&
+		previous_element.classList.toString().includes("element ")
+	) {
+		element.remove();
+		previous_element.after(element);
+	}
+}
+
 export function add_mouse_over_and_leave_event_for_(block) {
 	block.addEventListener("mouseover", function () {
 		block.classList.add("border");

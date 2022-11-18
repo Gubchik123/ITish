@@ -1,4 +1,6 @@
 import {
+    get_up_btn,
+    get_down_btn,
 	get_edit_btn,
 	get_left_btn,
 	get_apply_btn,
@@ -64,19 +66,10 @@ function _get_block_with_element_btns() {
 	block_with_element_btns.classList = "element-btns justify-content-between mt-3";
 	block_with_element_btns.style.display = "none";
 	block_with_element_btns.appendChild(_get_align_btns_block());
+	block_with_element_btns.appendChild(_get_position_btns_block());
 	block_with_element_btns.appendChild(_get_processing_btns());
 
 	return block_with_element_btns;
-}
-
-function _get_processing_btns() {
-	let block_with_processing_btns = get_div_block();
-	block_with_processing_btns.classList = "processing_btns";
-
-	block_with_processing_btns.appendChild(get_edit_btn());
-	block_with_processing_btns.appendChild(get_close_btn());
-
-	return block_with_processing_btns;
 }
 
 function _get_align_btns_block() {
@@ -88,4 +81,24 @@ function _get_align_btns_block() {
 	align_btns_block.appendChild(get_right_btn());
 
 	return align_btns_block;
+}
+
+function _get_position_btns_block() {
+    let position_btns_block = get_div_block();
+	position_btns_block.classList = "position_btns";
+
+	position_btns_block.appendChild(get_up_btn());
+	position_btns_block.appendChild(get_down_btn());
+
+	return position_btns_block;
+}
+
+function _get_processing_btns() {
+    let block_with_processing_btns = get_div_block();
+    block_with_processing_btns.classList = "processing_btns";
+
+    block_with_processing_btns.appendChild(get_edit_btn());
+    block_with_processing_btns.appendChild(get_close_btn());
+
+    return block_with_processing_btns;
 }
