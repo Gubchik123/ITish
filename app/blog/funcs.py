@@ -1,10 +1,12 @@
+from datetime import date
+
 import flask
 import flask_login as flog
 
 from ..app import app
-from ..models import Post, Tag
 from ..extensions import db
-from .forms import PostCreateForm, PostEditForm
+from ..models import Post, Tag, Comment
+from .forms import PostCreateForm, PostEditForm, CommentForm
 
 
 def get_js_file(filename: str):
@@ -80,8 +82,11 @@ def get_all_posts_with_(tag: str):
 
 
 def get_post_by_(post_url: str):
-    post = Post.query.filter(Post.url == post_url).first_or_404()
-    return flask.render_template("blog/post.html", post=post)
+    return flask.render_template(
+        "blog/post.html",
+        form=CommentForm(),
+        post=Post.query.filter(Post.url == post_url).first_or_404(),
+    )
 
 
 @flog.login_required
@@ -89,9 +94,23 @@ def like_post_with_(post_url: str):
     pass
 
 
+def _add_comment_in_db_for_post_with_(post_url: str):
+    form = CommentForm()
+    post = Post.query.filter(Post.url == post_url).first()
+
+    db.session.add(
+        Comment(
+            body=form.comment_body.data, user_id=flog.current_user.id, post_id=post.id
+        )
+    )
+    db.session.commit()
+
+
 @flog.login_required
 def comment_post_with_(post_url: str):
-    pass
+    _add_comment_in_db_for_post_with_(post_url)
+    flask.flash("Comment has successfully added", category="success")
+    return flask.redirect(flask.url_for("blog.get_post_by_", post_url=post_url))
 
 
 @flog.login_required

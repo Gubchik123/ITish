@@ -2,16 +2,64 @@
 
 {%- block title -%} Post - {{ post.title }} {%- endblock title -%} 
 
+{%- block styles -%}
+<style>
+    #comment_body { height: 150px; }
+
+    .all-comments, 
+    .all-comments a { color: var(--bs-dark); }
+</style>
+{%- endblock styles -%} 
+
 {%- block content_title -%} {{ post.title }} {%- endblock content_title -%} 
 
 
 {%- block content -%} 
 
-<hr>
-{%- from 'blog/_post_macros.html' import show_info_about_ %}
-{{ show_info_about_(post) }}
-<hr class="mt-3">
+    <hr>
+    {%- from 'blog/_post_macros.html' import show_info_about_ %}
+    {{ show_info_about_(post) }}
+    <hr class="mt-3">
 
-{{ post.body | safe }}
+    {{ post.body | safe }}
+
+    <hr class="my-2">
+
+    <h2 class="mb-3">Comments</h2>
+
+    {%- if current_user.is_authenticated %}
+        <div class="comment-form w-100 mb-5">
+            {%- from '_forms_macros.html' import get_ready_ %} 
+            {{ 
+                get_ready_(
+                    form, 
+                    action=url_for('blog.comment_post_with_', post_url=post.url)
+                ) 
+            }}
+        </div> 
+    {%- else %}
+        {%- from '_alerts_macros.html' import dismissible_alert %}
+        {{
+            dismissible_alert(
+                message="Log in to has ability to comment post",
+                category="warning"
+            )
+        }}
+    {%- endif %} 
+
+    {%- if post.comments.all() %}
+        <div class="all-comments w-100">
+            {%- from 'blog/_post_macros.html' import show_all_comment_from_ %}
+            {{ show_all_comment_from_(post.comments.all()) }}
+        </div>
+    {%- else %}
+        {%- from '_alerts_macros.html' import not_dismissible_alert %}
+        {{
+            not_dismissible_alert(
+                message="There are not any comments yet",
+                category="primary"
+            )
+        }}
+    {%- endif %} 
 
 {%- endblock content -%} 

@@ -1,4 +1,4 @@
-{%- macro show_all_(posts) %}
+{%- macro show_all_posts_from_(posts) %}
     {%- for post in posts %}
         <div class="post rounded my-form-bg-color py-3 mb-3">
             <a href="{{ url_for('blog.get_post_by_', post_url=post.url) }}">
@@ -14,20 +14,29 @@
     {%- endfor %} 
 {%- endmacro %} 
 
-{%- macro show_info_about_(post) %}
-    <div class="post_info d-flex justify-content-between">
-        <div class="post_author me-3">
+{%- macro show_info_about_(item) %}
+    <div class="item_info d-flex justify-content-between">
+        <div class="item_author me-3">
             <b>Author:</b> &nbsp; 
             <a 
                 href=""
                 class="text-decoration-underline my-text-color"
             >
-                {{ post.user.username }}
+                {{ item.user.username }}
             </a>
         </div>
-        <div class="post_created">
+        <div class="item_created">
             <b>Created:</b> &nbsp; 
-            {{ post.created.strftime("%d.%m.%Y") }}
+            {{ item.created.strftime("%d.%m.%Y") }}
         </div>
     </div>
+{%- endmacro %} 
+
+{%- macro show_all_comment_from_(comments) %}
+    {%- for comment in comments %}
+        <div class="alert alert-dark" role="alert">
+            <p>{{ comment.body }}</p>
+            {{ show_info_about_(comment) }}
+        </div>
+    {%- endfor %} 
 {%- endmacro %} 
