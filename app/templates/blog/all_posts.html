@@ -11,7 +11,8 @@
         .post a { color: #eee; }
         .post { transition: 0.5s; }
         .post:hover { box-shadow: 0 0 10px 0 var(--my-text-color); }
-        .post_info { color: white; }
+
+        .item_info { color: white; }
     </style>
 {%- endblock styles -%}
 
@@ -44,8 +45,8 @@
 
     {%- if posts %}
 
-        {%- from 'blog/_post_macros.html' import show_all_ %} 
-        {{ show_all_(posts.items) }}
+        {%- from 'blog/_post_macros.html' import show_all_posts_from_ %} 
+        {{ show_all_posts_from_(posts.items) }}
 
         {%- include 'blog/_pagination.html' %} 
         
