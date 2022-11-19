@@ -130,14 +130,30 @@ def comment_post_with_(post_url: str):
     _add_comment_in_db_for_post_with_(post_url)
     flask.flash("Comment has successfully added", category="success")
     return flask.redirect(flask.url_for("blog.get_post_by_", post_url=post_url))
+    
+
+def _check_if_current_user_is_author_of_(content):
+    if content.user.id != flog.current_user.id:
+        flask.abort(403)
+
+
+def delete_comment_with_(post_url: str, comment_id: int):
+    comment = Comment.query.filter(Comment.id == comment_id).first()
+
+    _check_if_current_user_is_author_of_(comment)
+
+    db.session.delete(comment)
+    db.session.commit()
+
+    flask.flash("Comment has successfully deleted", category="success")
+    return flask.redirect(flask.url_for("blog.get_post_by_", post_url=post_url))
 
 
 def edit_post_with_(post_url: str):
     form = PostEditForm()
     post = Post.query.filter(Post.url == post_url).first_or_404()
 
-    if post.user.id != flog.current_user.id:
-        flask.abort(403)
+    _check_if_current_user_is_author_of_(post)
 
     if form.validate_on_submit():
         post.title = form.post_title.data

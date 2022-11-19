@@ -1,3 +1,4 @@
+// For post likes
 const like_icon = document.querySelector("#like-icon");
 const like_count = document.querySelector("#like-count");
 
@@ -23,3 +24,12 @@ like_btn.addEventListener("click", function () {
 		}),
 	});
 });
+
+// For post comments
+function ask_before_deleting(e) {
+	let answer = confirm("Do you really want to delete this comment?");
+	if (!answer) e.preventDefault();
+}
+
+for (const btn of document.querySelectorAll(".delete-comment-btn"))
+	btn.addEventListener("click", ask_before_deleting);

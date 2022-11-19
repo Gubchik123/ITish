@@ -45,6 +45,12 @@ def comment_post_with_(post_url: str):
     return funcs.comment_post_with_(post_url)
 
 
+@blog.route("/post/<post_url>/delete-comment/<int:comment_id>")
+@flog.login_required
+def delete_comment_with_(post_url: str, comment_id: int):
+    return funcs.delete_comment_with_(post_url, comment_id)
+
+
 @blog.route("/post/<post_url>/edit", methods=["GET", "POST"])
 @flog.login_required
 def edit_post_with_(post_url: str):
