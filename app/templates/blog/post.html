@@ -95,7 +95,12 @@
     {%- if post.comments.all() %}
         <div class="all-comments w-100">
             {%- from 'blog/_post_macros.html' import show_all_comment_from_ %}
-            {{ show_all_comment_from_(post.comments.order_by(desc("created")).all()) }}
+            {{ 
+                show_all_comment_from_(
+                    post.comments.order_by(desc("created")).all(),
+                    current_user.id
+                ) 
+            }}
         </div>
     {%- else %}
         {%- from '_alerts_macros.html' import not_dismissible_alert %}
@@ -111,6 +116,7 @@
 
 {%- block scripts -%}
 <script>
+    // Jinja2 variables for fetch "POST" request
     const post_url = "{{ post.url }}";
 
     const post_id = "{{ post.id }}";
@@ -118,6 +124,6 @@
 </script>
 <script
     type="module"
-    src="{{ url_for('blog.get_js_file', filename='blog/like.js') }}"
+    src="{{ url_for('blog.get_js_file', filename='blog/post.js') }}"
 ></script>
 {%- endblock scripts -%} 

@@ -32,10 +32,25 @@
     </div>
 {%- endmacro %} 
 
-{%- macro show_all_comment_from_(comments) %}
+{%- macro show_all_comment_from_(comments, user_id) %}
     {%- for comment in comments %}
         <div class="alert alert-dark" role="alert">
-            <p>{{ comment.body }}</p>
+            <div class="d-flex justify-content-between">
+                <p>{{ comment.body }}</p>
+
+                {%- if comment.user.id == user_id %} 
+                    <a 
+                        class="btn-close delete-comment-btn"
+                        href="{{ 
+                            url_for(
+                                'blog.delete_comment_with_', 
+                                post_url=comment.post.url, 
+                                comment_id=comment.id
+                            ) 
+                        }}"
+                    ></a>
+                {%- endif %}
+            </div>
             {{ show_info_about_(comment) }}
         </div>
     {%- endfor %} 
