@@ -1,7 +1,6 @@
-from datetime import date
-
 import flask
 import flask_login as flog
+from sqlalchemy import desc
 
 from ..app import app
 from ..extensions import db
@@ -83,6 +82,7 @@ def get_all_posts_with_(tag: str):
 def get_post_by_(post_url: str):
     return flask.render_template(
         "blog/post.html",
+        desc=desc,
         form=CommentForm(),
         post=Post.query.filter(Post.url == post_url).first_or_404(),
     )
@@ -135,6 +135,9 @@ def comment_post_with_(post_url: str):
 def edit_post_with_(post_url: str):
     form = PostEditForm()
     post = Post.query.filter(Post.url == post_url).first_or_404()
+
+    if post.user.id != flog.current_user.id:
+        flask.abort(403)
 
     if form.validate_on_submit():
         post.title = form.post_title.data
