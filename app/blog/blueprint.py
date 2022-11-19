@@ -33,10 +33,10 @@ def get_post_by_(post_url: str):
     return funcs.get_post_by_(post_url)
 
 
-@blog.route("/post/<post_url>/like")
+@blog.route("/post/<post_url>/like", methods=["POST"])
 @flog.login_required
 def like_post_with_(post_url: str):
-    return funcs.like_post_with_(post_url)
+    return funcs.like_post()
 
 
 @blog.route("/post/<post_url>/comment", methods=["POST"])

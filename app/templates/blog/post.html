@@ -4,6 +4,8 @@
 
 {%- block styles -%}
 <style>
+    #like-icon { color: red; }
+
     #comment_body { height: 150px; }
 
     .all-comments, 
@@ -15,6 +17,33 @@
 
 
 {%- block content -%} 
+
+    <div class="tags_and_likes mb-2 d-flex justify-content-between align-items-center">
+        <div class="tags">Tags: </div>
+        <div class="likes"> 
+            <button 
+                type="button" 
+                id="like-button"
+                class="btn position-relative border-0"
+                {%- if not current_user.is_authenticated %}disabled{%- endif %}
+            >
+                {%- if current_user.is_authenticated and not current_user.id in post.likes.all() | map(attribute="user_id") | list %}
+                    {% set icon_name = "-outline" %} 
+                {%- endif %}
+
+                <ion-icon 
+                    id="like-icon"
+                    name="heart{{ icon_name }}"
+                ></ion-icon>
+                <span 
+                    id="like-count"
+                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill my-form-bg-color"
+                >
+                    {{ post.likes.all() | length }}
+                </span>
+            </button>
+        </div>
+    </div>
 
     <hr>
     {%- from 'blog/_post_macros.html' import show_info_about_ %}
@@ -63,3 +92,16 @@
     {%- endif %} 
 
 {%- endblock content -%} 
+
+{%- block scripts -%}
+<script>
+    const post_url = "{{ post.url }}";
+
+    const post_id = "{{ post.id }}";
+    const user_id = "{{ current_user.id }}";
+</script>
+<script
+    type="module"
+    src="{{ url_for('blog.get_js_file', filename='blog/like.js') }}"
+></script>
+{%- endblock scripts -%} 

@@ -5,7 +5,7 @@ import flask_login as flog
 
 from ..app import app
 from ..extensions import db
-from ..models import Post, Tag, Comment
+from ..models import Post, Tag, Comment, Like
 from .forms import PostCreateForm, PostEditForm, CommentForm
 
 
@@ -66,7 +66,6 @@ def _add_post_in_db_from_(form: PostCreateForm):
     db.session.commit()
 
 
-@flog.login_required
 def create_post():
     form = PostCreateForm()
 
@@ -89,9 +88,30 @@ def get_post_by_(post_url: str):
     )
 
 
-@flog.login_required
-def like_post_with_(post_url: str):
-    pass
+def _get_post_id_and_like_from_json() -> tuple[int, Like]:
+    data = flask.request.get_json()
+    post_id = data["post_id"]
+
+    return (
+        post_id,
+        Like.query.filter(
+            Like.user_id == data["user_id"], Like.post_id == post_id
+        ).first(),
+    )
+
+
+def like_post():
+    post_id, like = _get_post_id_and_like_from_json()
+
+    if like:
+        db.session.delete(like)
+        response = "Like was deleted"
+    else:
+        db.session.add(Like(user_id=flog.current_user.id, post_id=post_id))
+        response = "Like was added"
+
+    db.session.commit()
+    return response
 
 
 def _add_comment_in_db_for_post_with_(post_url: str):
@@ -106,14 +126,12 @@ def _add_comment_in_db_for_post_with_(post_url: str):
     db.session.commit()
 
 
-@flog.login_required
 def comment_post_with_(post_url: str):
     _add_comment_in_db_for_post_with_(post_url)
     flask.flash("Comment has successfully added", category="success")
     return flask.redirect(flask.url_for("blog.get_post_by_", post_url=post_url))
 
 
-@flog.login_required
 def edit_post_with_(post_url: str):
     form = PostEditForm()
     post = Post.query.filter(Post.url == post_url).first_or_404()
