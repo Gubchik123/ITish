@@ -4,6 +4,10 @@
 
 {%- block styles -%}
 <style>
+    #edit-btn {
+        width: 50px;
+    }
+
     #like-icon { color: red; }
 
     #comment_body { height: 150px; }
@@ -14,6 +18,18 @@
 {%- endblock styles -%} 
 
 {%- block content_title -%} {{ post.title }} {%- endblock content_title -%} 
+
+{%- block near_content_title -%}
+    {%- if current_user.id == post.user.id %}
+        <a 
+            id="edit-btn"
+            href="{{ url_for('blog.edit_post_with_', post_url=post.url) }}" 
+            class="btn btn-primary mb-3 d-flex justify-content-center align-items-center"
+        >
+            <ion-icon name="pencil"></ion-icon>
+        </a>
+    {%- endif %}
+{%- endblock near_content_title -%} 
 
 
 {%- block content -%} 
