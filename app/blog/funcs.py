@@ -81,7 +81,7 @@ def _get_all_tags_for_post_from_(form: PostCreateForm | PostEditForm):
     ]
 
 
-def _edit_post_in_db_with_data_from_(form: PostCreateForm):
+def _add_post_in_db_with_data_from_(form: PostCreateForm):
     db.session.add(
         Post(
             title=form.post_title.data,
@@ -97,7 +97,7 @@ def create_post():
     form = PostCreateForm()
 
     if form.validate_on_submit():
-        _edit_post_in_db_with_data_from_(form)
+        _add_post_in_db_with_data_from_(form)
         flask.flash("Post has successfully added", category="success")
 
     return flask.render_template("blog/create_post.html", form=form)

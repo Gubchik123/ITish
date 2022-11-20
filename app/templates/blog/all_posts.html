@@ -39,13 +39,13 @@
 {%- block content -%}
     {{ super() }}
 
-    {%- if posts %}
+    {%- if posts.items %}
 
         {%- from 'blog/_post_macros.html' import show_all_posts_from_ %} 
         {{ show_all_posts_from_(posts.items) }}
 
         {%- include 'blog/_pagination.html' %} 
-        
+
     {%- else %}
         {%- from '_alerts_macros.html' import not_dismissible_alert %}
 
