@@ -1,5 +1,13 @@
 {%- extends 'blog/_blog.html' %}
 
+{%- block styles -%}
+    <style>
+        @media screen and (max-width: 452px) {
+            .badge { font-size: 1em; }
+        }
+    </style>
+{%- endblock styles -%} 
+
 {%- block content_title -%} All tags {%- endblock content_title -%} 
 
 
@@ -7,7 +15,19 @@
     {{ super() }}
 
     {%- if tags %}
-        <!-- Empty -->
+        <div class="tags">
+            {%- for tag in tags %}
+                <a
+                    href="#"
+                    class="d-inline float_left me-3 mb-3 text-decoration-none"
+                >
+                    <span 
+                        style="line-height: 1.5em;"
+                        class="badge border rounded"
+                    >#{{ tag.title }}</span>
+                </a>
+            {%- endfor %}
+        </div> 
     {%- else %}
         {%- from '_alerts_macros.html' import not_dismissible_alert %} 
         {{ 
@@ -17,4 +37,8 @@
             ) 
         }}
     {%- endif %} 
-{%- endblock content -%} 
+{%- endblock content -%}
+
+{%- block scripts -%}
+    <script src="{{ url_for('static', filename='js/blog/tags.js') }}"></script>
+{%- endblock -%} 
