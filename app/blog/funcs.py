@@ -54,12 +54,40 @@ def _get_all_tags():
     )
 
 
+def _create_non_existent_tags_from_(titles: list[str]):
+    for tag_title in titles:
+        if not Tag.query.filter(Tag.title == tag_title).first():
+            db.session.add(Tag(title=tag_title))
+    db.session.commit()
+
+
+def _get_striped_and_lower_tag_titles_from_(
+    form: PostCreateForm | PostEditForm,
+) -> list[str]:
+    return [tag_title.strip().lower() for tag_title in form.post_tags.data.split(",")]
+
+
+def _get_all_tags_for_post_from_(form: PostCreateForm | PostEditForm):
+    if not form.post_tags.data:
+        return []
+
+    striped_and_lower_tag_titles = _get_striped_and_lower_tag_titles_from_(form)
+
+    _create_non_existent_tags_from_(striped_and_lower_tag_titles)
+
+    return [
+        Tag.query.filter(Tag.title == tag_title).first()
+        for tag_title in _get_striped_and_lower_tag_titles_from_(form)
+    ]
+
+
 def _add_post_in_db_from_(form: PostCreateForm):
     db.session.add(
         Post(
             title=form.post_title.data,
             body=form.post_body.data,
             user_id=flog.current_user.id,
+            tags=_get_all_tags_for_post_from_(form),
         )
     )
     db.session.commit()
@@ -160,6 +188,7 @@ def edit_post_with_(post_url: str):
     if form.validate_on_submit():
         post.title = form.post_title.data
         post.body = form.post_body.data
+        post.tags = _get_all_tags_for_post_from_(form)
         db.session.commit()
 
         flask.flash("Post has successfully edited", category="success")
