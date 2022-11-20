@@ -8,7 +8,7 @@
     </style>
 {%- endblock styles -%} 
 
-{%- block content_title -%} All tags {%- endblock content_title -%} 
+{%- block content_title -%} All tags ({{ tags | length }}) {%- endblock -%} 
 
 
 {%- block content -%}
@@ -16,7 +16,7 @@
 
     {%- if tags %}
         <div class="tags">
-            {%- from '_post_macros.html' import show_all_tags_from_ %}
+            {%- from 'blog/_post_macros.html' import show_all_tags_from_ %}
             {{ show_all_tags_from_(tags) }} 
         </div> 
     {%- else %}

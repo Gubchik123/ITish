@@ -8,15 +8,11 @@
             .search_form { margin-bottom: 25px; }
         }
 
-        .post a { color: #eee; }
-        .post { transition: 0.5s; }
-        .post:hover { box-shadow: 0 0 10px 0 var(--my-text-color); }
-
         .item_info { color: white; }
     </style>
 {%- endblock styles -%}
 
-{%- block content_title -%} All posts {%- endblock -%} 
+{%- block content_title -%} All posts ({{ posts.items | length }}) {%- endblock -%} 
 
 {%- block search_form -%}
     {%- if posts.items or request.args.get("q", "")%}

@@ -4,9 +4,9 @@
 
 {%- block styles -%}
 <style>
-    #edit-btn {
-        width: 50px;
-    }
+    #edit-btn { width: 50px; }
+
+    .tag { background-color: var(--bs-primary); }
 
     #like-icon { color: red; }
 
@@ -37,7 +37,7 @@
     <div class="tags_and_likes mb-2 d-flex justify-content-between align-items-center">
         <div class="tags">
             {%- if post.tags %}
-                {%- from '_post_macro.html' import show_all_tags_from_ %} 
+                {%- from 'blog/_post_macros.html' import show_all_tags_from_ %} 
                 {{ show_all_tags_from_(post.tags) }}
             {%- else %}
                 <span class="rounded text-bg-warning px-2 py-1">There are not any tags yet</span>
