@@ -32,6 +32,20 @@
     </div>
 {%- endmacro %} 
 
+{%- macro show_all_tags_from_(tags) %}
+    {%- for tag in tags %}
+        <a
+            class="d-inline float_left me-3 mb-3 text-decoration-none"
+            href="{{ url_for('blog.get_all_posts_with_', tag=tag.url) }}"
+        >
+            <span 
+                style="line-height: 1.5em;"
+                class="badge border rounded"
+            >#{{ tag.title }}</span>
+        </a>
+    {%- endfor %}
+{%- endmacro %} 
+
 {%- macro show_all_comment_from_(comments, user_id) %}
     {%- for comment in comments %}
         <div class="alert alert-dark" role="alert">
