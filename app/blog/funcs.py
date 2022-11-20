@@ -81,7 +81,7 @@ def _get_all_tags_for_post_from_(form: PostCreateForm | PostEditForm):
     ]
 
 
-def _add_post_in_db_from_(form: PostCreateForm):
+def _edit_post_in_db_with_data_from_(form: PostCreateForm):
     db.session.add(
         Post(
             title=form.post_title.data,
@@ -97,7 +97,7 @@ def create_post():
     form = PostCreateForm()
 
     if form.validate_on_submit():
-        _add_post_in_db_from_(form)
+        _edit_post_in_db_with_data_from_(form)
         flask.flash("Post has successfully added", category="success")
 
     return flask.render_template("blog/create_post.html", form=form)
@@ -179,6 +179,13 @@ def delete_comment_with_(post_url: str, comment_id: int):
     return flask.redirect(flask.url_for("blog.get_post_by_", post_url=post_url))
 
 
+def _edit_post_in_db_with_data_from_(form: PostEditForm, post: Post):
+    post.title = form.post_title.data
+    post.body = form.post_body.data
+    post.tags = _get_all_tags_for_post_from_(form)
+    db.session.commit()
+
+
 def edit_post_with_(post_url: str):
     form = PostEditForm()
     post = Post.query.filter(Post.url == post_url).first_or_404()
@@ -186,10 +193,7 @@ def edit_post_with_(post_url: str):
     _check_if_current_user_is_author_of_(post)
 
     if form.validate_on_submit():
-        post.title = form.post_title.data
-        post.body = form.post_body.data
-        post.tags = _get_all_tags_for_post_from_(form)
-        db.session.commit()
+        _edit_post_in_db_with_data_from_(form, post)
 
         flask.flash("Post has successfully edited", category="success")
         return flask.redirect(flask.url_for("blog.get_post_by_", post_url=post_url))
