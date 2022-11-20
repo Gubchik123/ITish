@@ -76,7 +76,9 @@ def create_post():
 
 
 def get_all_posts_with_(tag: str):
-    pass
+    return flask.render_template(
+        "blog/tag.html", tag=Tag.query.filter(Tag.url == tag).first_or_404()
+    )
 
 
 def get_post_by_(post_url: str):
@@ -130,7 +132,7 @@ def comment_post_with_(post_url: str):
     _add_comment_in_db_for_post_with_(post_url)
     flask.flash("Comment has successfully added", category="success")
     return flask.redirect(flask.url_for("blog.get_post_by_", post_url=post_url))
-    
+
 
 def _check_if_current_user_is_author_of_(content):
     if content.user.id != flog.current_user.id:

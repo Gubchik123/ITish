@@ -1,0 +1,13 @@
+{%- extends 'base.html' %} 
+
+{%- block title -%} {{ tag.title }} {%- endblock -%} 
+
+{%- block content_title -%} 
+    All posts with tag - '{{ tag.title }}' (length(tag.posts.all()))
+{%- endblock -%} 
+
+
+{%- block content -%}
+    {%- from '_post_macros.html' import show_all_posts_from_ %}
+    {{ show_all_posts_from_( tag.posts.all() ) }} 
+{%- endblock content -%} 
