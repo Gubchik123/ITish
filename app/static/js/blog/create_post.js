@@ -55,5 +55,35 @@ for (let adding_button of document.querySelector(".adding_buttons").children) {
 	});
 }
 
+const post_tags_field = document.querySelector("#post_tags");
 const post_submit_btn = document.getElementById("post_submit");
+
 post_submit_btn.addEventListener("click", get_click_event_on_create_post_btn);
+post_submit_btn.addEventListener("click", function (e) {
+	if (post_tags_field.value) {
+		if (
+			!post_tags_field.value.includes(",") &&
+			post_tags_field.value.length > 30
+		) {
+			e.preventDefault();
+			post_submit_btn.parentElement.parentElement.parentElement.nextElementSibling.classList =
+				"bg-danger rounded-bottom";
+		} else {
+			for (const tag of post_tags_field.value.split(",")) {
+				if (tag.length > 30) {
+					e.preventDefault();
+					if (!document.querySelector(".error-mess"))
+						_add_error_paragraph();
+				}
+			}
+		}
+	}
+});
+
+function _add_error_paragraph() {
+	const error_paragraph = document.createElement("p");
+	error_paragraph.classList = "error-mess bg-danger px-2 rounded-bottom";
+	error_paragraph.innerText = "Must include less than 30 characters";
+
+	post_tags_field.after(error_paragraph);
+}
