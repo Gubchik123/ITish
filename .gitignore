@@ -6,3 +6,4 @@ env/
 venv/
 .venv/
 env*
+tests_with_db.py
