@@ -91,6 +91,7 @@ class Tag(General, db.Model):
     __tablename__ = "tags"
 
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(30), nullable=False, unique=True)
     url = db.Column(db.String(30), nullable=False, unique=True)
 
     def __init__(self, *args, **kwargs) -> None:
