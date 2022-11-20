@@ -23,6 +23,13 @@
 {%- block scripts -%}
 {{ super() }}
 
+<script>
+    let post_tags = "{{ post.tags | map(attribute='title') | list | join(', ') }}";
+
+    const post_tags_field = document.querySelector("#post_tags");
+    post_tags_field.value = post_tags;
+</script>
+
 <script
 type="module"
 src="{{ url_for('blog.get_js_file', filename='blog/edit_post.js') }}"
