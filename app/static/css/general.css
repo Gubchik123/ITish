@@ -127,7 +127,10 @@ footer { z-index: 90; }
 ion-icon[name="aperture"],
 ion-icon[name="logo-instagram"],
 ion-icon[name="logo-linkedin"],
-ion-icon[name="logo-github"] {
+ion-icon[name="logo-github"],
+ion-icon[name="logo-facebook"], 
+ion-icon[name="send"], /* Icon like telegram */
+ion-icon[name="mail-outline"] {
     color: white;
     border-radius: 10px;
 }
@@ -160,9 +163,20 @@ ion-icon[name="logo-instagram"] {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
 }
 ion-icon[name="logo-linkedin"], 
-ion-icon[name="aperture"] { background: darkblue; }
+ion-icon[name="aperture"],
+ion-icon[name="logo-facebook"] { background: darkblue; }
 ion-icon[name="aperture"], 
-ion-icon[name="logo-github"] { border-radius: 50%; }
+ion-icon[name="logo-github"],
+ion-icon[name="logo-facebook"],
+ion-icon[name="send"] { border-radius: 50%; }
+ion-icon[name="mail-outline"] { 
+    color: red;
+    background-color: #fff; 
+}
+ion-icon[name="send"] { 
+    transform: rotate(-35deg);
+    background-color: #28a8e9; 
+}
 ion-icon[name="logo-github"] {
     color: black;
     background: white;
