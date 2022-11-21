@@ -97,8 +97,11 @@ def create_post():
     form = PostCreateForm()
 
     if form.validate_on_submit():
-        _add_post_in_db_with_data_from_(form)
-        flask.flash("Post has successfully added", category="success")
+        if Post.query.filter(Post.title == form.post_title.data).first():
+            flask.flash("Error. There is the post with such title!", category="danger")
+        else:
+            _add_post_in_db_with_data_from_(form)
+            flask.flash("Post has successfully added", category="success")
 
     return flask.render_template("blog/create_post.html", form=form)
 
