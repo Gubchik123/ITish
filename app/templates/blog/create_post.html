@@ -25,6 +25,31 @@
         }}
     {%- endblock page_alert -%}
 
+    <details>
+        <summary>How to create post? (Note)</summary>
+        <div class="note-alert alert alert-secondary border-left" role="alert">
+            <ul>
+                <li>Make sure your title doesn't exist.</li>
+                <li>
+                    Use special element buttons for: 
+                    <ul>
+                        <li>editing;</li>
+                        <li>deleting;</li>
+                        <li>changing position;</li>
+                        <li>changing alignment.</li>
+                    </ul>
+                </li>
+                <li>
+                    If you use a mobile device, click on any element to see special buttons.
+                </li>
+                <li>
+                    Use a comma as separator for post tags (optional).
+                </li>
+            </ul>
+            <h5>Good luck!</h5>
+        </div>
+    </details>
+
     {%- block post_title -%}{%- endblock -%} 
 
     <div class="content border border-dark rounded py-2 my-3">
@@ -44,13 +69,14 @@
         >
             Subtitle II
         </button>
-        <button
+        <but
+        ton
             id="add_paragraph_btn"
             class="btn btn-lg btn-primary mb-2 me-2"
         >
             Paragraph &nbsp;
             <ion-icon name="reorder-four-outline"></ion-icon>
-        </button>
+        </but>
         <button
             id="add_link_btn"
             class="btn btn-lg btn-primary mb-2 me-2"

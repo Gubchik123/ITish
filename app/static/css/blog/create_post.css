@@ -1,3 +1,5 @@
+.note-alert { border-left: 8px solid; }
+
 textarea { height: 20vh; }
 
 .content { min-height: 200px; }
