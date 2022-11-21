@@ -61,6 +61,18 @@ a:hover { opacity: 1; }
 ::-webkit-scrollbar-thumb:hover { opacity: 1; }
 
 
+/* Custom text selection */
+::-moz-selection { /* Code for Firefox */
+    color: white;
+    background: #2f3542;
+}
+
+::selection {
+    color: white;
+    background: #2f3542;
+}
+
+
 /* Styles in header */
 a.my-logo,
 a.my-logo:hover { color: lightblue; }
