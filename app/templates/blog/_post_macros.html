@@ -19,7 +19,12 @@
         <div class="item_author me-3">
             <b>Author:</b> &nbsp; 
             <a 
-                href=""
+                href="{{ 
+                    url_for(
+                        'profile.get_user_with_', 
+                        username=item.user.username
+                    ) 
+                }}"
                 class="text-decoration-underline my-text-color"
             >
                 {{ item.user.username }}

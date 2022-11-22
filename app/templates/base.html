@@ -121,7 +121,7 @@
 											<li>
 												<a
 													class="dropdown-item d-flex justify-content-between align-items-center"
-													href="#"
+													href="{{ url_for('profile.get_user_with_', username=current_user.username) }}"
 												>
 													Profile
 													<ion-icon
