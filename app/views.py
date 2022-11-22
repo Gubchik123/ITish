@@ -3,10 +3,12 @@ from .app import app
 
 from .auth.blueprint import auth
 from .blog.blueprint import blog
+from .profile.blueprint import profile
 
 
 app.register_blueprint(auth, url_prefix="/auth")
 app.register_blueprint(blog, url_prefix="/blog")
+app.register_blueprint(profile, url_prefix="/profile")
 
 
 @app.route("/")
