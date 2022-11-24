@@ -1,0 +1,17 @@
+<h4 class="mb-3">
+    User comments ({{ user.comments.all() | length }})
+</h4>
+
+{%- if user.comments.all() %}
+    {%- from 'blog/_post_macros.html' import show_all_comment_from_ %}
+    {{ show_all_comment_from_(user.comments.all(), current_user.id, True) }}
+{%- else %}
+    {%- from '_alerts_macros.html' import not_dismissible_alert %}
+
+    {{ 
+        not_dismissible_alert(
+            message="The user has not any comments yet",
+            category="primary"
+        ) 
+    }}
+{%- endif %}

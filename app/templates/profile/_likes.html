@@ -1,0 +1,18 @@
+<h4 class="mb-3">
+    User liked posts ({{ user.likes.all() | length }})
+</h4>
+
+{%- if user.likes.all() %}
+    {%- from 'blog/_post_macros.html' import show_all_posts_from_ %}
+    {% set liked_posts = user.likes.all() | map(attribute="post") | list %} 
+    {{ show_all_posts_from_(liked_posts, current_user.id) }}
+{%- else %}
+    {%- from '_alerts_macros.html' import not_dismissible_alert %}
+
+    {{ 
+        not_dismissible_alert(
+            message="The user has not any liked posts yet",
+            category="primary"
+        ) 
+    }}
+{%- endif %}
