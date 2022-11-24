@@ -134,7 +134,9 @@ def delete_post_with_(post_url: str):
     db.session.commit()
 
     flask.flash("Post has successfully deleted", category="success")
-    return flask.redirect(flask.url_for("blog.get_blog_page"))
+    return flask.redirect(
+        flask.request.args.get("next") or flask.url_for("blog.get_blog_page")
+    )
 
 
 def _get_post_id_and_like_from_json() -> tuple[int, Like]:
@@ -190,7 +192,10 @@ def delete_comment_with_(post_url: str, comment_id: int):
     db.session.commit()
 
     flask.flash("Comment has successfully deleted", category="success")
-    return flask.redirect(flask.url_for("blog.get_post_by_", post_url=post_url))
+    return flask.redirect(
+        flask.request.args.get("next")
+        or flask.url_for("blog.get_post_by_", post_url=post_url)
+    )
 
 
 def _edit_post_in_db_with_data_from_(form: PostEditForm, post: Post):
