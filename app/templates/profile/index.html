@@ -1,5 +1,100 @@
 {%- extends 'base.html' %} 
 
-{%- block title -%} User - {{ user.username }} {%- endblock title -%} 
+{%- block title -%} User - {{ user.username }} {%- endblock title -%}
 
 {%- block content_title -%} User profile {%- endblock content_title -%} 
+
+
+{%- block content -%}
+    {% set tab = request.args.get('tab') %} 
+
+    <div
+        class="site-header sticky-top py-2 d-flex justify-content-end mb-4 border-2 border-bottom border-info my-text-color my-body-bg-color"
+    >
+        <div class="btn-group btn-group-lg">
+            <a
+                href="{{ user.username }}"
+                {%- if not tab or tab == "overview" %}
+                    class="btn btn-primary active"
+                    aria-current="page"
+                {%- else %}
+                    class="btn btn-primary"
+                {%- endif %}
+            >
+                Overview
+            </a>
+            {%- for type in ["posts", "comments", "likes"] %}
+                <a
+                    href="{{ user.username }}?tab={{ type }}"
+                    {%- if tab == type %}
+                        class="btn btn-primary active"
+                        aria-current="page"
+                    {%- else %}
+                        class="btn btn-primary"
+                    {%- endif %}
+                >
+                    {{ type.capitalize() }}
+                </a>
+            {%- endfor %}
+        </div>
+    </div>
+
+    <h2 class="mb-3">{{ user.username }}</h2>
+
+    <div class="user-avatar col-md-4 col-sm-12 mb-3">
+        <div class="d-flex justify-content-center">
+            <img 
+                class="w-75"
+                alt="User avatar" 
+                src="{{ 
+                    url_for(
+                        'profile.get_avatar_for_user_with_', 
+                        username=user.username
+                    ) 
+                }}" 
+            >
+        </div>
+    </div>
+    <div class="user-info col-md-8 col-sm-12">
+        {%- if not tab or tab == "overview" %}
+            <h4>User details</h4>
+            <p class="mb-5">
+                <b>Username: </b> &nbsp; {{ user.username }} <br>
+                <b>Email: </b> &nbsp; {{ user.email }}
+            </p>
+
+            <h4>User activities</h4>
+            <p>
+                <b>Count of the user:</b>
+                <ul>
+                    <li>Posts - &nbsp; {{ user.posts.all() | length }}</li>
+                    <li>Comments - &nbsp; {{ user.comments.all() | length }}</li>
+                    <li>Liked posts - &nbsp; {{ user.likes.all() | length }}</li>
+                </ul>
+            </p>
+        {%- else %}
+            {%- include 'profile/_' + tab + '.html' %} 
+        {%- endif %}
+    </div>
+{%- endblock content -%} 
+
+{%- block scripts -%}
+<script>
+    function resize_pagination() {
+        let btn_group = document.querySelector(".btn-group");
+    
+        window.outerWidth >= 768
+            ? btn_group.classList.add("btn-group-lg")
+            : btn_group.classList.remove("btn-group-lg");
+
+        window.outerWidth <= 576
+            ? btn_group.classList.add("btn-group-sm")
+            : btn_group.classList.remove("btn-group-sm");
+    }
+    
+    resize_pagination();
+    window.addEventListener("resize", resize_pagination);
+</script>
+
+<script src="{{ url_for('static', filename='js/delete_btn.js') }}"></script>
+{%- endblock scripts -%} 
