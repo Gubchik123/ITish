@@ -42,7 +42,7 @@
     {%- if posts.items %}
 
         {%- from 'blog/_post_macros.html' import show_all_posts_from_ %} 
-        {{ show_all_posts_from_(posts.items) }}
+        {{ show_all_posts_from_(posts.items, current_user.id) }}
 
         {%- include 'blog/_pagination.html' %} 
 
@@ -85,4 +85,5 @@
     resize_pagination();
     window.addEventListener("resize", resize_pagination);
 </script>
+<script src="{{ url_for('static', filename='js/delete_btn.js') }}"></script>
 {%- endblock scripts -%} 

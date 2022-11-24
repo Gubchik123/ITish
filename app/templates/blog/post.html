@@ -171,8 +171,11 @@
     const post_id = "{{ post.id }}";
     const user_id = "{{ current_user.id }}";
 </script>
+
 <script
-    type="module"
-    src="{{ url_for('blog.get_js_file', filename='blog/post.js') }}"
+type="module"
+src="{{ url_for('blog.get_js_file', filename='blog/post.js') }}"
 ></script>
+
+<script src="{{ url_for('static', filename='js/delete_btn.js') }}"></script>
 {%- endblock scripts -%} 
