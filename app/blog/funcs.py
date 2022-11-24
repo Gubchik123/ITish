@@ -18,8 +18,7 @@ def get_js_file(filename: str):
 
 
 def get_blog_page():
-    tab = flask.request.args.get("tab")
-    tab = tab if tab else "posts"
+    tab = flask.request.args.get("tab", "posts")
 
     return (
         _get_all_posts()
@@ -121,6 +120,23 @@ def get_post_by_(post_url: str):
     )
 
 
+def _check_if_current_user_is_author_of_(content):
+    if content.user.id != flog.current_user.id:
+        flask.abort(403)
+
+
+def delete_post_with_(post_url: str):
+    post = Post.query.filter(Post.url == post_url).first_or_404()
+
+    _check_if_current_user_is_author_of_(post)
+
+    db.session.delete(post)
+    db.session.commit()
+
+    flask.flash("Post has successfully deleted", category="success")
+    return flask.redirect(flask.url_for("blog.get_blog_page"))
+
+
 def _get_post_id_and_like_from_json() -> tuple[int, Like]:
     data = flask.request.get_json()
     post_id = data["post_id"]
@@ -165,13 +181,8 @@ def comment_post_with_(post_url: str):
     return flask.redirect(flask.url_for("blog.get_post_by_", post_url=post_url))
 
 
-def _check_if_current_user_is_author_of_(content):
-    if content.user.id != flog.current_user.id:
-        flask.abort(403)
-
-
 def delete_comment_with_(post_url: str, comment_id: int):
-    comment = Comment.query.filter(Comment.id == comment_id).first()
+    comment = Comment.query.filter(Comment.id == comment_id).first_or_404()
 
     _check_if_current_user_is_author_of_(comment)
 

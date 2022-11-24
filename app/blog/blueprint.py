@@ -33,6 +33,12 @@ def get_post_by_(post_url: str):
     return funcs.get_post_by_(post_url)
 
 
+@blog.route("/post/<post_url>/delete")
+@flog.login_required
+def delete_post_with_(post_url: str):
+    return funcs.delete_post_with_(post_url)
+
+
 @blog.route("/post/<post_url>/like", methods=["POST"])
 @flog.login_required
 def like_post_with_(post_url: str):
