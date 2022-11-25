@@ -7,20 +7,19 @@ from . import funcs
 profile = Blueprint("profile", __name__)
 
 
-@profile.route("/get-user-avatar")
-@flog.login_required
-def get_user_avatar():
-    return funcs.get_user_avatar()
-
-
-@profile.route("/update-user-avatar", methods=["POST"])
-def update_user_avatar():
-    return funcs.update_user_avatar()
-
-
 @profile.route("/<username>")
 def get_user_with_(username: str):
     return funcs.get_user_with_(username)
+
+
+@profile.route("/<username>/get-user-avatar")
+def get_avatar_for_user_with_(username: str):
+    return funcs.get_avatar_for_user_with_(username)
+
+
+@profile.route("/<username>/update-user-avatar", methods=["POST"])
+def update_user_avatar(username: str):
+    return funcs.update_user_avatar(username)
 
 
 @profile.route("/<username>/delete")

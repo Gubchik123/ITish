@@ -44,7 +44,7 @@
     <div class="user-avatar col-md-4 col-sm-12 mb-3">
         <div class="d-flex justify-content-center">
             <img 
-                class="w-75"
+                class="w-75 rounded"
                 alt="User avatar" 
                 src="{{ 
                     url_for(
@@ -54,6 +54,22 @@
                 }}" 
             >
         </div>
+        {%- if user.id == current_user.id %}
+            {%- from '_forms_macros.html' import render_ %} 
+
+            <form 
+                method="post"
+                enctype="multipart/form-data"
+                action="{{ 
+                    url_for(
+                        'profile.update_user_avatar', 
+                        username=current_user.username
+                    ) 
+                }}"
+            >
+                {{ render_(form) }}
+            </form>
+        {%- endif %} 
     </div>
     <div class="user-info col-md-8 col-sm-12">
         {%- if not tab or tab == "overview" %}
