@@ -27,21 +27,36 @@
     {%- endfor %} 
 {%- endmacro %} 
 
-{%- macro show_info_about_(item) %}
+{%- macro show_info_about_(item, show_in_profile=False) %}
     <div class="item_info d-flex justify-content-between">
         <div class="item_author me-3">
-            <b>Author:</b> &nbsp; 
-            <a 
-                href="{{ 
-                    url_for(
-                        'profile.get_user_with_', 
-                        username=item.user.username
-                    ) 
-                }}"
-                class="text-decoration-underline"
-            >
-                {{ item.user.username }}
-            </a>
+            {%- if show_in_profile %}
+                <b>For post:</b> &nbsp;
+                <a
+                    href="{{
+                        url_for(
+                            'blog.get_post_by_',
+                            post_url=item.post.url
+                        )
+                    }}"
+                    class="text-decoration-underline"
+                >
+                    {{ item.post.url }}
+                </a>
+            {%- else %}
+                <b>Author:</b> &nbsp; 
+                <a 
+                    href="{{ 
+                        url_for(
+                            'profile.get_user_with_', 
+                            username=item.user.username
+                        ) 
+                    }}"
+                    class="text-decoration-underline"
+                >
+                    {{ item.user.username }}
+                </a>
+            {%- endif %}
         </div>
         <div class="item_created">
             <b>Created:</b> &nbsp; 
@@ -84,23 +99,8 @@
                     ></a>
                 {%- endif %}
             </div>
-
-            {%- if show_in_profile %}
-                <b>For post:</b> &nbsp;
-                <a
-                    href="{{
-                        url_for(
-                            'blog.get_post_by_',
-                            post_url=comment.post.url
-                        )
-                    }}"
-                    class="text-decoration-underline"
-                >
-                    {{ comment.post.url }}
-                </a>
-            {%- endif %}
             
-            {{ show_info_about_(comment) }}
+            {{ show_info_about_(comment, show_in_profile) }}
         </div>
     {%- endfor %} 
 {%- endmacro %} 
