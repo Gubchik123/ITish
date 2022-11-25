@@ -1,14 +1,16 @@
 {% macro render_field_with_errors(field) %}
     <div class="mt-3">
-        {%- if field.type != "BooleanField" %}
-            <div class="form-floating">
-                {{ field(placeholder="some", class="form-control", **kwargs)|safe }}
-                {{ field.label(placeholder="some", class="text-black") }}
-            </div>
-        {%- else %}
+        {%- if field.type == "BooleanField" %}
             <div class="text-center">
                 {{ field.label }}
                 {{ field(**kwargs)|safe }}
+            </div>
+        {%- elif field.type == "FileField" %}
+            {{ field(class="form-control", **kwargs)|safe }}
+        {%- else %}
+            <div class="form-floating">
+                {{ field(placeholder="some", class="form-control", **kwargs)|safe }}
+                {{ field.label(placeholder="some", class="text-black") }}
             </div>
         {%- endif %}
 
