@@ -8,6 +8,7 @@ profile = Blueprint("profile", __name__)
 
 
 @profile.route("/<username>")
+@flog.login_required
 def get_user_with_(username: str):
     return funcs.get_user_with_(username)
 
