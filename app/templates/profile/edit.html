@@ -1,0 +1,29 @@
+{%- extends 'base.html' %} 
+
+{%- block title -%} Edit page {%- endblock -%}
+
+{%- block styles -%}
+<style>
+
+</style>
+{%- endblock styles -%}
+
+{%- block content_title -%} Edit your personal information {%- endblock -%} 
+
+
+{%- block content -%}
+    {%- for form in forms %}
+        {%- from '_forms_macros.html' import get_ready_ %} 
+        <div class="mb-4">
+            {{ 
+                get_ready_(
+                    form, 
+                    action=url_for(
+                        "profile.edit_" + form.get_string_for_action(),
+                        username=current_user.username
+                    )
+                ) 
+            }}
+        </div>
+    {%- endfor %} 
+{%- endblock content -%} 
