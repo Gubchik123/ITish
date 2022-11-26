@@ -77,7 +77,11 @@ def update_user_avatar(username: str):
 
 @_check_if_it_is_current_user
 def delete_user(username: str):
-    pass
+    db.session.delete(flog.current_user)
+    db.session.commit()
+
+    flask.flash("Profile has successfully deleted", category="success")
+    return flask.redirect("/")
 
 
 @_check_if_it_is_current_user

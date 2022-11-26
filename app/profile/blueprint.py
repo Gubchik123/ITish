@@ -23,7 +23,7 @@ def update_user_avatar(username: str):
 
 
 @profile.route("/<username>/delete")
-def delete_user_with_(username: str):
+def delete_user(username: str):
     return funcs.delete_user(username)
 
 

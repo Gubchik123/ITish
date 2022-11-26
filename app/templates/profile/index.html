@@ -83,23 +83,47 @@
             </form>
         {%- endif %} 
     </div>
-    <div class="user-info col-md-8 col-sm-12">
+    <div class="user-info col-md-8 col-sm-12 d-flex flex-column justify-content-around">
         {%- if not tab or tab == "overview" %}
-            <h4>User details</h4>
-            <p class="mb-5">
-                <b>Username: </b> &nbsp; {{ user.username }} <br>
-                <b>Email: </b> &nbsp; {{ user.email }}
-            </p>
+            <div class="user-info__details mb-5">
+                <h4>User details</h4>
+                <p>
+                    <b>Username: </b> &nbsp; {{ user.username }} <br>
+                    <b>Email: </b> &nbsp; {{ user.email }}
+                </p>
+            </div>
 
-            <h4>User activities</h4>
-            <p>
-                <b>Count of the user:</b>
-                <ul>
-                    <li>Posts - &nbsp; {{ user.posts.all() | length }}</li>
-                    <li>Comments - &nbsp; {{ user.comments.all() | length }}</li>
-                    <li>Liked posts - &nbsp; {{ user.likes.all() | length }}</li>
-                </ul>
-            </p>
+            <div class="user-info__activity mb-5">
+                <h4>User activities</h4>
+                <p>
+                    <b>Count of the user:</b>
+                    <ul>
+                        <li>Posts - &nbsp; {{ user.posts.all() | length }}</li>
+                        <li>Comments - &nbsp; {{ user.comments.all() | length }}</li>
+                        <li>Liked posts - &nbsp; {{ user.likes.all() | length }}</li>
+                    </ul>
+                </p>
+            </div>
+
+            <div class="user-info__buttons d-flex justify-content-between align-items-center">
+                <a 
+                    class="btn btn-primary btn-lg float_left me-3"
+                    href="{{ url_for('auth.log_out_user') }}"
+                >
+                    Log out
+                </a>
+                <a 
+                    class="btn btn-danger"
+                    href="{{ 
+                        url_for(
+                            'profile.delete_user', 
+                            username=current_user.username
+                        ) 
+                    }}"
+                >
+                    Delete profile
+                </a>
+            </div>
         {%- else %}
             {%- include 'profile/_' + tab + '.html' %} 
         {%- endif %}
