@@ -55,7 +55,19 @@
             >
         </div>
         {%- if user.id == current_user.id %}
-            {%- from '_forms_macros.html' import render_ %} 
+            {%- from '_forms_macros.html' import render_ %}
+            
+            <a 
+                class="w-100 mt-3 btn btn-success"
+                href="{{ 
+                    url_for(
+                        'profile.get_edit_page', 
+                        username=current_user.username
+                    ) 
+                }}"
+            >
+                Edit profile
+            </a>
 
             <form 
                 method="post"
