@@ -23,12 +23,25 @@ def update_user_avatar(username: str):
 
 
 @profile.route("/<username>/delete")
-@flog.login_required
 def delete_user_with_(username: str):
-    return funcs.delete_user_with_(username)
+    return funcs.delete_user(username)
 
 
 @profile.route("/<username>/edit", methods=["GET", "POST"])
-@flog.login_required
-def edit_user_with_(username: str):
-    return funcs.edit_user_with_(username)
+def get_edit_page(username: str):
+    return funcs.get_edit_page(username)
+
+
+@profile.route("/<username>/edit-email", methods=["POST"])
+def edit_email(username: str):
+    return funcs.edit_email(username)
+
+
+@profile.route("/<username>/edit-username", methods=["POST"])
+def edit_username(username: str):
+    return funcs.edit_username(username)
+
+
+@profile.route("/<username>/edit-password", methods=["POST"])
+def edit_password(username: str):
+    return funcs.edit_password(username)
