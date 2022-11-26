@@ -1,11 +1,20 @@
+from typing import NamedTuple
+
 import flask
 import flask_login as flog
 from sqlalchemy import desc
+from werkzeug.security import generate_password_hash
 
 from ..app import app
 from ..models import User
 from ..extensions import db
-from .forms import UserAvatarForm
+from .forms import UserAvatarForm, NewEmailForm, NewUsernameForm, NewPasswordForm
+
+
+class Forms(NamedTuple):
+    new_email_form: NewEmailForm
+    new_username_form: NewUsernameForm
+    new_password_form: NewPasswordForm
 
 
 def _check_if_it_is_current_user(func):
@@ -61,14 +70,67 @@ def update_user_avatar(username: str):
     else:
         flask.flash("Error. Wrong file type for avatar image", category="danger")
 
-    return flask.redirect(flask.url_for("profile.get_user_with_", username=username))
+    return flask.redirect(
+        flask.url_for("profile.get_user_with_", username=flog.current_user.username)
+    )
 
 
 @_check_if_it_is_current_user
-def delete_user_with_(username: str):
+def delete_user(username: str):
     pass
 
 
 @_check_if_it_is_current_user
-def edit_user_with_(username: str):
-    pass
+def get_edit_page(username: str):
+    return flask.render_template(
+        "profile/edit.html",
+        forms=(NewEmailForm(), NewUsernameForm(), NewPasswordForm()),
+    )
+
+
+def _check_if_info_validate_on_submit_in_(
+    form: NewEmailForm | NewUsernameForm | NewPasswordForm,
+):
+    def decorator(func):
+        @_check_if_it_is_current_user
+        def inner(username: str):
+            if form().validate_on_submit():
+                func(username)
+                return flask.redirect(
+                    flask.url_for(
+                        "profile.get_user_with_", username=flog.current_user.username
+                    )
+                )
+
+            flask.flash("Error! You entered wrong data!", category="danger")
+
+            return flask.redirect(
+                flask.url_for(
+                    "profile.get_edit_page", username=flog.current_user.username
+                )
+            )
+
+        return inner
+
+    return decorator
+
+
+@_check_if_info_validate_on_submit_in_(NewEmailForm)
+def edit_email(username: str):
+    flog.current_user.email = NewEmailForm().email.data
+    db.session.commit()
+    flask.flash("Email has successfully changed", category="success")
+
+
+@_check_if_info_validate_on_submit_in_(NewUsernameForm)
+def edit_username(username: str):
+    flog.current_user.username = NewUsernameForm().username.data
+    db.session.commit()
+    flask.flash("Username has successfully changed", category="success")
+
+
+@_check_if_info_validate_on_submit_in_(NewPasswordForm)
+def edit_password(username: str):
+    flog.current_user.password = generate_password_hash(NewPasswordForm().password.data)
+    db.session.commit()
+    flask.flash("Password has successfully changed", category="success")
