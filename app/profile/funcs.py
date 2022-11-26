@@ -1,5 +1,3 @@
-from typing import NamedTuple
-
 import flask
 import flask_login as flog
 from sqlalchemy import desc
@@ -9,12 +7,6 @@ from ..app import app
 from ..models import User
 from ..extensions import db
 from .forms import UserAvatarForm, NewEmailForm, NewUsernameForm, NewPasswordForm
-
-
-class Forms(NamedTuple):
-    new_email_form: NewEmailForm
-    new_username_form: NewUsernameForm
-    new_password_form: NewPasswordForm
 
 
 def _check_if_it_is_current_user(func):
