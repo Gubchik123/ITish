@@ -1,8 +1,4 @@
-import re
-
-import wtforms as wtf
-from flask_wtf import FlaskForm
-from wtforms.validators import InputRequired
+from .general import *
 
 
 def _check_avatar_image_type(form, field):
@@ -13,7 +9,7 @@ def _check_avatar_image_type(form, field):
 class UserAvatarForm(FlaskForm):
     avatar_image = wtf.FileField(
         validators=[
-            InputRequired(),
+            required,
             _check_avatar_image_type,
         ]
     )
