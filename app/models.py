@@ -3,7 +3,7 @@ import datetime
 
 from flask_login import UserMixin
 
-from .extensions import db
+from .db import db
 
 
 class User(db.Model, UserMixin):
