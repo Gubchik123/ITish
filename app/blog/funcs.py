@@ -3,8 +3,9 @@ import flask_login as flog
 from sqlalchemy import desc
 
 from ..app import app
-from ..extensions import db
 from ..models import Post, Tag, Comment, Like
+
+from . import services
 from .forms import PostCreateForm, PostEditForm, CommentForm
 
 
@@ -53,53 +54,18 @@ def _get_all_tags():
     )
 
 
-def _create_non_existent_tags_from_(titles: list[str]):
-    for tag_title in titles:
-        if not Tag.query.filter(Tag.title == tag_title).first():
-            db.session.add(Tag(title=tag_title))
-    db.session.commit()
-
-
-def _get_striped_and_lower_tag_titles_from_(
-    form: PostCreateForm | PostEditForm,
-) -> list[str]:
-    return [tag_title.strip().lower() for tag_title in form.post_tags.data.split(",")]
-
-
-def _get_all_tags_for_post_from_(form: PostCreateForm | PostEditForm):
-    if not form.post_tags.data:
-        return []
-
-    striped_and_lower_tag_titles = _get_striped_and_lower_tag_titles_from_(form)
-
-    _create_non_existent_tags_from_(striped_and_lower_tag_titles)
-
-    return [
-        Tag.query.filter(Tag.title == tag_title).first()
-        for tag_title in _get_striped_and_lower_tag_titles_from_(form)
-    ]
-
-
-def _add_post_in_db_with_data_from_(form: PostCreateForm):
-    db.session.add(
-        Post(
-            title=form.post_title.data,
-            body=form.post_body.data,
-            user_id=flog.current_user.id,
-            tags=_get_all_tags_for_post_from_(form),
-        )
-    )
-    db.session.commit()
+def _there_is_post_with_such_(title: str) -> bool:
+    return bool(Post.query.filter(Post.title == title).first())
 
 
 def create_post():
     form = PostCreateForm()
 
     if form.validate_on_submit():
-        if Post.query.filter(Post.title == form.post_title.data).first():
-            flask.flash("Error. There is the post with such title!", category="danger")
+        if _there_is_post_with_such_(form.post_title.data):
+            flask.flash("Error! There is the post with such title!", category="danger")
         else:
-            _add_post_in_db_with_data_from_(form)
+            services._add_post_in_db_with_data_from_(form)
             flask.flash("Post has successfully added", category="success")
 
     return flask.render_template("blog/create_post.html", form=form)
@@ -130,8 +96,7 @@ def delete_post_with_(post_url: str):
 
     _check_if_current_user_is_author_of_(post)
 
-    db.session.delete(post)
-    db.session.commit()
+    services._delete_from_db_(post)
 
     flask.flash("Post has successfully deleted", category="success")
     return flask.redirect(
@@ -155,30 +120,18 @@ def like_post():
     post_id, like = _get_post_id_and_like_from_json()
 
     if like:
-        db.session.delete(like)
+        services._delete_from_db_(like)
         response = "Like was deleted"
     else:
-        db.session.add(Like(user_id=flog.current_user.id, post_id=post_id))
+        services._add_in_db_(Like(user_id=flog.current_user.id, post_id=post_id))
         response = "Like was added"
 
-    db.session.commit()
     return response
 
 
-def _add_comment_in_db_for_post_with_(post_url: str):
-    form = CommentForm()
-    post = Post.query.filter(Post.url == post_url).first()
-
-    db.session.add(
-        Comment(
-            body=form.comment_body.data, user_id=flog.current_user.id, post_id=post.id
-        )
-    )
-    db.session.commit()
-
-
 def comment_post_with_(post_url: str):
-    _add_comment_in_db_for_post_with_(post_url)
+    services._add_comment_in_db_for_(Post.query.filter(Post.url == post_url).first())
+
     flask.flash("Comment has successfully added", category="success")
     return flask.redirect(flask.url_for("blog.get_post_by_", post_url=post_url))
 
@@ -187,22 +140,13 @@ def delete_comment_with_(post_url: str, comment_id: int):
     comment = Comment.query.filter(Comment.id == comment_id).first_or_404()
 
     _check_if_current_user_is_author_of_(comment)
-
-    db.session.delete(comment)
-    db.session.commit()
+    services._delete_from_db_(comment)
 
     flask.flash("Comment has successfully deleted", category="success")
     return flask.redirect(
         flask.request.args.get("next")
         or flask.url_for("blog.get_post_by_", post_url=post_url)
     )
-
-
-def _edit_post_in_db_with_data_from_(form: PostEditForm, post: Post):
-    post.title = form.post_title.data
-    post.body = form.post_body.data
-    post.tags = _get_all_tags_for_post_from_(form)
-    db.session.commit()
 
 
 def edit_post_with_(post_url: str):
@@ -212,7 +156,7 @@ def edit_post_with_(post_url: str):
     _check_if_current_user_is_author_of_(post)
 
     if form.validate_on_submit():
-        _edit_post_in_db_with_data_from_(form, post)
+        services._edit_post_in_db_with_data_from_(form, post)
 
         flask.flash("Post has successfully edited", category="success")
         return flask.redirect(flask.url_for("blog.get_post_by_", post_url=post_url))

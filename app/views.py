@@ -8,7 +8,7 @@ from .profile.blueprint import profile
 
 app.register_blueprint(auth, url_prefix="/auth")
 app.register_blueprint(blog, url_prefix="/blog")
-app.register_blueprint(profile, url_prefix="/profile")
+app.register_blueprint(profile, url_prefix="/user")
 
 
 @app.route("/")

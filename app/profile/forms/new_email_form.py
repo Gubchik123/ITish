@@ -2,8 +2,12 @@ from .general import *
 from .general import _get_striped_
 
 
+def _there_is_user_with_such_email(email: str) -> bool:
+    return bool(User.query.filter(User.email == email).first())
+
+
 def _check_email(form, field):
-    if User.query.filter(User.email == _get_striped_(field.data)).first():
+    if _there_is_user_with_such_email(_get_striped_(field.data)):
         raise wtf.ValidationError("There is the user with such email!")
 
 

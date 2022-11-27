@@ -1,11 +1,10 @@
 import flask
 import flask_login as flog
-from sqlalchemy import desc
-from werkzeug.security import generate_password_hash
 
 from ..app import app
 from ..models import User
-from ..extensions import db
+
+from . import services
 from .forms import UserAvatarForm, NewEmailForm, NewUsernameForm, NewPasswordForm
 
 
@@ -50,27 +49,26 @@ def get_avatar_for_user_with_(username: str):
     return response
 
 
-@_check_if_it_is_current_user
-def update_user_avatar(username: str):
-    if UserAvatarForm().validate_on_submit():
-        avatar_image = flask.request.files["avatar_image"]
-
-        flog.current_user.avatar = avatar_image.read()
-        db.session.commit()
-
-        flask.flash("Avatar has successfully updated", category="success")
-    else:
-        flask.flash("Error. Wrong file type for avatar image", category="danger")
-
+def _redirect_on_current_user_profile_page():
     return flask.redirect(
         flask.url_for("profile.get_user_with_", username=flog.current_user.username)
     )
 
 
 @_check_if_it_is_current_user
-def delete_user(username: str):
-    db.session.delete(flog.current_user)
-    db.session.commit()
+def update_user_avatar(username: str):
+    if UserAvatarForm().validate_on_submit():
+        services._update_current_user_avatar_in_db()
+        flask.flash("Avatar has successfully updated", category="success")
+    else:
+        flask.flash("Error! Wrong file type for avatar image", category="danger")
+
+    return _redirect_on_current_user_profile_page()
+
+
+@_check_if_it_is_current_user
+def delete_current_user(username: str):
+    services._delete_current_user_from_db()
 
     flask.flash("Profile has successfully deleted", category="success")
     return flask.redirect("/")
@@ -92,11 +90,7 @@ def _check_if_info_validate_on_submit_in_(
         def inner(username: str):
             if form().validate_on_submit():
                 func(username)
-                return flask.redirect(
-                    flask.url_for(
-                        "profile.get_user_with_", username=flog.current_user.username
-                    )
-                )
+                return _redirect_on_current_user_profile_page()
 
             flask.flash("Error! You entered wrong data!", category="danger")
 
@@ -112,21 +106,18 @@ def _check_if_info_validate_on_submit_in_(
 
 
 @_check_if_info_validate_on_submit_in_(NewEmailForm)
-def edit_email(username: str):
-    flog.current_user.email = NewEmailForm().email.data
-    db.session.commit()
+def edit_current_user_email(username: str):
+    services._edit_current_user_email_in_db()
     flask.flash("Email has successfully changed", category="success")
 
 
 @_check_if_info_validate_on_submit_in_(NewUsernameForm)
-def edit_username(username: str):
-    flog.current_user.username = NewUsernameForm().username.data
-    db.session.commit()
+def edit_current_user_username(username: str):
+    services._edit_current_user_username_in_db()
     flask.flash("Username has successfully changed", category="success")
 
 
 @_check_if_info_validate_on_submit_in_(NewPasswordForm)
-def edit_password(username: str):
-    flog.current_user.password = generate_password_hash(NewPasswordForm().password.data)
-    db.session.commit()
+def edit_current_user_password(username: str):
+    services._edit_current_user_password_in_db()
     flask.flash("Password has successfully changed", category="success")

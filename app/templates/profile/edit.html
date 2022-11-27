@@ -19,7 +19,7 @@
                 get_ready_(
                     form, 
                     action=url_for(
-                        "profile.edit_" + form.get_string_for_action(),
+                        "profile.edit_current_user_" + form.get_string_for_action(),
                         username=current_user.username
                     )
                 ) 

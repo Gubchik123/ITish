@@ -23,4 +23,4 @@ def abort_to_login_page():
 
 
 def get_error_page(error):
-    return flask.render_template("error.html", error=error), error.code
+    return (flask.render_template("error.html", error=error), error.code)

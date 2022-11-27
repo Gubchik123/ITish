@@ -1,19 +1,23 @@
 from .general import *
-from .general import _get_striped_
+from .general import _get_striped_, _there_is_user_with_such_email
+
+
+def _there_is_user_with_such_username(username: str) -> bool:
+    return bool(User.query.filter(User.username == username).first())
 
 
 def _check_username(form, field):
-    if User.query.filter(User.username == _get_striped_(field.data)).first():
-        raise ValidationError("There is the user with such username!")
+    if _there_is_user_with_such_username(_get_striped_(field.data)):
+        raise wtforms.ValidationError("There is the user with such username!")
 
 
 def _check_email(form, field):
-    if User.query.filter(User.email == _get_striped_(field.data)).first():
-        raise ValidationError("There is the user with such email!")
+    if _there_is_user_with_such_email(_get_striped_(field.data)):
+        raise wtforms.ValidationError("There is the user with such email!")
 
 
 class RegistrationForm(FlaskForm):
-    username = wtf.StringField(
+    username = wtforms.StringField(
         "Username",
         validators=[
             required,
@@ -26,7 +30,7 @@ class RegistrationForm(FlaskForm):
             _check_username,
         ],
     )
-    email = wtf.EmailField(
+    email = wtforms.EmailField(
         "Email",
         validators=[
             required,
@@ -35,10 +39,10 @@ class RegistrationForm(FlaskForm):
             _check_email,
         ],
     )
-    password = wtf.PasswordField(
+    password = wtforms.PasswordField(
         "Password", validators=[required, validator.Length(min=5)]
     )
-    password_again = wtf.PasswordField(
+    password_again = wtforms.PasswordField(
         "Password again",
         validators=[
             required,
@@ -46,4 +50,4 @@ class RegistrationForm(FlaskForm):
             validator.EqualTo("password", message="Passwords must match!"),
         ],
     )
-    submit = wtf.SubmitField("Sign Up")
+    submit = wtforms.SubmitField("Sign Up")

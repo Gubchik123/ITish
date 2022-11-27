@@ -1,29 +1,10 @@
-import os
 import flask
 import flask_login as flog
-from werkzeug.security import generate_password_hash
 
 from ..models import User
-from ..extensions import db
+
+from . import services
 from .forms import RegistrationForm, LoginAdminForm, LoginForm
-
-
-def _get_striped_(string: str) -> str:
-    return str(string).strip()
-
-
-def _add_user_with_data_from_(form: RegistrationForm):
-    db.session.add(
-        User(
-            email=_get_striped_(form.email.data),
-            username=_get_striped_(form.username.data),
-            password=generate_password_hash(_get_striped_(form.password.data)),
-        )
-    )
-    db.session.commit()
-
-    flask.flash("You have successfully registered!", category="success")
-    return flask.redirect(flask.url_for(".log_in_user"))
 
 
 def check_if_user_is_already_authenticated(func):
@@ -42,7 +23,10 @@ def sign_up_user():
     form = RegistrationForm()
 
     if form.validate_on_submit():
-        return _add_user_with_data_from_(form)
+        services._add_user_in_db_with_data_from_(form)
+
+        flask.flash("You have successfully registered!", category="success")
+        return flask.redirect(flask.url_for(".log_in_user"))
 
     return flask.render_template("auth/registration.html", form=form)
 

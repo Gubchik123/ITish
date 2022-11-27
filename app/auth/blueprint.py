@@ -17,7 +17,7 @@ def log_in_user():
     return funcs.log_in_user()
 
 
-@auth.route("/logout", methods=["GET", "POST"])
+@auth.route("/logout")
 @flog.login_required
 def log_out_user():
     return funcs.log_out_user()

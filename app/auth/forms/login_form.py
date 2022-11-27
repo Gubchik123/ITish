@@ -2,22 +2,23 @@ from werkzeug.security import check_password_hash
 
 from .general import *
 from .general import _get_striped_
+from .general import _there_is_user_with_such_email
 
 
 def _check_user_email(form, field):
-    if not User.query.filter(User.email == _get_striped_(field.data)).first():
-        raise ValidationError("There is not the user with such email!")
+    if not _there_is_user_with_such_email(_get_striped_(field.data)):
+        raise wtforms.ValidationError("There is not the user with such email!")
 
 
 def _check_user_password(form, field):
     user = User.query.filter(User.email == _get_striped_(form.email.data)).first()
 
     if user and not check_password_hash(user.password, _get_striped_(field.data)):
-        raise ValidationError("Wrong password!")
+        raise wtforms.ValidationError("Wrong password!")
 
 
 class LoginForm(FlaskForm):
-    email = wtf.EmailField(
+    email = wtforms.EmailField(
         "Email",
         validators=[
             required,
@@ -26,9 +27,9 @@ class LoginForm(FlaskForm):
             _check_user_email,
         ],
     )
-    password = wtf.PasswordField(
+    password = wtforms.PasswordField(
         "Password",
         validators=[required, validator.Length(min=5), _check_user_password],
     )
-    remember = wtf.BooleanField("Remember me")
-    submit = wtf.SubmitField("Log In")
+    remember = wtforms.BooleanField("Remember me")
+    submit = wtforms.SubmitField("Log In")
