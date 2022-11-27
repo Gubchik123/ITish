@@ -67,6 +67,7 @@ def log_in_user():
 
 def log_out_user():
     flog.logout_user()
+    flask.session["admin_logged"] = False
 
     flask.flash("You have successfully logged out!", category="success")
     return flask.redirect(
@@ -79,7 +80,6 @@ def log_in_admin():
 
     if form.validate_on_submit():
         flask.session["admin_logged"] = True
-
-        return flask.redirect(flask.url_for("/admin"))
+        return flask.redirect("/admin")
 
     return flask.render_template("auth/login_admin.html", form=form)
