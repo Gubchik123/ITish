@@ -1,9 +1,12 @@
 import flask
 import flask_login as flog
 from sqlalchemy import desc
+from werkzeug.routing.exceptions import RoutingException
 
 from ..app import app
+from ..exceptions import catch_flask_error_
 from ..models import Post, Tag, Comment, Like
+from ..funcs import render_template, redirect_to_url_for_
 
 from . import services
 from .forms import PostCreateForm, PostEditForm, CommentForm
@@ -28,6 +31,7 @@ def get_blog_page():
     )
 
 
+@services.catch_sqlalchemy_errors
 def _get_posts_with_pagination():
     q = flask.request.args.get("q", "")
 
@@ -43,17 +47,15 @@ def _get_posts_with_pagination():
 
 
 def _get_all_posts():
-    return flask.render_template(
-        "blog/all_posts.html", posts=_get_posts_with_pagination()
-    )
+    return render_template("blog/all_posts.html", posts=_get_posts_with_pagination())
 
 
+@services.catch_sqlalchemy_errors
 def _get_all_tags():
-    return flask.render_template(
-        "blog/all_tags.html", tags=Tag.query.order_by(Tag.url).all()
-    )
+    return render_template("blog/all_tags.html", tags=Tag.query.order_by(Tag.url).all())
 
 
+@services.catch_sqlalchemy_errors
 def _there_is_post_with_such_(title: str) -> bool:
     return bool(Post.query.filter(Post.title == title).first())
 
@@ -68,17 +70,19 @@ def create_post():
             services._add_post_in_db_with_data_from_(form)
             flask.flash("Post has successfully added", category="success")
 
-    return flask.render_template("blog/create_post.html", form=form)
+    return render_template("blog/create_post.html", form=form)
 
 
+@services.catch_sqlalchemy_errors
 def get_all_posts_with_(tag: str):
-    return flask.render_template(
+    return render_template(
         "blog/tag.html", tag=Tag.query.filter(Tag.url == tag).first_or_404()
     )
 
 
+@services.catch_sqlalchemy_errors
 def get_post_by_(post_url: str):
-    return flask.render_template(
+    return render_template(
         "blog/post.html",
         desc=desc,
         form=CommentForm(),
@@ -91,6 +95,8 @@ def _check_if_current_user_is_author_of_(content):
         flask.abort(403)
 
 
+@services.catch_sqlalchemy_errors
+@catch_flask_error_(RoutingException)
 def delete_post_with_(post_url: str):
     post = Post.query.filter(Post.url == post_url).first_or_404()
 
@@ -104,6 +110,7 @@ def delete_post_with_(post_url: str):
     )
 
 
+@services.catch_sqlalchemy_errors
 def _get_post_id_and_like_from_json() -> tuple[int, Like]:
     data = flask.request.get_json()
     post_id = data["post_id"]
@@ -129,13 +136,16 @@ def like_post():
     return response
 
 
+@services.catch_sqlalchemy_errors
 def comment_post_with_(post_url: str):
     services._add_comment_in_db_for_(Post.query.filter(Post.url == post_url).first())
 
     flask.flash("Comment has successfully added", category="success")
-    return flask.redirect(flask.url_for("blog.get_post_by_", post_url=post_url))
+    return redirect_to_url_for_("blog.get_post_by_", post_url=post_url)
 
 
+@services.catch_sqlalchemy_errors
+@catch_flask_error_(RoutingException)
 def delete_comment_with_(post_url: str, comment_id: int):
     comment = Comment.query.filter(Comment.id == comment_id).first_or_404()
 
@@ -149,6 +159,7 @@ def delete_comment_with_(post_url: str, comment_id: int):
     )
 
 
+@services.catch_sqlalchemy_errors
 def edit_post_with_(post_url: str):
     form = PostEditForm()
     post = Post.query.filter(Post.url == post_url).first_or_404()
@@ -159,6 +170,6 @@ def edit_post_with_(post_url: str):
         services._edit_post_in_db_with_data_from_(form, post)
 
         flask.flash("Post has successfully edited", category="success")
-        return flask.redirect(flask.url_for("blog.get_post_by_", post_url=post_url))
+        return redirect_to_url_for_("blog.get_post_by_", post_url=post_url)
 
-    return flask.render_template("blog/edit_post.html", form=form, post=post)
+    return render_template("blog/edit_post.html", form=form, post=post)

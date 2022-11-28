@@ -3,6 +3,7 @@ import flask_login as flog
 
 from ..app import app
 from ..models import User
+from ..funcs import render_template, redirect_to_url_for_
 
 from . import services
 from .forms import UserAvatarForm, NewEmailForm, NewUsernameForm, NewPasswordForm
@@ -26,7 +27,7 @@ def get_user_with_(username: str):
     if flask.request.args.get("tab", "") not in tabs:
         return flask.abort(404)
 
-    return flask.render_template(
+    return render_template(
         "profile/index.html",
         form=form,
         user=User.query.filter(User.username == username).first_or_404(),
@@ -50,8 +51,8 @@ def get_avatar_for_user_with_(username: str):
 
 
 def _redirect_on_current_user_profile_page():
-    return flask.redirect(
-        flask.url_for("profile.get_user_with_", username=flog.current_user.username)
+    return redirect_to_url_for_(
+        "profile.get_user_with_", username=flog.current_user.username
     )
 
 
@@ -71,12 +72,12 @@ def delete_current_user(username: str):
     services._delete_current_user_from_db()
 
     flask.flash("Profile has successfully deleted", category="success")
-    return flask.redirect("/")
+    return redirect_to_url_for_("get_home_page")
 
 
 @_check_if_it_is_current_user
 def get_edit_page(username: str):
-    return flask.render_template(
+    return render_template(
         "profile/edit.html",
         forms=(NewEmailForm(), NewUsernameForm(), NewPasswordForm()),
     )
@@ -94,10 +95,8 @@ def _check_if_info_validate_on_submit_in_(
 
             flask.flash("Error! You entered wrong data!", category="danger")
 
-            return flask.redirect(
-                flask.url_for(
-                    "profile.get_edit_page", username=flog.current_user.username
-                )
+            return redirect_to_url_for_(
+                "profile.get_edit_page", username=flog.current_user.username
             )
 
         return inner
