@@ -7,6 +7,8 @@ from .db import db
 
 
 class User(db.Model, UserMixin):
+    """Model for storing information about users"""
+
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -37,9 +39,11 @@ class User(db.Model, UserMixin):
 
 
 def get_correct_str_from_(s: str) -> str:
+    """For getting correct string replacing all spaces with hyphen"""
     return re.sub(pattern=r"[^\w+]", repl="-", string=s)
 
 
+# Table for many-to-many relationship between posts and tags
 post_tags = db.Table(
     "post_tags",
     db.Column("post_id", db.Integer, db.ForeignKey("posts.id")),
@@ -47,15 +51,21 @@ post_tags = db.Table(
 )
 
 
-class General:
+class ModelWithUrl:
+    """For models with 'url' column for inheritance"""
+
     def generate_correct_url(self) -> None:
+        """For setting correct url"""
         self.url = get_correct_str_from_(self.title)
 
     def __repr__(self) -> str:
+        """For getting 'title' column"""
         return f"<{self.title}>"
 
 
-class Post(General, db.Model):
+class Post(ModelWithUrl, db.Model):
+    """Model for storing information about posts"""
+
     __tablename__ = "posts"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -83,11 +93,14 @@ class Post(General, db.Model):
     )
 
     def __init__(self, *args, **kwargs) -> None:
+        """For setting correct url during initializing"""
         super(Post, self).__init__(*args, **kwargs)
         self.generate_correct_url()
 
 
-class Tag(General, db.Model):
+class Tag(ModelWithUrl, db.Model):
+    """Model for storing information about tags"""
+
     __tablename__ = "tags"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -95,11 +108,14 @@ class Tag(General, db.Model):
     url = db.Column(db.String(30), nullable=False, unique=True)
 
     def __init__(self, *args, **kwargs) -> None:
+        """For setting correct url during initializing"""
         super(Tag, self).__init__(*args, **kwargs)
         self.generate_correct_url()
 
 
 class Comment(db.Model):
+    """Model for storing information about comments"""
+
     __tablename__ = "comments"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -114,6 +130,8 @@ class Comment(db.Model):
 
 
 class Like(db.Model):
+    """Model for storing information about likes"""
+
     __tablename__ = "likes"
 
     id = db.Column(db.Integer, primary_key=True)
