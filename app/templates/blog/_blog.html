@@ -1,16 +1,19 @@
 {%- extends 'base.html' %} 
 
-{%- block title -%} Blog {%- endblock title -%}
+{%- block title -%} Blog {%- endblock -%} 
 
 
 {%- block content -%}
+
 <div
 	class="site-header sticky-top py-2 d-flex justify-content-end mb-4 border-2 border-bottom border-info my-text-color my-body-bg-color"
 >
 	<div class="btn-group btn-group-lg">
+        {% set tab = request.args.get('tab') %} 
+
 		<a
 			href="./?tab=posts"
-            {%- if not request.args.get('tab') or request.args.get('tab') == "posts" %}
+            {%- if not tab or tab == "posts" %}
                 class="btn btn-primary active"
                 aria-current="page"
             {%- else %}
@@ -21,7 +24,7 @@
         </a>
 		<a
 			href="./?tab=tags"
-			{%- if request.args.get('tab') == "tags" %}
+			{%- if tab == "tags" %}
                 class="btn btn-primary active"
                 aria-current="page"
             {%- else %}
@@ -32,4 +35,5 @@
         </a>
 	</div>
 </div>
+
 {%- endblock content -%}

@@ -14,128 +14,131 @@
 
 
 {%- block content -%}
-    {%- block page_alert -%}  
-        {%- from '_alerts_macros.html' import not_dismissible_alert %}
-        
-        {{
-            not_dismissible_alert(
-                message="Fill this area out using buttons below",
-                category="primary"
-            )
-        }}
-    {%- endblock page_alert -%}
 
-    <details>
-        <summary>How to create post? (Note)</summary>
-        <div class="note-alert alert alert-secondary border-left" role="alert">
-            <ul>
-                <li>Make sure your title doesn't exist.</li>
-                <li>
-                    Use special element buttons for: 
-                    <ul>
-                        <li>editing;</li>
-                        <li>deleting;</li>
-                        <li>changing position;</li>
-                        <li>changing alignment.</li>
-                    </ul>
-                </li>
-                <li>
-                    If you use a mobile device, click on any element to see special buttons.
-                </li>
-                <li>
-                    Use a comma as separator for post tags (optional).
-                </li>
-            </ul>
-            <h5>Good luck!</h5>
+{%- block page_alert -%}  
+    {%- from '_alerts_macros.html' import not_dismissible_alert %}
+    
+    {{
+        not_dismissible_alert(
+            message="Fill this area out using buttons below",
+            category="primary"
+        )
+    }}
+{%- endblock page_alert -%}
+
+<details>
+    <summary>How to create post? (Note)</summary>
+    <div class="note-alert alert alert-secondary border-left" role="alert">
+        <ul>
+            <li>Make sure your title doesn't exist.</li>
+            <li>
+                Use special element buttons for: 
+                <ul>
+                    <li>editing;</li>
+                    <li>deleting;</li>
+                    <li>changing position;</li>
+                    <li>changing alignment.</li>
+                </ul>
+            </li>
+            <li>
+                If you use a mobile device, click on any element to see special buttons.
+            </li>
+            <li>
+                Use a comma as separator for post tags (optional).
+            </li>
+        </ul>
+        <h5>Good luck!</h5>
+    </div>
+</details>
+
+{%- block post_title -%}{%- endblock -%} 
+
+<div class="content border border-dark rounded py-2 my-3">
+    {%- block post_body -%}{%- endblock -%} 
+</div>
+
+<div class="my-3 adding_buttons">
+    <button
+        id="add_subtitle1_btn"
+        class="btn btn-lg btn-primary mb-2 me-2"
+    >
+        Subtitle I
+    </button>
+    <button
+        id="add_subtitle2_btn"
+        class="btn btn-lg btn-primary mb-2 me-2"
+    >
+        Subtitle II
+    </button>
+    <button
+        id="add_paragraph_btn"
+        class="btn btn-lg btn-primary mb-2 me-2"
+    >
+        Paragraph &nbsp;
+        <ion-icon name="reorder-four-outline"></ion-icon>
+    </button>
+    <button
+        id="add_link_btn"
+        class="btn btn-lg btn-primary mb-2 me-2"
+    >
+        Link &nbsp;
+        <ion-icon name="link-outline"></ion-icon>
+    </button>
+    <button
+        id="add_code_btn"
+        class="btn btn-lg btn-primary mb-2 me-2"
+    >
+        Code &nbsp;
+        <ion-icon name="code-outline"></ion-icon>
+    </button>
+    <button
+        id="add_image_btn"
+        class="btn btn-lg btn-primary mb-2 me-2"
+    >
+        Image &nbsp;
+        <ion-icon name="image-outline"></ion-icon>
+    </button>
+    <button
+        id="add_alert_btn"
+        class="btn btn-lg btn-primary mb-2 me-2"
+    >
+        Alert &nbsp;
+        <ion-icon name="alert-circle-outline"></ion-icon>
+    </button>
+    <button
+        id="add_line_btn"
+        class="btn btn-lg btn-primary mb-2 me-2"
+    >
+        Line &nbsp;
+        <ion-icon name="remove-outline"></ion-icon>
+    </button>
+</div>
+
+<div class="my-3 processing_form">
+    {%- from '_forms_macros.html' import render_field, render_field_with_errors %}
+
+    <form 
+        action="" 
+        method="post"
+        class="d-flex justify-content-between align-items-center"
+    >
+        <div>
+            {{ form.hidden_tag() }}
+            <!-- Invisible form fields -->
+            {{ render_field(form.post_title, class="d-none") }}
+            {{ render_field(form.post_body, class="d-none") }}
+            <!-- Visible form fields -->
+            {{ render_field_with_errors(form.post_tags, class="form-control") }}
         </div>
-    </details>
+        <div>
+            {{ render_field(form.post_submit, class="btn btn-success btn-lg mt-2") }}
+        </div>
+    </form>
+    <p>Separator - comma</p>
+</div>
 
-    {%- block post_title -%}{%- endblock -%} 
-
-    <div class="content border border-dark rounded py-2 my-3">
-        {%- block post_body -%}{%- endblock -%} 
-    </div>
-
-    <div class="my-3 adding_buttons">
-        <button
-            id="add_subtitle1_btn"
-            class="btn btn-lg btn-primary mb-2 me-2"
-        >
-            Subtitle I
-        </button>
-        <button
-            id="add_subtitle2_btn"
-            class="btn btn-lg btn-primary mb-2 me-2"
-        >
-            Subtitle II
-        </button>
-        <button
-            id="add_paragraph_btn"
-            class="btn btn-lg btn-primary mb-2 me-2"
-        >
-            Paragraph &nbsp;
-            <ion-icon name="reorder-four-outline"></ion-icon>
-        </button>
-        <button
-            id="add_link_btn"
-            class="btn btn-lg btn-primary mb-2 me-2"
-        >
-            Link &nbsp;
-            <ion-icon name="link-outline"></ion-icon>
-        </button>
-        <button
-            id="add_code_btn"
-            class="btn btn-lg btn-primary mb-2 me-2"
-        >
-            Code &nbsp;
-            <ion-icon name="code-outline"></ion-icon>
-        </button>
-        <button
-            id="add_image_btn"
-            class="btn btn-lg btn-primary mb-2 me-2"
-        >
-            Image &nbsp;
-            <ion-icon name="image-outline"></ion-icon>
-        </button>
-        <button
-            id="add_alert_btn"
-            class="btn btn-lg btn-primary mb-2 me-2"
-        >
-            Alert &nbsp;
-            <ion-icon name="alert-circle-outline"></ion-icon>
-        </button>
-        <button
-            id="add_line_btn"
-            class="btn btn-lg btn-primary mb-2 me-2"
-        >
-            Line &nbsp;
-            <ion-icon name="remove-outline"></ion-icon>
-        </button>
-    </div>
-
-    <div class="my-3 processing_form">
-        {%- from '_forms_macros.html' import render_field, render_field_with_errors %}
-
-        <form 
-            action="" 
-            method="post"
-            class="d-flex justify-content-between align-items-center"
-        >
-            <div>
-                {{ form.hidden_tag() }}
-                <!-- Invisible form fields -->
-                {{ render_field(form.post_title, class="d-none") }}
-                {{ render_field(form.post_body, class="d-none") }}
-                <!-- Visible form fields -->
-                {{ render_field_with_errors(form.post_tags, class="form-control") }}
-            </div>
-            <div>
-                {{ render_field(form.post_submit, class="btn btn-success btn-lg mt-2") }}
-            </div>
-        </form>
-        <p>Separator - comma</p>
-    </div>
 {%- endblock content -%} 
+
 
 {%- block scripts -%}
 <script

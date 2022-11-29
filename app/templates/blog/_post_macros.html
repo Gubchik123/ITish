@@ -1,106 +1,119 @@
 {%- macro show_all_posts_from_(posts, current_user_id) %}
-    {%- for post in posts %}
-        <div class="post rounded my-form-bg-color p-3 mb-3">
-            <a href="{{ url_for('blog.get_post_by_', post_url=post.url) }}">
-                <div class="post_title text-decoration-underline d-flex justify-content-between">
-                    <h3>{{ post.title }}</h3>
-                    {%- if post.user.id == current_user_id %} 
-                        <a 
-                            class="btn-close btn-close-white delete-btn"
-                            href="{{ 
-                                url_for(
-                                    'blog.delete_post_with_', 
-                                    post_url=post.url,
-                                    next=request.url
-                                ) 
-                            }}"
-                        ></a>
-                    {%- endif %}
-                </div>
-                <div class="post_body py-2">
-                    <p>{{ post.body[:200] | striptags }}...</p>
-                </div>
-            </a>
 
-            {{ show_info_about_(post) }}
-        </div>
-    {%- endfor %} 
-{%- endmacro %} 
-
-{%- macro show_info_about_(item, show_in_profile=False) %}
-    <div class="item_info d-flex justify-content-between">
-        <div class="item_author me-3">
-            {%- if show_in_profile %}
-                <b>For post:</b> &nbsp;
-                <a
-                    href="{{
-                        url_for(
-                            'blog.get_post_by_',
-                            post_url=item.post.url
-                        )
-                    }}"
-                    class="text-decoration-underline"
-                >
-                    {{ item.post.url }}
-                </a>
-            {%- else %}
-                <b>Author:</b> &nbsp; 
-                <a 
-                    href="{{ 
-                        url_for(
-                            'profile.get_user_with_', 
-                            username=item.user.username
-                        ) 
-                    }}"
-                    class="text-decoration-underline"
-                >
-                    {{ item.user.username }}
-                </a>
-            {%- endif %}
-        </div>
-        <div class="item_created">
-            <b>Created:</b> &nbsp; 
-            {{ item.created.strftime("%d.%m.%Y") }}
-        </div>
-    </div>
-{%- endmacro %} 
-
-{%- macro show_all_tags_from_(tags) %}
-    {%- for tag in tags %}
-        <a
-            class="d-inline float_left me-3 mb-3 text-decoration-none"
-            href="{{ url_for('blog.get_all_posts_with_', tag=tag.url) }}"
-        >
-            <span 
-                style="line-height: 1.5em;"
-                class="tag badge border rounded"
-            >#{{ tag.title }}</span>
-        </a>
-    {%- endfor %}
-{%- endmacro %} 
-
-{%- macro show_all_comment_from_(comments, current_user_id, show_in_profile=False) %}
-    {%- for comment in comments %}
-        <div class="alert alert-dark" role="alert">
-            <div class="d-flex justify-content-between">
-                <p>{{ comment.body }}</p>
-
-                {%- if comment.user.id == current_user_id %} 
+{%- for post in posts %}
+    <div class="post rounded my-form-bg-color p-3 mb-3">
+        <a href="{{ url_for('blog.get_post_by_', post_url=post.url) }}">
+            <div 
+                class="post_title text-decoration-underline d-flex justify-content-between"
+            >
+                <h3>{{ post.title }}</h3>
+                {%- if post.user.id == current_user_id %} 
                     <a 
-                        class="btn-close delete-btn"
+                        class="btn-close btn-close-white delete-btn"
                         href="{{ 
                             url_for(
-                                'blog.delete_comment_with_', 
-                                post_url=comment.post.url, 
-                                comment_id=comment.id,
+                                'blog.delete_post_with_', 
+                                post_url=post.url,
                                 next=request.url
                             ) 
                         }}"
                     ></a>
                 {%- endif %}
             </div>
-            
-            {{ show_info_about_(comment, show_in_profile) }}
+            <div class="post_body py-2">
+                <p>{{ post.body[:200] | striptags }}...</p>
+            </div>
+        </a>
+
+        {{ show_info_about_(post) }}
+    </div>
+{%- endfor %} 
+
+{%- endmacro %} 
+
+
+{%- macro show_info_about_(item, show_in_profile=False) %}
+
+<div class="item_info d-flex justify-content-between">
+    <div class="item_author me-3">
+        {%- if show_in_profile %}
+            <b>For post:</b> &nbsp;
+            <a
+                href="{{
+                    url_for(
+                        'blog.get_post_by_',
+                        post_url=item.post.url
+                    )
+                }}"
+                class="text-decoration-underline"
+            >
+                {{ item.post.url }}
+            </a>
+        {%- else %}
+            <b>Author:</b> &nbsp; 
+            <a 
+                href="{{ 
+                    url_for(
+                        'profile.get_user_with_', 
+                        username=item.user.username
+                    ) 
+                }}"
+                class="text-decoration-underline"
+            >
+                {{ item.user.username }}
+            </a>
+        {%- endif %}
+    </div>
+    <div class="item_created">
+        <b>Created:</b> &nbsp; 
+        {{ item.created.strftime("%d.%m.%Y") }}
+    </div>
+</div>
+
+{%- endmacro %}
+
+
+{%- macro show_all_tags_from_(tags) %}
+
+{%- for tag in tags %}
+    <a
+        class="d-inline float_left me-3 mb-3 text-decoration-none"
+        href="{{ url_for('blog.get_all_posts_with_', tag=tag.url) }}"
+    >
+        <span 
+            style="line-height: 1.5em;"
+            class="tag badge border rounded"
+        >#{{ tag.title }}</span>
+    </a>
+{%- endfor %}
+
+{%- endmacro %} 
+
+
+{%- macro show_all_comment_from_(comments, current_user_id, show_in_profile=False) %}
+    
+{%- for comment in comments %}
+    <div class="alert alert-dark" role="alert">
+        <div class="d-flex justify-content-between">
+            <p>{{ comment.body }}</p>
+
+            {%- if comment.user.id == current_user_id %} 
+                <a 
+                    class="btn-close delete-btn"
+                    href="{{ 
+                        url_for(
+                            'blog.delete_comment_with_', 
+                            post_url=comment.post.url, 
+                            comment_id=comment.id,
+                            next=request.url
+                        ) 
+                    }}"
+                ></a>
+            {%- endif %}
         </div>
-    {%- endfor %} 
+        
+        {{ show_info_about_(comment, show_in_profile) }}
+    </div>
+{%- endfor %} 
+
 {%- endmacro %} 

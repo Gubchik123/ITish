@@ -62,7 +62,7 @@ a:hover { opacity: 1; }
 
 
 /* Custom text selection */
-::-moz-selection { /* Code for Firefox */
+::-moz-selection {
     color: white;
     background: #2f3542;
 }

@@ -1,53 +1,64 @@
 {% macro render_field_with_errors(field) %}
-    <div class="mt-3">
-        {%- if field.type == "BooleanField" %}
-            <div class="text-center">
-                {{ field.label }}
-                {{ field(**kwargs)|safe }}
-            </div>
-        {%- elif field.type == "FileField" %}
-            {{ field(class="form-control", **kwargs)|safe }}
-        {%- else %}
-            <div class="form-floating">
-                {{ field(placeholder="some", class="form-control", **kwargs)|safe }}
-                {{ field.label(placeholder="some", class="text-black") }}
-            </div>
-        {%- endif %}
 
-        {% for error in field.errors %}
-            <p class="bg-danger text-center rounded-bottom">{{ error }}</p>
-        {% endfor %}
-    </div>
+<div class="mt-3">
+    {%- if field.type == "BooleanField" %}
+        <div class="text-center">
+            {{ field.label }}
+            {{ field(**kwargs)|safe }}
+        </div>
+    {%- elif field.type == "FileField" %}
+        {{ field(class="form-control", **kwargs)|safe }}
+    {%- else %}
+        <div class="form-floating">
+            {{ field(placeholder="some", class="form-control", **kwargs)|safe }}
+            {{ field.label(placeholder="some", class="text-black") }}
+        </div>
+    {%- endif %}
+
+    {% for error in field.errors %}
+        <p class="bg-danger text-center rounded-bottom">{{ error }}</p>
+    {% endfor %}
+</div>
+
 {% endmacro %}
+
 
 {% macro render_field(field) %}
-    <div class="mt-2">
-        {{ field(**kwargs)|safe }}
-    </div>
+
+<div class="mt-2">
+    {{ field(**kwargs)|safe }}
+</div>
+
 {% endmacro %}
 
+
 {%- macro render_(form) %} 
-    {{ form.hidden_tag() }}
 
-    {%- for field in form if field.name not in ["csrf_token", "submit"] %}
-        {{ render_field_with_errors(field) }}
-    {%- endfor %}
+{{ form.hidden_tag() }}
 
-    <div class="text-center">
-        {{ render_field(form.submit, class="btn btn-success btn-lg mt-2") }}
-    </div>
+{%- for field in form if field.name not in ["csrf_token", "submit"] %}
+    {{ render_field_with_errors(field) }}
+{%- endfor %}
+
+<div class="text-center">
+    {{ render_field(form.submit, class="btn btn-success btn-lg mt-2") }}
+</div>
+
 {%- endmacro %} 
 
+
 {%- macro get_ready_(form, action, method="POST") %}
-    <div class="d-flex flex-column align-items-center mt-3">
-        <div class="col-md-6 col-sm-12 rounded my-form-bg-color">
-            <form
-                action="{{ action }}"
-                method="{{ method }}"
-                class="text-white py-3 px-3"
-            >
-                {{ render_(form) }}
-            </form>
-        </div>
+
+<div class="d-flex flex-column align-items-center mt-3">
+    <div class="col-md-6 col-sm-12 rounded my-form-bg-color">
+        <form
+            action="{{ action }}"
+            method="{{ method }}"
+            class="text-white py-3 px-3"
+        >
+            {{ render_(form) }}
+        </form>
     </div>
+</div>
+
 {%- endmacro %} 

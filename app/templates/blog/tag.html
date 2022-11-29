@@ -8,16 +8,18 @@
 
 
 {%- block content -%}
-    {%- if tag.posts.all() %}
-        {%- from 'blog/_post_macros.html' import show_all_posts_from_ %}
-        {{ show_all_posts_from_( tag.posts.all() ) }} 
-    {%- else %}
-        {%- from '_alerts_macros.html' import not_dismissible_alert %} 
-        {{ 
-            not_dismissible_alert(
-                message="There are not any posts with '#" + tag.title + "' yet",
-                category="primary"
-            ) 
-        }}
-    {%- endif %}
+
+{%- if tag.posts.all() %}
+    {%- from 'blog/_post_macros.html' import show_all_posts_from_ %}
+    {{ show_all_posts_from_( tag.posts.all() ) }} 
+{%- else %}
+    {%- from '_alerts_macros.html' import not_dismissible_alert %} 
+    {{ 
+        not_dismissible_alert(
+            message="There are not any posts with '#" + tag.title + "' yet",
+            category="primary"
+        ) 
+    }}
+{%- endif %}
+
 {%- endblock content -%} 

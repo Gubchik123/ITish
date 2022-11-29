@@ -1,35 +1,38 @@
 {%- extends 'blog/_blog.html' %}
 
 {%- block styles -%}
-    <style>
-        @media screen and (max-width: 452px) {
-            .badge { font-size: 1em; }
-        }
-    </style>
+<style>
+    @media screen and (max-width: 452px) {
+        .badge { font-size: 1em; }
+    }
+</style>
 {%- endblock styles -%} 
 
 {%- block content_title -%} All tags ({{ tags | length }}) {%- endblock -%} 
 
 
 {%- block content -%}
-    {{ super() }}
 
-    {%- if tags %}
-        <div class="tags">
-            {%- from 'blog/_post_macros.html' import show_all_tags_from_ %}
-            {{ show_all_tags_from_(tags) }} 
-        </div> 
-    {%- else %}
-        {%- from '_alerts_macros.html' import not_dismissible_alert %} 
-        {{ 
-            not_dismissible_alert(
-                message="There are not any tags yet",
-                category="primary"
-            ) 
-        }}
-    {%- endif %} 
+{{ super() }}
+
+{%- if tags %}
+    <div class="tags">
+        {%- from 'blog/_post_macros.html' import show_all_tags_from_ %}
+        {{ show_all_tags_from_(tags) }} 
+    </div> 
+{%- else %}
+    {%- from '_alerts_macros.html' import not_dismissible_alert %} 
+    {{ 
+        not_dismissible_alert(
+            message="There are not any tags yet",
+            category="primary"
+        ) 
+    }}
+{%- endif %} 
+
 {%- endblock content -%}
 
+
 {%- block scripts -%}
-    <script src="{{ url_for('static', filename='js/blog/tags.js') }}"></script>
+<script src="{{ url_for('static', filename='js/blog/tags.js') }}"></script>
 {%- endblock -%} 

@@ -37,36 +37,39 @@
 
 
 {%- block content -%}
-    {{ super() }}
 
-    {%- if posts.items %}
+{{ super() }}
 
-        {%- from 'blog/_post_macros.html' import show_all_posts_from_ %} 
-        {{ show_all_posts_from_(posts.items, current_user.id) }}
+{%- if posts.items %}
 
-        {%- include 'blog/_pagination.html' %} 
+    {%- from 'blog/_post_macros.html' import show_all_posts_from_ %} 
+    {{ show_all_posts_from_(posts.items, current_user.id) }}
 
+    {%- include 'blog/_pagination.html' %} 
+
+{%- else %}
+    {%- from '_alerts_macros.html' import not_dismissible_alert %}
+
+    {%- if request.args.get("q", "") %}
+        {{ 
+            not_dismissible_alert(
+                message="There are not such posts with '" 
+                        + request.args.get('q', '') + "' yet",
+                category="danger"
+            ) 
+        }}
     {%- else %}
-        {%- from '_alerts_macros.html' import not_dismissible_alert %}
+        {{ 
+            not_dismissible_alert(
+                message="There are not any posts yet",
+                category="primary"
+            ) 
+        }}
+    {%- endif %} 
+{%- endif %}
 
-        {%- if request.args.get("q", "") %}
-            {{ 
-                not_dismissible_alert(
-                    message="There are not such posts with '" 
-                            + request.args.get('q', '') + "' yet",
-                    category="danger"
-                ) 
-            }}
-        {%- else %}
-            {{ 
-                not_dismissible_alert(
-                    message="There are not any posts yet",
-                    category="primary"
-                ) 
-            }}
-        {%- endif %} 
-    {%- endif %}
 {%- endblock content -%} 
+
 
 {%- block scripts -%}  
 <script>
@@ -85,5 +88,6 @@
     resize_pagination();
     window.addEventListener("resize", resize_pagination);
 </script>
+
 <script src="{{ url_for('static', filename='js/delete_btn.js') }}"></script>
 {%- endblock scripts -%} 

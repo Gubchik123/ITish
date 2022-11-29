@@ -1,26 +1,28 @@
 {%- extends 'base.html' %}
 
-{%- block content_title_classes -%} &nbsp; text-center {%- endblock -%}
-
 {%- block flashed_messages -%}{%- endblock -%}
 
+
 {%- block content -%}
-    <div class="d-flex flex-column align-items-center mt-3">
-        <div class="col-md-6 col-sm-12 rounded my-form-bg-color">
-            {% from "_forms_macros.html" import render_ %}
-            {% include "_messages.html" %}
-            <form
-                action="{%- block form_action -%}{%- endblock -%}"
-                method="{%- block form_method -%}POST{%- endblock -%}"
-                name="{%- block form_name -%}{%- endblock -%}"
-                class="text-white py-3 px-3"
-            >
-                {{ render_(form) }}
-            </form>
-            <!-- Adding form content -->
-            {%- block adding_form_content -%}{%- endblock -%} 
-        </div>
+
+<div class="d-flex flex-column align-items-center mt-3">
+    <div class="col-md-6 col-sm-12 rounded my-form-bg-color">
+        {% from "_forms_macros.html" import render_ %}
+        {% include "_messages.html" %}
+        <form
+            action="{%- block form_action -%}{%- endblock -%}"
+            method="{%- block form_method -%}POST{%- endblock -%}"
+            name="{%- block form_name -%}{%- endblock -%}"
+            class="text-white py-3 px-3"
+        >
+            {{ render_(form) }}
+        </form>
+        <!-- Adding form content -->
+        {%- block adding_form_content -%}{%- endblock -%} 
     </div>
+</div>
+
 {%- endblock content -%} 
+
 
 {%- block footer -%}{%- endblock -%}

@@ -28,7 +28,7 @@
 			href="{{ url_for('static', filename='css/general.css') }}"
 		/>
 
-		<!-- Block for extending for other CSS files or block styles -->
+		<!-- My styles and CSS files -->
 		{%- block styles -%}{%- endblock -%}
 	</head>
 	<body>
@@ -121,7 +121,12 @@
 											<li>
 												<a
 													class="dropdown-item d-flex justify-content-between align-items-center"
-													href="{{ url_for('profile.get_user_with_', username=current_user.username) }}"
+													href="{{ 
+                                                        url_for(
+                                                            'profile.get_user_with_', 
+                                                            username=current_user.username
+                                                        ) 
+                                                    }}"
 												>
 													Profile
 													<ion-icon
@@ -132,7 +137,11 @@
 											<li>
 												<a
 													class="dropdown-item d-flex justify-content-between align-items-center"
-													href="{{ url_for('blog.create_post') }}"
+													href="{{ 
+                                                        url_for(
+                                                            'blog.create_post'
+                                                        ) 
+                                                    }}"
 												>
 													New post...
 													<ion-icon
@@ -146,7 +155,12 @@
 											<li>
 												<a
 													class="dropdown-item d-flex justify-content-between align-items-center"
-													href="{{ url_for('auth.log_out_user', next=request.url) }}"
+													href="{{ 
+                                                        url_for(
+                                                            'auth.log_out_user', 
+                                                            next=request.url
+                                                        ) 
+                                                    }}"
 												>
 													Log out
 													<ion-icon
@@ -158,7 +172,12 @@
 									</div>
 									{%- else %}
 									<a
-										href="{{ url_for('auth.log_in_user', next=request.url) }}"
+										href="{{ 
+                                            url_for(
+                                                'auth.log_in_user', 
+                                                next=request.url
+                                            ) 
+                                        }}"
 										class="btn btn-outline-success me-2"
 									>
 										Log In
@@ -180,10 +199,10 @@
 			<main class="my-4">
 				<div class="container">
 					<div class="row">
-						<div class="d-flex justify-content-between align-items-center">
-                            <h1
-                                class="mb-4 {%- block content_title_classes -%}{%- endblock -%}"
-                            >
+						<div 
+                            class="d-flex justify-content-between align-items-center"
+                        >
+                            <h1 class="mb-4">
                                 {%- block content_title -%}{%- endblock -%}
                             </h1>
                             
@@ -195,7 +214,6 @@
                             {%- include '_messages.html' %} 
                         {%- endblock -%}
                         
-                        
                         {%- block content -%}{%- endblock -%}
 
                         <button 
@@ -205,7 +223,6 @@
                             <ion-icon name="arrow-up-outline"></ion-icon>
                         </button>
                     </div>
-					{%- block additional_content -%}{%- endblock -%}
 				</div>
 			</main>
 
@@ -258,9 +275,9 @@
 
 		<!-- Bootstrap 5 script -->
 		<script
+            crossorigin="anonymous"
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
 			integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
-			crossorigin="anonymous"
 		></script>
 
 		<!-- Light dark toggle script -->
@@ -279,7 +296,7 @@
 			src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
 		></script>
 
-		<!-- Block for extending for other scripts -->
+		<!-- My scripts and JS files -->
 		{%- block scripts -%}{%- endblock -%}
 	</body>
 </html>

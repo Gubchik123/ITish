@@ -6,7 +6,9 @@
 
 {%- block form_name -%} login_form {%- endblock -%}
 
+
 {%- block adding_form_content -%}
+
 <div class="text-center mb-4 px-3">
     <a href="{{ url_for('auth.log_in_admin') }}" class="my-text-color">
         Login as admin
@@ -18,4 +20,5 @@
         Create new account
     </a>
 </div>
+
 {%- endblock adding_form_content -%} 
