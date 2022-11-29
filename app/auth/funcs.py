@@ -10,7 +10,7 @@ from .forms import RegistrationForm, LoginAdminForm, LoginForm
 
 
 @catch_flask_error_(RoutingException)
-def _get_url_for_user_profile_page():
+def _get_url_for_user_profile_page() -> str:
     return flask.url_for("profile.get_user_with_", username=flog.current_user.username)
 
 
@@ -26,7 +26,7 @@ def check_if_user_is_already_authenticated(func):
 
 
 @check_if_user_is_already_authenticated
-def sign_up_user():
+def sign_up_user() -> str | flask.Response:
     form = RegistrationForm()
 
     if form.validate_on_submit():
@@ -40,7 +40,7 @@ def sign_up_user():
 
 @check_if_user_is_already_authenticated
 @catch_flask_error_(RoutingException)
-def log_in_user():
+def log_in_user() -> str | flask.Response:
     form = LoginForm()
 
     if form.validate_on_submit():
@@ -55,7 +55,7 @@ def log_in_user():
 
 
 @catch_flask_error_(RoutingException)
-def log_out_user():
+def log_out_user() -> flask.Response:
     flog.logout_user()
     flask.session["admin_logged"] = False
 
@@ -65,7 +65,7 @@ def log_out_user():
     )
 
 
-def log_in_admin():
+def log_in_admin() -> str | flask.Response:
     form = LoginAdminForm()
 
     if form.validate_on_submit():

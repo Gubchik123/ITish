@@ -8,30 +8,30 @@ from .forms import NewEmailForm, NewUsernameForm, NewPasswordForm
 
 
 @catch_sqlalchemy_errors
-def _update_current_user_avatar_in_db():
+def _update_current_user_avatar_in_db() -> None:
     flog.current_user.avatar = flask.request.files["avatar_image"].read()
     db.session.commit()
 
 
 @catch_sqlalchemy_errors
-def _delete_current_user_from_db():
+def _delete_current_user_from_db() -> None:
     db.session.delete(flog.current_user)
     db.session.commit()
 
 
 @catch_sqlalchemy_errors
-def _edit_current_user_email_in_db():
+def _edit_current_user_email_in_db() -> None:
     flog.current_user.email = NewEmailForm().email.data
     db.session.commit()
 
 
 @catch_sqlalchemy_errors
-def _edit_current_user_username_in_db():
+def _edit_current_user_username_in_db() -> None:
     flog.current_user.username = NewUsernameForm().username.data
     db.session.commit()
 
 
 @catch_sqlalchemy_errors
-def _edit_current_user_password_in_db():
+def _edit_current_user_password_in_db() -> None:
     flog.current_user.password = generate_password_hash(NewPasswordForm().password.data)
     db.session.commit()

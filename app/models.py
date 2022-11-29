@@ -36,7 +36,7 @@ class User(db.Model, UserMixin):
     )
 
 
-def get_correct_str_from_(s: str):
+def get_correct_str_from_(s: str) -> str:
     return re.sub(pattern=r"[^\w+]", repl="-", string=s)
 
 
@@ -48,7 +48,7 @@ post_tags = db.Table(
 
 
 class General:
-    def generate_correct_url(self):
+    def generate_correct_url(self) -> None:
         self.url = get_correct_str_from_(self.title)
 
     def __repr__(self) -> str:

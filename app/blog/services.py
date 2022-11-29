@@ -1,19 +1,19 @@
 from flask_login import current_user
 
 from ..extensions import db
-from ..models import Post, Tag, Comment
+from ..models import Tag, Post, Like, Comment
 from ..exceptions import catch_sqlalchemy_errors
 from .forms import PostCreateForm, PostEditForm, CommentForm
 
 
 @catch_sqlalchemy_errors
-def _delete_from_db_(item):
+def _delete_from_db_(item: Post | Like | Comment) -> None:
     db.session.delete(item)
     db.session.commit()
 
 
 @catch_sqlalchemy_errors
-def _add_in_db_(item):
+def _add_in_db_(item: Like) -> None:
     db.session.add(item)
     db.session.commit()
 
@@ -23,7 +23,7 @@ def _there_is_not_tag_with_such_(title: str) -> bool:
 
 
 @catch_sqlalchemy_errors
-def _create_non_existent_tags_from_(tag_titles: list[str]):
+def _create_non_existent_tags_from_(tag_titles: list[str]) -> None:
     for tag_title in tag_titles:
         if _there_is_not_tag_with_such_(tag_title):
             db.session.add(Tag(title=tag_title))
@@ -40,7 +40,7 @@ def _get_striped_and_lower_tag_titles_from_(
     return striped_and_lower_tag_titles
 
 
-def _get_all_tags_for_post_from_(form: PostCreateForm | PostEditForm):
+def _get_all_tags_for_post_from_(form: PostCreateForm | PostEditForm) -> list[Tag]:
     return (
         [
             Tag.query.filter(Tag.title == tag_title).first()
@@ -52,7 +52,7 @@ def _get_all_tags_for_post_from_(form: PostCreateForm | PostEditForm):
 
 
 @catch_sqlalchemy_errors
-def _add_post_in_db_with_data_from_(form: PostCreateForm):
+def _add_post_in_db_with_data_from_(form: PostCreateForm) -> None:
     db.session.add(
         Post(
             title=form.post_title.data,
@@ -65,7 +65,7 @@ def _add_post_in_db_with_data_from_(form: PostCreateForm):
 
 
 @catch_sqlalchemy_errors
-def _add_comment_in_db_for_(post: Post):
+def _add_comment_in_db_for_(post: Post) -> None:
     db.session.add(
         Comment(
             body=CommentForm().comment_body.data,
@@ -77,7 +77,7 @@ def _add_comment_in_db_for_(post: Post):
 
 
 @catch_sqlalchemy_errors
-def _edit_post_in_db_with_data_from_(form: PostEditForm, post: Post):
+def _edit_post_in_db_with_data_from_(form: PostEditForm, post: Post) -> None:
     post.title = form.post_title.data
     post.body = form.post_body.data
     post.tags = _get_all_tags_for_post_from_(form)

@@ -12,7 +12,7 @@ class Error(NamedTuple):
     description: str
 
 
-def _render_error_page(error: Error):
+def _render_error_page(error: Error) -> tuple[str, int]:
     return (
         flask.render_template(
             "error.html",

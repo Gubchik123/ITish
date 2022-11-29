@@ -6,13 +6,13 @@ def _there_is_user_with_such_username(username: str) -> bool:
     return bool(User.query.filter(User.username == username).first())
 
 
-def _check_username(form, field):
+def _check_username(form, field: wtforms.StringField) -> None:
     if _there_is_user_with_such_username(_get_striped_(field.data)):
-        raise wtf.ValidationError("There is the user with such username!")
+        raise wtforms.ValidationError("There is the user with such username!")
 
 
 class NewUsernameForm(FlaskForm):
-    username = wtf.StringField(
+    username = wtforms.StringField(
         "Username",
         validators=[
             required,
@@ -25,7 +25,7 @@ class NewUsernameForm(FlaskForm):
             _check_username,
         ],
     )
-    submit = wtf.SubmitField("Change username")
+    submit = wtforms.SubmitField("Change username")
 
     def get_string_for_action(self) -> str:
         return "username"

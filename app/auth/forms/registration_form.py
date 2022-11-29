@@ -6,12 +6,12 @@ def _there_is_user_with_such_username(username: str) -> bool:
     return bool(User.query.filter(User.username == username).first())
 
 
-def _check_username(form, field):
+def _check_username(form, field: wtforms.StringField) -> None:
     if _there_is_user_with_such_username(_get_striped_(field.data)):
         raise wtforms.ValidationError("There is the user with such username!")
 
 
-def _check_email(form, field):
+def _check_email(form, field: wtforms.EmailField) -> None:
     if _there_is_user_with_such_email(_get_striped_(field.data)):
         raise wtforms.ValidationError("There is the user with such email!")
 

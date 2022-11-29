@@ -5,12 +5,12 @@ from .general import _get_striped_
 from .general import _there_is_user_with_such_email
 
 
-def _check_user_email(form, field):
+def _check_user_email(form, field: wtforms.EmailField) -> None:
     if not _there_is_user_with_such_email(_get_striped_(field.data)):
         raise wtforms.ValidationError("There is not the user with such email!")
 
 
-def _check_user_password(form, field):
+def _check_user_password(form, field: wtforms.PasswordField) -> None:
     user = User.query.filter(User.email == _get_striped_(form.email.data)).first()
 
     if user and not check_password_hash(user.password, _get_striped_(field.data)):

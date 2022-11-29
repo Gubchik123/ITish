@@ -2,10 +2,10 @@ from .general import *
 
 
 class NewPasswordForm(FlaskForm):
-    password = wtf.PasswordField(
+    password = wtforms.PasswordField(
         "Password", validators=[required, validator.Length(min=5)]
     )
-    password_again = wtf.PasswordField(
+    password_again = wtforms.PasswordField(
         "Password again",
         validators=[
             required,
@@ -13,7 +13,7 @@ class NewPasswordForm(FlaskForm):
             validator.EqualTo("password", message="Passwords must match!"),
         ],
     )
-    submit = wtf.SubmitField("Change password")
+    submit = wtforms.SubmitField("Change password")
 
     def get_string_for_action(self) -> str:
         return "password"

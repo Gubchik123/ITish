@@ -1,4 +1,4 @@
-import wtforms as wtf
+import wtforms
 from flask_wtf import FlaskForm
 import wtforms.validators as validator
 

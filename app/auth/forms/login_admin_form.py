@@ -4,7 +4,7 @@ from .general import *
 from .general import _get_striped_
 
 
-def _check_admin_password(form, field):
+def _check_admin_password(form, field: wtforms.PasswordField) -> None:
     if str(os.getenv("ADMIN_PASSWORD")) != _get_striped_(field.data):
         raise wtforms.ValidationError("Wrong admin password!")
 

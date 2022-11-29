@@ -1,3 +1,5 @@
+import flask
+
 from . import funcs
 from .app import app
 
@@ -12,22 +14,22 @@ app.register_blueprint(profile, url_prefix="/user")
 
 
 @app.route("/")
-def get_home_page():
+def get_home_page() -> str:
     return funcs.get_home_page()
 
 
 @app.route("/FAQs")
-def get_FAQs_page():
+def get_FAQs_page() -> str:
     return funcs.get_FAQs_page()
 
 
 @app.route("/about")
-def get_about_page():
+def get_about_page() -> str:
     return funcs.get_about_page()
 
 
 @app.errorhandler(401)
-def abort_to_login_page(error):
+def abort_to_login_page(error) -> flask.Response:
     return funcs.abort_to_login_page()
 
 
@@ -36,5 +38,5 @@ def abort_to_login_page(error):
 @app.errorhandler(404)
 @app.errorhandler(500)
 @app.errorhandler(501)
-def get_error_page(error):
+def get_error_page(error) -> tuple[str, int]:
     return funcs.get_error_page(error)

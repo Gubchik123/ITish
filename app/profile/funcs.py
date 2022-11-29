@@ -20,7 +20,7 @@ def _check_if_it_is_current_user(func):
     return inner
 
 
-def get_user_with_(username: str):
+def get_user_with_(username: str) -> str:
     form = UserAvatarForm()
     tabs = ["", "overview", "posts", "comments", "likes"]
 
@@ -34,7 +34,7 @@ def get_user_with_(username: str):
     )
 
 
-def get_avatar_for_user_with_(username: str):
+def get_avatar_for_user_with_(username: str) -> flask.Response:
     user_avatar = User.query.filter(User.username == username).first().avatar
 
     if user_avatar:
@@ -50,14 +50,14 @@ def get_avatar_for_user_with_(username: str):
     return response
 
 
-def _redirect_on_current_user_profile_page():
+def _redirect_on_current_user_profile_page() -> flask.Response:
     return redirect_to_url_for_(
         "profile.get_user_with_", username=flog.current_user.username
     )
 
 
 @_check_if_it_is_current_user
-def update_user_avatar(username: str):
+def update_user_avatar(username: str) -> flask.Response:
     if UserAvatarForm().validate_on_submit():
         services._update_current_user_avatar_in_db()
         flask.flash("Avatar has successfully updated", category="success")
@@ -68,7 +68,7 @@ def update_user_avatar(username: str):
 
 
 @_check_if_it_is_current_user
-def delete_current_user(username: str):
+def delete_current_user(username: str) -> flask.Response:
     services._delete_current_user_from_db()
 
     flask.flash("Profile has successfully deleted", category="success")
@@ -76,7 +76,7 @@ def delete_current_user(username: str):
 
 
 @_check_if_it_is_current_user
-def get_edit_page(username: str):
+def get_edit_page(username: str) -> str:
     return render_template(
         "profile/edit.html",
         forms=(NewEmailForm(), NewUsernameForm(), NewPasswordForm()),
@@ -85,10 +85,10 @@ def get_edit_page(username: str):
 
 def _check_if_info_validate_on_submit_in_(
     form: NewEmailForm | NewUsernameForm | NewPasswordForm,
-):
+) -> flask.Response:
     def decorator(func):
         @_check_if_it_is_current_user
-        def inner(username: str):
+        def inner(username: str) -> flask.Response:
             if form().validate_on_submit():
                 func(username)
                 return _redirect_on_current_user_profile_page()
@@ -105,18 +105,18 @@ def _check_if_info_validate_on_submit_in_(
 
 
 @_check_if_info_validate_on_submit_in_(NewEmailForm)
-def edit_current_user_email(username: str):
+def edit_current_user_email(username: str) -> flask.Response:
     services._edit_current_user_email_in_db()
     flask.flash("Email has successfully changed", category="success")
 
 
 @_check_if_info_validate_on_submit_in_(NewUsernameForm)
-def edit_current_user_username(username: str):
+def edit_current_user_username(username: str) -> flask.Response:
     services._edit_current_user_username_in_db()
     flask.flash("Username has successfully changed", category="success")
 
 
 @_check_if_info_validate_on_submit_in_(NewPasswordForm)
-def edit_current_user_password(username: str):
+def edit_current_user_password(username: str) -> flask.Response:
     services._edit_current_user_password_in_db()
     flask.flash("Password has successfully changed", category="success")

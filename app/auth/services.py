@@ -13,7 +13,7 @@ def _get_striped_(string: str) -> str:
 
 
 @catch_sqlalchemy_errors
-def _add_user_in_db_with_data_from_(form: RegistrationForm):
+def _add_user_in_db_with_data_from_(form: RegistrationForm) -> None:
     db.session.add(
         User(
             email=_get_striped_(form.email.data),
@@ -25,7 +25,7 @@ def _add_user_in_db_with_data_from_(form: RegistrationForm):
 
 
 @catch_sqlalchemy_errors
-def _log_in_user_with_data_from_(form: LoginForm):
+def _log_in_user_with_data_from_(form: LoginForm) -> None:
     flog.login_user(
         User.query.filter(User.email == form.email.data).first(),
         remember=form.remember.data,
