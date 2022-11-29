@@ -3,20 +3,25 @@ from .general import _get_striped_, _there_is_user_with_such_email
 
 
 def _there_is_user_with_such_username(username: str) -> bool:
+    """For checking on exist user with such username"""
     return bool(User.query.filter(User.username == username).first())
 
 
 def _check_username(form, field: wtforms.StringField) -> None:
+    """For checking user username from username field data"""
     if _there_is_user_with_such_username(_get_striped_(field.data)):
         raise wtforms.ValidationError("There is the user with such username!")
 
 
 def _check_email(form, field: wtforms.EmailField) -> None:
+    """For checking on exist user with such email"""
     if _there_is_user_with_such_email(_get_striped_(field.data)):
         raise wtforms.ValidationError("There is the user with such email!")
 
 
 class RegistrationForm(FlaskForm):
+    """Form for user registration with username, email and password"""
+
     username = wtforms.StringField(
         "Username",
         validators=[

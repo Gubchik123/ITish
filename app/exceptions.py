@@ -7,12 +7,15 @@ from werkzeug.routing.exceptions import RoutingException
 
 
 class Error(NamedTuple):
+    """NamedTuple for storing information about error"""
+
     code = 500
     name: str
     description: str
 
 
 def _render_error_page(error: Error) -> tuple[str, int]:
+    """For rendering error template with error"""
     return (
         flask.render_template(
             "error.html",
@@ -23,6 +26,8 @@ def _render_error_page(error: Error) -> tuple[str, int]:
 
 
 def catch_sqlalchemy_errors(func):
+    """The decorator for catching SQAlchemy errors"""
+
     def inner(*args, **kwargs):
         try:
             answer = func(*args, **kwargs)
@@ -44,12 +49,13 @@ def catch_sqlalchemy_errors(func):
 
 
 def catch_flask_error_(flask_exception: TemplateError | RoutingException):
+    """The decorator for catching template or build flask errors"""
+
     def decorator(func):
         def inner(*args, **kwargs):
             try:
                 answer = func(*args, **kwargs)
             except flask_exception:
-                print("catch exception")
                 answer = _render_error_page(
                     error=Error(
                         name="Page error",

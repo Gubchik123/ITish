@@ -6,6 +6,8 @@ load_dotenv()
 
 
 class _BaseConfig:
+    """General configs"""
+
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
@@ -16,11 +18,15 @@ class _BaseConfig:
 
 
 class ForProduction(_BaseConfig):
+    """Production configs"""
+
     ENV = "production"
     SECRET_KEY = str(os.getenv("SECRET_KEY"))
 
 
 class ForDevelopment(_BaseConfig):
+    """Development configs"""
+
     DEBUG = True
     DEVELOPMENT = True
     ENV = "development"
@@ -28,6 +34,8 @@ class ForDevelopment(_BaseConfig):
 
 
 class ForTesting(_BaseConfig):
+    """Testing configs"""
+
     TESTING = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SECRET_KEY = "secret_for_test_environment"

@@ -22,6 +22,7 @@ login_manager.login_message_category = "warning"
 
 @login_manager.user_loader
 def _load_user(id):
+    """For getting user from db if exist"""
     return User.query.filter(User.id == id).first()
 
 

@@ -11,10 +11,13 @@ from .forms import RegistrationForm, LoginAdminForm, LoginForm
 
 @catch_flask_error_(RoutingException)
 def _get_url_for_user_profile_page() -> str:
+    """For getting url for the profile page for current user"""
     return flask.url_for("profile.get_user_with_", username=flog.current_user.username)
 
 
 def check_if_user_is_already_authenticated(func):
+    """The decorator for checking if user is authenticated"""
+
     def inner():
         return (
             flask.redirect(_get_url_for_user_profile_page())
@@ -27,6 +30,10 @@ def check_if_user_is_already_authenticated(func):
 
 @check_if_user_is_already_authenticated
 def sign_up_user() -> str | flask.Response:
+    """
+    GET: rendering template for the page for registration
+    POST: user registration and redirecting to the page for login
+    """
     form = RegistrationForm()
 
     if form.validate_on_submit():
@@ -41,6 +48,10 @@ def sign_up_user() -> str | flask.Response:
 @check_if_user_is_already_authenticated
 @catch_flask_error_(RoutingException)
 def log_in_user() -> str | flask.Response:
+    """
+    GET: rendering template for the page for user login
+    POST: user login and redirecting to next url or user profile page
+    """
     form = LoginForm()
 
     if form.validate_on_submit():
@@ -56,6 +67,7 @@ def log_in_user() -> str | flask.Response:
 
 @catch_flask_error_(RoutingException)
 def log_out_user() -> flask.Response:
+    """For user logout and redirecting to next url or 'Home' page"""
     flog.logout_user()
     flask.session["admin_logged"] = False
 
@@ -66,6 +78,10 @@ def log_out_user() -> flask.Response:
 
 
 def log_in_admin() -> str | flask.Response:
+    """
+    GET: rendering template for the page for admin login
+    POST: admin login and redirecting to the admin panel
+    """
     form = LoginAdminForm()
 
     if form.validate_on_submit():

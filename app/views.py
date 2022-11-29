@@ -15,22 +15,26 @@ app.register_blueprint(profile, url_prefix="/user")
 
 @app.route("/")
 def get_home_page() -> str:
+    """For getting the 'Home' page"""
     return funcs.get_home_page()
 
 
 @app.route("/FAQs")
 def get_FAQs_page() -> str:
+    """For getting the 'FAQs' page"""
     return funcs.get_FAQs_page()
 
 
 @app.route("/about")
 def get_about_page() -> str:
+    """For getting the 'About' page"""
     return funcs.get_about_page()
 
 
 @app.errorhandler(401)
-def abort_to_login_page(error) -> flask.Response:
-    return funcs.abort_to_login_page()
+def redirect_to_login_page(error) -> flask.Response:
+    """For handling error code 401"""
+    return funcs.redirect_to_login_page()
 
 
 @app.errorhandler(400)
@@ -39,4 +43,5 @@ def abort_to_login_page(error) -> flask.Response:
 @app.errorhandler(500)
 @app.errorhandler(501)
 def get_error_page(error) -> tuple[str, int]:
+    """For handling some HTTP error codes"""
     return funcs.get_error_page(error)

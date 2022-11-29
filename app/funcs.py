@@ -31,7 +31,7 @@ def _get_logout_page_url() -> str:
     return flask.request.url_root[:-1] + flask.url_for("auth.log_out_user")
 
 
-def abort_to_login_page() -> flask.Response:
+def redirect_to_login_page() -> flask.Response:
     next = flask.request.url if flask.request.url != _get_logout_page_url() else None
     flask.flash("Please log in to access this page", category="warning")
     return redirect_to_url_for_("auth.log_in_user", next=next)
