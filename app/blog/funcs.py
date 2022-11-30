@@ -16,7 +16,7 @@ from .forms import PostCreateForm, PostEditForm, CommentForm
 def get_js_file(filename: str) -> flask.Response:
     """For getting generated path to static js file"""
     return flask.send_from_directory(
-        app.config["UPLOAD_FOLDER"],
+        app.config["UPLOAD_FOLDER"],  # Static folder
         f"js/{filename}" if ".js" in filename else f"js/{filename}.js",
         as_attachment=True,
         mimetype="text/javascript",
@@ -97,7 +97,7 @@ def get_post_by_(post_url: str) -> str:
     """For rendering the template for the post page"""
     return render_template(
         "blog/post.html",
-        desc=desc,
+        desc=desc,  # For SQL query 'ORDER BY ... DESC'
         form=CommentForm(),
         post=Post.query.filter(Post.url == post_url).first_or_404(),
     )
@@ -116,7 +116,6 @@ def delete_post_with_(post_url: str) -> flask.Response:
     post = Post.query.filter(Post.url == post_url).first_or_404()
 
     _check_if_current_user_is_author_of_(post)
-
     services._delete_from_db_(post)
 
     flask.flash("Post has successfully deleted", category="success")

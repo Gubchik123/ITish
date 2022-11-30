@@ -38,5 +38,5 @@ def _log_in_user_with_data_from_(form: LoginForm) -> None:
     """For user login using 'Flask-Login' extension"""
     flog.login_user(
         User.query.filter(User.email == form.email.data).first(),
-        remember=form.remember.data,
+        remember=form.remember.data,  # Boolean field 'Remember me'
     )

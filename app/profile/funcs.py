@@ -24,15 +24,14 @@ def _check_if_it_is_current_user(func):
 
 def get_user_with_(username: str) -> str:
     """For rendering the profile page for user by username"""
-    form = UserAvatarForm()
-    tabs = ["", "overview", "posts", "comments", "likes"]
+    allowed_tabs = ["", "overview", "posts", "comments", "likes"]
 
-    if flask.request.args.get("tab", "") not in tabs:
+    if flask.request.args.get("tab", "") not in allowed_tabs:
         return flask.abort(404)
 
     return render_template(
         "profile/index.html",
-        form=form,
+        form=UserAvatarForm(),
         user=User.query.filter(User.username == username).first_or_404(),
     )
 
