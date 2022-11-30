@@ -1,9 +1,20 @@
+import logging
+import logging.config
 from typing import NamedTuple
 
 import flask
 from sqlalchemy.exc import SQLAlchemyError
 from jinja2.exceptions import TemplateError
 from werkzeug.routing.exceptions import RoutingException
+
+from .logging_settings import logger_config
+
+
+# Set up logging config
+logging.config.dictConfig(logger_config)
+
+# Creating my logger
+logger = logging.getLogger("exceptions")
 
 
 class Error(NamedTuple):
@@ -31,7 +42,8 @@ def catch_sqlalchemy_errors(func):
     def inner(*args, **kwargs):
         try:
             answer = func(*args, **kwargs)
-        except SQLAlchemyError:
+        except SQLAlchemyError as e:
+            logger.error(f"Exception with SQLAlchemy: {e}")
             answer = _render_error_page(
                 error=Error(
                     name="DB error",
@@ -55,7 +67,8 @@ def catch_flask_error_(flask_exception: TemplateError | RoutingException):
         def inner(*args, **kwargs):
             try:
                 answer = func(*args, **kwargs)
-            except flask_exception:
+            except flask_exception as e:
+                logger.error(f"Flask exception with: {e}")
                 answer = _render_error_page(
                     error=Error(
                         name="Page error",
