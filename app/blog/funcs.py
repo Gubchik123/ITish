@@ -2,10 +2,8 @@ import flask
 import flask_login as flog
 from sqlalchemy import desc
 from flask_sqlalchemy.pagination import Pagination
-from werkzeug.routing.exceptions import RoutingException
 
 from ..app import app
-from ..exceptions import catch_flask_error_
 from ..models import Post, Tag, Comment, Like
 from ..funcs import render_template, redirect_to_url_for_
 
@@ -84,7 +82,6 @@ def create_post() -> str:
     return render_template("blog/create_post.html", form=form)
 
 
-@services.catch_sqlalchemy_errors
 def get_all_posts_with_(tag: str) -> str:
     """For rendering the template for the page with posts by tag"""
     return render_template(
@@ -92,7 +89,6 @@ def get_all_posts_with_(tag: str) -> str:
     )
 
 
-@services.catch_sqlalchemy_errors
 def get_post_by_(post_url: str) -> str:
     """For rendering the template for the post page"""
     return render_template(
@@ -109,8 +105,6 @@ def _check_if_current_user_is_author_of_(content: Post | Comment) -> None:
         flask.abort(403)
 
 
-@services.catch_sqlalchemy_errors
-@catch_flask_error_(RoutingException)
 def delete_post_with_(post_url: str) -> flask.Response:
     """For deleting post by post url and redirecting to next url or 'Blog' page"""
     post = Post.query.filter(Post.url == post_url).first_or_404()
@@ -124,7 +118,6 @@ def delete_post_with_(post_url: str) -> flask.Response:
     )
 
 
-@services.catch_sqlalchemy_errors
 def _get_post_id_and_like_from_json() -> tuple[int, Like]:
     """For parsing json and getting post id and like"""
     data = flask.request.get_json()
@@ -161,8 +154,6 @@ def comment_post_with_(post_url: str) -> flask.Response:
     return redirect_to_url_for_("blog.get_post_by_", post_url=post_url)
 
 
-@services.catch_sqlalchemy_errors
-@catch_flask_error_(RoutingException)
 def delete_comment_with_(post_url: str, comment_id: int) -> flask.Response:
     """For deleting comment from db and redirecting to next url or post page"""
     comment = Comment.query.filter(Comment.id == comment_id).first_or_404()
@@ -177,7 +168,6 @@ def delete_comment_with_(post_url: str, comment_id: int) -> flask.Response:
     )
 
 
-@services.catch_sqlalchemy_errors
 def edit_post_with_(post_url: str) -> str | flask.Response:
     """
     GET: rendering the template for the page for post editing
