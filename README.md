@@ -82,11 +82,3 @@ Run the project
 ```
 
 > **Note:** Don't forget about environment variables
-
-### My contacts
-
-<p align="left">
-<a href="https://stackoverflow.com/users/20199410" target="_blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/stack-overflow.svg" height="30" width="40" /></a>
-<a href="https://instagram.com/nikitos.1746" target="_blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" height="30" width="40" /></a>
-<a href="https://t.me/Gubchik123" target="_blank"><img align="center" src="./md_images/telegram-icon.png" width="40" /></a>
-</p>
