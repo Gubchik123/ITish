@@ -31,7 +31,7 @@ from .admin import *
 
 
 admin = Admin(
-    app, "ITish", url="/", index_view=HomeAdminView(), template_mode="bootstrap4"
+    app, "ITish", url="/admin/", index_view=HomeAdminView(), template_mode="bootstrap4"
 )
 
 admin.add_view(UserAdminView(User, db.session))
