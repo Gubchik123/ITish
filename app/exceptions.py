@@ -39,6 +39,7 @@ def _render_error_page(error: Error) -> tuple[str, int]:
 def catch_sqlalchemy_errors(func):
     """The decorator for catching SQAlchemy errors"""
 
+    @catch_all_other_exceptions
     def inner(*args, **kwargs):
         # Default value for answer for returning
         answer = _render_error_page(
@@ -66,6 +67,7 @@ def catch_flask_error_(flask_exception: TemplateError | RoutingException):
     """The decorator for catching template or build flask errors"""
 
     def decorator(func):
+        @catch_all_other_exceptions
         def inner(*args, **kwargs):
             # Default value for answer for returning
             answer = _render_error_page(
@@ -88,3 +90,28 @@ def catch_flask_error_(flask_exception: TemplateError | RoutingException):
         return inner
 
     return decorator
+
+
+def catch_all_other_exceptions(func):
+    """The decorator for catching all other errors"""
+
+    def inner(*args, **kwargs):
+        # Default value for answer for returning
+        answer = _render_error_page(
+            error=Error(
+                name="Error",
+                description="""
+                    Sorry for the inconvenience, 
+                    but an unexpected error has occurred.
+                """,
+            ),
+        )
+
+        try:
+            answer = func(*args, **kwargs)
+        except Exception as e:
+            logger.error(f"Base error with: {e}")
+        finally:
+            return answer
+
+    return inner
