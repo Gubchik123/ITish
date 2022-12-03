@@ -91,7 +91,9 @@
                 <h4>User details</h4>
                 <p>
                     <b>Username: </b> &nbsp; {{ user.username }} <br>
-                    <b>Email: </b> &nbsp; {{ user.email }}
+                    <b>Email: </b> &nbsp; {{ user.email }} <br>
+                    <b>Registered on the site: </b> &nbsp; 
+                    {{ user.created.strftime("%d.%m.%Y") }}
                 </p>
             </div>
             <div class="user-info__activity">
