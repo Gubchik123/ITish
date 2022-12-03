@@ -36,11 +36,11 @@ The system consists of the following main functional blocks:
 -   Backend:
     -   Python programming language;
     -   Flask framework with following extensions:
-        - Flask-Admin (for admin panel);
-        - Flask-Login (for 'auth' functionality);
-        - Flask-Migrate (for migrations);
-        - Flask-SQLAlchemy (for database using python objects);
-        - Flask-WTF (for rendering forms).
+        -   Flask-Admin (for admin panel);
+        -   Flask-Login (for 'auth' functionality);
+        -   Flask-Migrate (for migrations);
+        -   Flask-SQLAlchemy (for database using python objects);
+        -   Flask-WTF (for rendering forms).
     -   MySQL / PostgreSQL database;
 -   Frontend:
     -   HTML & CSS;
@@ -52,8 +52,10 @@ The system consists of the following main functional blocks:
 To run this project, you will need to add the following environment variables to your .env file
 
 `ADMIN_PASSWORD`
-`DATABASE_URI`
 `SECRET_KEY`
+`DATABASE_TEST_URI`
+`DATABASE_PRODUCTION_URI`
+`DATABASE_DEVELOPMENT_URI`
 
 ### Run Locally
 

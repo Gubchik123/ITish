@@ -14,7 +14,6 @@ class _BaseConfig:
     DEVELOPMENT = False
     UPLOAD_FOLDER = "static"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = str(os.getenv("DATABASE_URI"))
 
 
 class ForProduction(_BaseConfig):
@@ -22,6 +21,7 @@ class ForProduction(_BaseConfig):
 
     ENV = "production"
     SECRET_KEY = str(os.getenv("SECRET_KEY"))
+    SQLALCHEMY_DATABASE_URI = str(os.getenv("DATABASE_PRODUCTION_URI"))
 
 
 class ForDevelopment(_BaseConfig):
@@ -31,11 +31,14 @@ class ForDevelopment(_BaseConfig):
     DEVELOPMENT = True
     ENV = "development"
     SECRET_KEY = "secret_for_development_environment"
+    SQLALCHEMY_DATABASE_URI = str(os.getenv("DATABASE_DEVELOPMENT_URI"))
 
 
 class ForTesting(_BaseConfig):
     """Testing configs"""
 
     TESTING = True
+    ENV = "testing"
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SECRET_KEY = "secret_for_test_environment"
+    SQLALCHEMY_DATABASE_URI = str(os.getenv("DATABASE_TEST_URI"))
