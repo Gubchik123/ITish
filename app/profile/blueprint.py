@@ -15,6 +15,7 @@ def get_user_with_(username: str) -> str:
 
 
 @profile.route("/<username>/get-user-avatar")
+@flog.login_required
 def get_avatar_for_user_with_(username: str) -> flask.Response:
     """For getting avatar for user by username"""
     return funcs.get_avatar_for_user_with_(username)
