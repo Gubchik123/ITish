@@ -3,7 +3,7 @@ import flask_login as flog
 
 from ..app import app
 from ..models import User
-from ..funcs import render_template, redirect_to_url_for_
+from ..funcs import render_template, redirect_to_url_for_, catch_all_other_exceptions
 
 from . import services
 from .forms import UserAvatarForm, NewEmailForm, NewUsernameForm, NewPasswordForm
@@ -36,6 +36,7 @@ def get_user_with_(username: str) -> str:
     )
 
 
+@catch_all_other_exceptions
 def get_avatar_for_user_with_(username: str) -> flask.Response:
     """For getting avatar from database for user by username"""
     user_avatar = User.query.filter(User.username == username).first().avatar

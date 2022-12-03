@@ -5,12 +5,13 @@ from flask_sqlalchemy.pagination import Pagination
 
 from ..app import app
 from ..models import Post, Tag, Comment, Like
-from ..funcs import render_template, redirect_to_url_for_
+from ..funcs import render_template, redirect_to_url_for_, catch_all_other_exceptions
 
 from . import services
 from .forms import PostCreateForm, PostEditForm, CommentForm
 
 
+@catch_all_other_exceptions
 def get_js_file(filename: str) -> flask.Response:
     """For getting generated path to static js file"""
     return flask.send_from_directory(
@@ -118,6 +119,7 @@ def delete_post_with_(post_url: str) -> flask.Response:
     )
 
 
+@catch_all_other_exceptions
 def _get_post_id_and_like_from_json() -> tuple[int, Like]:
     """For parsing json and getting post id and like"""
     data = flask.request.get_json()
@@ -154,6 +156,7 @@ def comment_post_with_(post_url: str) -> flask.Response:
     return redirect_to_url_for_("blog.get_post_by_", post_url=post_url)
 
 
+@catch_all_other_exceptions
 def delete_comment_with_(post_url: str, comment_id: int) -> flask.Response:
     """For deleting comment from db and redirecting to next url or post page"""
     comment = Comment.query.filter(Comment.id == comment_id).first_or_404()

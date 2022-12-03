@@ -1,7 +1,7 @@
 import flask
 import flask_login as flog
 
-from ..funcs import render_template, redirect_to_url_for_
+from ..funcs import render_template, redirect_to_url_for_, catch_all_other_exceptions
 
 from . import services
 from .forms import RegistrationForm, LoginAdminForm, LoginForm
@@ -44,6 +44,7 @@ def sign_up_user() -> str | flask.Response:
     return render_template("auth/registration.html", form=form)
 
 
+@catch_all_other_exceptions
 @check_if_user_is_already_authenticated
 def log_in_user() -> str | flask.Response:
     """
@@ -56,23 +57,23 @@ def log_in_user() -> str | flask.Response:
         services._log_in_user_with_data_from_(form)
 
         flask.flash("You have successfully logged in!", category="success")
-        next_url = flask.request.args.get("next")
         return (
-            flask.redirect(next_url) if next_url else _redirect_to_user_profile_page()
+            flask.redirect(flask.request.args.get("next"))
+            or _redirect_to_user_profile_page()
         )
 
     return render_template("auth/login.html", form=form)
 
 
+@catch_all_other_exceptions
 def log_out_user() -> flask.Response:
     """For user logout and redirecting to next url or 'Home' page"""
     flog.logout_user()
     flask.session["admin_logged"] = False
 
     flask.flash("You have successfully logged out!", category="success")
-    next_url = flask.request.args.get("next")
-    return (
-        flask.redirect(next_url) if next_url else redirect_to_url_for_("get_home_page")
+    return flask.redirect(flask.request.args.get("next")) or redirect_to_url_for_(
+        "get_home_page"
     )
 
 
