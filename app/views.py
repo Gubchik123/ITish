@@ -25,12 +25,6 @@ def get_FAQs_page() -> str:
     return funcs.get_FAQs_page()
 
 
-@app.route("/about")
-def get_about_page() -> str:
-    """For getting the 'About' page"""
-    return funcs.get_about_page()
-
-
 @app.errorhandler(401)
 def redirect_to_login_page(error) -> flask.Response:
     """For handling error code 401"""

@@ -29,11 +29,6 @@ def get_FAQs_page() -> str:
     return render_template("FAQs.html")
 
 
-def get_about_page() -> str:
-    """For rendering the template for the 'About' page"""
-    return render_template("about.html")
-
-
 def _get_logout_page_url() -> str:
     """For getting url to the user logout page"""
     return flask.request.url_root[:-1] + flask.url_for("auth.log_out_user")
