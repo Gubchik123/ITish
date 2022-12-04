@@ -1,13 +1,562 @@
-{%- extends 'base.html' %}
+{%- extends 'base.html' %} 
 
 {%- block title -%} FAQs {%- endblock -%} 
 
-{%- block content_title -%} FAQs page {%- endblock -%} 
+{%- block content_title -%} FAQs {%- endblock -%} 
 
 
 {%- block content -%}
 
-{%- from '_alerts_macros.html' import not_dismissible_alert %} 
-{{ not_dismissible_alert(message="Soon", category="primary") }}
+<h5>About registration, authentication and authorization</h5>
 
-{%- endblock content -%}  
+<div class="accordion mb-5" id="auth-FAQs-accordion">
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="auth-headingOne">
+			<button
+				class="accordion-button collapsed"
+				type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="#auth-collapseOne"
+				aria-expanded="true"
+				aria-controls="auth-collapseOne"
+			>
+				How to sign up?
+			</button>
+		</h2>
+		<div
+			id="auth-collapseOne"
+			class="accordion-collapse collapse"
+			aria-labelledby="auth-headingOne"
+			data-bs-parent="#auth-FAQs-accordion"
+		>
+			<div class="accordion-body">
+				<p>
+                    <b>
+                        You need to fill out form fields with
+                        information about you on the signup page.
+                    </b>
+                </p>
+                <p>There are two ways to go to this page:</p>
+                <p>
+                    You can click on this
+                    <a 
+                        href="{{ url_for('auth.sign_up_user') }}"
+                    >link</a>
+                </p>
+                <h5>OR</h5>
+                <p>You can click on this button on the top of the site header</p>
+                <img 
+                    alt="Signup button image"
+                    src="{{ 
+                        url_for('static', filename='images/screens/signup-btn.jpg') 
+                    }}" 
+                >
+			</div>
+		</div>
+	</div>
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="auth-headingTwo">
+			<button
+				class="accordion-button collapsed"
+				type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="#auth-collapseTwo"
+				aria-expanded="false"
+				aria-controls="auth-collapseTwo"
+			>
+				How to log in?
+			</button>
+		</h2>
+		<div
+			id="auth-collapseTwo"
+			class="accordion-collapse collapse"
+			aria-labelledby="auth-headingTwo"
+			data-bs-parent="#auth-FAQs-accordion"
+		>
+			<div class="accordion-body">
+				<p>
+                    <b>
+                        You need to fill out form fields with
+                        your email and password on the login page.
+                    </b>
+                </p>
+                <p>There are two ways to go to this page:</p>
+                <p>
+                    You can click on this
+                    <a 
+                        href="{{ url_for('auth.log_in_user') }}"
+                    >link</a>
+                </p>
+                <h5>OR</h5>
+                <p>You can click on this button on the top of the site header</p>
+                <img 
+                    alt="Login button image"
+                    src="{{ 
+                        url_for('static', filename='images/screens/login-btn.jpg') 
+                    }}" 
+                >
+			</div>
+		</div>
+	</div>
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="auth-headingThree">
+			<button
+				class="accordion-button collapsed"
+				type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="#auth-collapseThree"
+				aria-expanded="false"
+				aria-controls="auth-collapseThree"
+			>
+				How to log out?
+			</button>
+		</h2>
+		<div
+			id="auth-collapseThree"
+			class="accordion-collapse collapse"
+			aria-labelledby="auth-headingThree"
+			data-bs-parent="#auth-FAQs-accordion"
+		>
+			<div class="accordion-body">
+				<p>
+                    <b>
+                        You need to go on the logout page.
+                    </b>
+                </p>
+                <p>There are two ways to go to this page:</p>
+                <p>
+                    You can click on this
+                    <a 
+                        href="{{ url_for('auth.log_out_user') }}"
+                    >link</a>
+                </p>
+                <h5>OR</h5>
+                <p>
+                    You can click on this button in the dropdown 
+                    menu for users at the top of the site.
+                </p>
+                <div class="mb-3">
+                    <img
+                        alt="User menu button image"
+                        src="{{
+                            url_for('static', filename='images/screens/user-menu-btn.jpg')
+                        }}"
+                    >
+                </div>
+                <div>
+                    <img
+                        alt="Logout button image"
+                        src="{{
+                            url_for('static', filename='images/screens/logout-btn.jpg')
+                        }}"
+                    >
+                </div>
+                <br>
+                <h5>OR</h5>
+                <p>
+                    You must be on your profile page and 
+                    click on this button at the bottom of the page.
+                </p>
+                <img
+                    class="w-100"
+                    alt="Logout profile button image"
+                    src="{{
+                        url_for(
+                            'static', 
+                            filename='images/screens/logout-profile-btn.jpg'
+                        )
+                    }}"
+                >
+			</div>
+		</div>
+	</div>
+</div>
+
+<h5>About blog functionality</h5>
+
+<div class="accordion mb-5" id="blog-FAQs-accordion">
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="blog-headingOne">
+			<button
+				class="accordion-button collapsed"
+				type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="#blog-collapseOne"
+				aria-expanded="true"
+				aria-controls="blog-collapseOne"
+			>
+				How to comment post?
+			</button>
+		</h2>
+		<div
+			id="blog-collapseOne"
+			class="accordion-collapse collapse"
+			aria-labelledby="blog-headingOne"
+			data-bs-parent="#blog-FAQs-accordion"
+		>
+			<div class="accordion-body">
+				<p>
+                    <b>
+                        You need to log in and go to the post page.
+                        And, below the post, there is a comment form.
+                    </b>
+                </p>
+                <img 
+                    class="w-100"
+                    alt="Comment form image" 
+                    src="{{ 
+                        url_for('static', filename='images/screens/comment-form.jpg') 
+                    }}"
+                >
+			</div>
+		</div>
+	</div>
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="blog-headingTwo">
+			<button
+				class="accordion-button collapsed"
+				type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="#blog-collapseTwo"
+				aria-expanded="false"
+				aria-controls="blog-collapseTwo"
+			>
+				How to create post?
+			</button>
+		</h2>
+		<div
+			id="blog-collapseTwo"
+			class="accordion-collapse collapse"
+			aria-labelledby="blog-headingTwo"
+			data-bs-parent="#blog-FAQs-accordion"
+		>
+			<div class="accordion-body">
+				<p>
+                    <b>
+                        You need to log in and go to the page for post creation. 
+                        And follow the hints on this page.
+                    </b>
+                </p>
+                <p>There are two ways to go to this page:</p>
+                <p>
+                    You can click on this
+                    <a 
+                        href="{{ url_for('blog.create_post') }}"
+                    >link</a>
+                </p>
+                <h5>OR</h5>
+                <p>
+                    You can click on this button in the dropdown 
+                    menu for users at the top of the site.
+                </p>
+                <div class="mb-3">
+                    <img
+                        alt="User menu button image"
+                        src="{{
+                            url_for('static', filename='images/screens/user-menu-btn.jpg')
+                        }}"
+                    >
+                </div>
+                <div>
+                    <img
+                        alt="Post creation button image"
+                        src="{{
+                            url_for(
+                                'static', 
+                                filename='images/screens/post-creation-btn.jpg'
+                            )
+                        }}"
+                    >
+                </div>
+			</div>
+		</div>
+	</div>
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="blog-headingThree">
+			<button
+				class="accordion-button collapsed"
+				type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="#blog-collapseThree"
+				aria-expanded="false"
+				aria-controls="blog-collapseThree"
+			>
+				How to edit post?
+			</button>
+		</h2>
+		<div
+			id="blog-collapseThree"
+			class="accordion-collapse collapse"
+			aria-labelledby="blog-headingThree"
+			data-bs-parent="#blog-FAQs-accordion"
+		>
+			<div class="accordion-body">
+				<p>
+                    <b>
+                        You need to go to the page for post-editing. And follow 
+                        the hints on this page, like on the page for post creation.
+                    </b>
+                </p>
+                <p>There are two ways to go to this page:</p>
+                <p>
+                    You can add "/edit" to your post link and get a link like this:
+                    <code>'/blog/Post url/edit'</code>
+                </p>
+                <h5>OR</h5>
+                <p>
+                    You can click on this edit button at the top of the post page.
+                </p>
+                <img
+                    alt="Post editing button image"
+                    src="{{
+                        url_for(
+                            'static', 
+                            filename='images/screens/post-editing-btn.jpg'
+                        )
+                    }}"
+                >
+			</div>
+		</div>
+	</div>
+</div>
+
+<h5>About user profile functionality</h5>
+
+<div class="accordion mb-5" id="profile-FAQs-accordion">
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="profile-headingZero">
+			<button
+				class="accordion-button collapsed"
+				type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="#profile-collapseZero"
+				aria-expanded="true"
+				aria-controls="profile-collapseZero"
+			>
+				How to go to the profile page?
+			</button>
+		</h2>
+		<div
+			id="profile-collapseZero"
+			class="accordion-collapse collapse"
+			aria-labelledby="profile-headingZero"
+			data-bs-parent="#profile-FAQs-accordion"
+		>
+			<div class="accordion-body">
+                <p><b>There are three ways to go to this page:</b></p>
+                <p>
+                    You can click on this
+                    <a 
+                        href="{{ 
+                            url_for(
+                                'profile.get_user_with_', 
+                                username=current_user.username
+                            ) 
+                        }}"
+                    >link</a>
+                </p>
+                <h5>OR</h5>
+                <p>
+                    You can type the link like this: 
+                    <code>/user/Your username</code>
+                </p>
+                <h5>OR</h5>
+                <p>
+                    You can click on this button in the dropdown 
+                    menu for users at the top of the site.
+                </p>
+                <div class="mb-3">
+                    <img
+                        alt="User menu button image"
+                        src="{{
+                            url_for(
+                                'static', 
+                                filename='images/screens/user-menu-btn.jpg'
+                            )
+                        }}"
+                    >
+                </div>
+                <div>
+                    <img
+                        alt="Profile button image"
+                        src="{{
+                            url_for(
+                                'static', 
+                                filename='images/screens/profile-btn.jpg'
+                            )
+                        }}"
+                    >
+                </div>
+			</div>
+		</div>
+	</div>
+    <div class="accordion-item">
+		<h2 class="accordion-header" id="profile-headingOne">
+			<button
+				class="accordion-button collapsed"
+				type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="#profile-collapseOne"
+				aria-expanded="true"
+				aria-controls="profile-collapseOne"
+			>
+				How to change avatar?
+			</button>
+		</h2>
+		<div
+			id="profile-collapseOne"
+			class="accordion-collapse collapse"
+			aria-labelledby="profile-headingOne"
+			data-bs-parent="#profile-FAQs-accordion"
+		>
+			<div class="accordion-body">
+				<p>
+                    <b>
+                        You must be on your profile page, 
+                        select an avatar image (.png,.jpg, or.jpeg), 
+                        and click this button below the avatar selection field.
+                    </b>
+                </p>
+                <img
+                    alt="Change avatar button image"
+                    src="{{
+                        url_for(
+                            'static', 
+                            filename='images/screens/change-avatar-btn.jpg'
+                        )
+                    }}"
+                >
+			</div>
+		</div>
+	</div>
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="profile-headingTwo">
+			<button
+				class="accordion-button collapsed"
+				type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="#profile-collapseTwo"
+				aria-expanded="false"
+				aria-controls="profile-collapseTwo"
+			>
+				How to edit profile details?
+			</button>
+		</h2>
+		<div
+			id="profile-collapseTwo"
+			class="accordion-collapse collapse"
+			aria-labelledby="profile-headingTwo"
+			data-bs-parent="#profile-FAQs-accordion"
+		>
+			<div class="accordion-body">
+				<p><b>There are three ways to go to this page:</b></p>
+                <p>
+                    You can click on this
+                    <a 
+                        href="{{ 
+                            url_for(
+                                'profile.get_edit_page', 
+                                username=current_user.username
+                            ) 
+                        }}"
+                    >link</a>
+                </p>
+                <h5>OR</h5>
+                <p>
+                    You can add "/edit" to your profile link and get a link like this:
+                    <code>/user/Your username/edit</code>
+                </p>
+                <h5>OR</h5>
+                <p>
+                    You must be on your profile page and 
+                    click on this button below your avatar.
+                </p>
+                <img
+                    alt="Edit profile button image"
+                    src="{{
+                        url_for(
+                            'static', 
+                            filename='images/screens/edit-profile-btn.jpg'
+                        )
+                    }}"
+                >
+                <br>
+                <h5>After that</h5>
+                <p>
+                    You will be on this page and can fill out one of these forms.
+                </p>
+                <img
+                    class="w-100"
+                    alt="Edit profile page image"
+                    src="{{
+                        url_for(
+                            'static', 
+                            filename='images/screens/edit-profile-page.jpg'
+                        )
+                    }}"
+                >
+			</div>
+		</div>
+	</div>
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="profile-headingThree">
+			<button
+				class="accordion-button collapsed"
+				type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="#profile-collapseThree"
+				aria-expanded="false"
+				aria-controls="profile-collapseThree"
+			>
+                How to delete profile?
+			</button>
+		</h2>
+		<div
+			id="profile-collapseThree"
+			class="accordion-collapse collapse"
+			aria-labelledby="profile-headingThree"
+			data-bs-parent="#profile-FAQs-accordion"
+		>
+			<div class="accordion-body">
+				<p><b>There are three ways to go to this page:</b></p>
+                <p>
+                    You can click on this
+                    <a 
+                        href="{{ 
+                            url_for(
+                                'profile.delete_current_user', 
+                                username=current_user.username
+                            ) 
+                        }}"
+                    >link</a>
+                </p>
+                <h5>OR</h5>
+                <p>
+                    You can add "/delete" to your profile link and get a link like this:
+                    <code>/user/Your username/delete</code>
+                </p>
+                <h5>OR</h5>
+                <p>
+                    You must be on your profile page and 
+                    click on this button at the bottom of the page.
+                </p>
+                <img
+                    class="w-100"
+                    alt="Edit profile button image"
+                    src="{{
+                        url_for(
+                            'static', 
+                            filename='images/screens/delete-profile-btn.jpg'
+                        )
+                    }}"
+                >
+			</div>
+		</div>
+	</div>
+</div>
+
+<p>
+    <h6>If you didn't found answer for you, contact me with my social networks</h6>
+</p>
+
+{%- endblock content -%}
