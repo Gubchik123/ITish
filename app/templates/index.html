@@ -7,14 +7,35 @@
 
 {%- block content -%}
 
-<div class="d-flex justify-content-center">
-    <div class="w-75">
-        <img
-            alt="Site header"
-            class="img-fluid rounded-4"
-            src="{{ url_for('static', filename='images/site_header.png') }}"
-        >
-    </div>
+<div>
+    <h4 class="mb-3">Welcome to the blog site:</h4>
+
+    <img
+        alt="Site header image"
+        class="img-fluid rounded-4 w-100"
+        src="{{ url_for('static', filename='images/site_header.png') }}"
+    >
+
+    <p class="mt-5">
+        Here, every novice blogger can try his hand at writing posts 
+        and developing himself as a blogger. I hope everyone can find 
+        something new and interesting here.
+    </p>
+
+    <p>
+        This project (website) was created to practice the Flask framework.
+        If someone is interested in the code of this project, 
+        then you can find the open source code at the 
+        <a 
+            class="my-text-color text-decoration-underline"
+            href="https://github.com/Gubchik123/ITish"
+        >link</a>
+        on the GitHub.
+    </p>
+
+    <p>
+        <b>Project author:</b> &nbsp; Nikita Hubariev
+    </p>
 </div>
 
 {%- endblock content -%} 
