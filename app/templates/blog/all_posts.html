@@ -12,7 +12,9 @@
     </style>
 {%- endblock styles -%}
 
-{%- block content_title -%} All posts ({{ posts.items | length }}) {%- endblock -%} 
+{%- block content_title -%}
+{%- if request.args.get("q", "") %} Results {%- else %} All posts ({{ posts_count }}) {%- endif %} 
+{%- endblock -%} 
 
 {%- block search_form -%}
     {%- if posts.items or request.args.get("q", "")%}

@@ -51,7 +51,11 @@ def _get_posts_with_pagination() -> Pagination:
 
 def _get_all_posts() -> str:
     """For rendering the template for the page with all posts from db"""
-    return render_template("blog/all_posts.html", posts=_get_posts_with_pagination())
+    return render_template(
+        "blog/all_posts.html",
+        posts_count=len(Post.query.all()),
+        posts=_get_posts_with_pagination(),
+    )
 
 
 @services.catch_sqlalchemy_errors
