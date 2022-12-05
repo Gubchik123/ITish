@@ -15,8 +15,18 @@ def _update_current_user_avatar_in_db() -> None:
 
 
 @catch_sqlalchemy_errors
+def _delete_current_user_posts_from_db():
+    """For deleting current user posts before deleting current user"""
+    for post in flog.current_user.posts.all():
+        db.session.delete(post)
+    db.session.commit()
+
+
+@catch_sqlalchemy_errors
 def _delete_current_user_from_db() -> None:
     """For deleting current user from database"""
+    _delete_current_user_posts_from_db()
+
     db.session.delete(flog.current_user)
     db.session.commit()
 
