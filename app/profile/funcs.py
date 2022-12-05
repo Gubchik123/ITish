@@ -1,5 +1,6 @@
 import flask
 import flask_login as flog
+from sqlalchemy import desc
 
 from ..app import app
 from ..models import User
@@ -32,6 +33,7 @@ def get_user_with_(username: str) -> str:
     return render_template(
         "profile/index.html",
         form=UserAvatarForm(),
+        desc=desc,  # For SQL query 'ORDER BY ... DESC'
         user=User.query.filter(User.username == username).first_or_404(),
     )
 

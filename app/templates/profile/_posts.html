@@ -4,7 +4,12 @@
 
 {%- if user.posts.all() %}
     {%- from 'blog/_post_macros.html' import show_all_posts_from_ %}
-    {{ show_all_posts_from_(user.posts.all(), current_user.id) }}
+    {{ 
+        show_all_posts_from_(
+            user.posts.order_by(desc("created")).all(), 
+            current_user.id
+        ) 
+    }}
 {%- else %}
     {%- from '_alerts_macros.html' import not_dismissible_alert %}
 

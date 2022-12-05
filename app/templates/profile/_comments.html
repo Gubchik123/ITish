@@ -4,7 +4,13 @@
 
 {%- if user.comments.all() %}
     {%- from 'blog/_post_macros.html' import show_all_comment_from_ %}
-    {{ show_all_comment_from_(user.comments.all(), current_user.id, True) }}
+    {{ 
+        show_all_comment_from_(
+            user.comments.order_by(desc("created")).all(), 
+            current_user.id, 
+            True
+        ) 
+    }}
 {%- else %}
     {%- from '_alerts_macros.html' import not_dismissible_alert %}
 
