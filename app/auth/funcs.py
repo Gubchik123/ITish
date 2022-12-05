@@ -56,10 +56,10 @@ def log_in_user() -> str | flask.Response:
     if form.validate_on_submit():
         services._log_in_user_with_data_from_(form)
 
+        next_url = flask.request.args.get("next")
         flask.flash("You have successfully logged in!", category="success")
         return (
-            flask.redirect(flask.request.args.get("next"))
-            or _redirect_to_user_profile_page()
+            flask.redirect(next_url) if next_url else _redirect_to_user_profile_page()
         )
 
     return render_template("auth/login.html", form=form)
@@ -71,9 +71,10 @@ def log_out_user() -> flask.Response:
     flog.logout_user()
     flask.session["admin_logged"] = False
 
+    next_url = flask.request.args.get("next")
     flask.flash("You have successfully logged out!", category="success")
-    return flask.redirect(flask.request.args.get("next")) or redirect_to_url_for_(
-        "get_home_page"
+    return (
+        flask.redirect(next_url) if next_url else redirect_to_url_for_("get_home_page")
     )
 
 
