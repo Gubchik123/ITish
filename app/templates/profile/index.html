@@ -16,7 +16,7 @@
         <a
             href="{{ user.username }}"
             {%- if not tab or tab == "overview" %}
-                class="btn btn-primary active"
+                class="btn btn-primary active disabled"
                 aria-current="page"
             {%- else %}
                 class="btn btn-primary"
@@ -28,7 +28,7 @@
             <a
                 href="{{ user.username }}?tab={{ type }}"
                 {%- if tab == type %}
-                    class="btn btn-primary active"
+                    class="btn btn-primary active disabled"
                     aria-current="page"
                 {%- else %}
                     class="btn btn-primary"
