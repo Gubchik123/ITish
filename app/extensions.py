@@ -1,9 +1,10 @@
+import flask
 from flask_admin import Admin
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
-from .app import app
 from .db import db
+from .app import app
 
 
 ### Flask-Migrate ###
@@ -23,7 +24,11 @@ login_manager.login_message_category = "warning"
 @login_manager.user_loader
 def _load_user(id):
     """For getting user from db if exist"""
-    return User.query.filter(User.id == id).first()
+    try:
+        return User.query.filter(User.id == id).first()
+    except:
+        flask.flash("Sorry, there was the error. Try again", category="error")
+        flask.redirect("/")
 
 
 ### Flask-Admin ###
