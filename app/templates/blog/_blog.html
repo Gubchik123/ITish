@@ -14,7 +14,7 @@
 		<a
 			href="./?tab=posts"
             {%- if not tab or tab == "posts" %}
-                class="btn btn-primary active"
+                class="btn btn-primary active disabled"
                 aria-current="page"
             {%- else %}
                 class="btn btn-primary"
@@ -25,7 +25,7 @@
 		<a
 			href="./?tab=tags"
 			{%- if tab == "tags" %}
-                class="btn btn-primary active"
+                class="btn btn-primary active disabled"
                 aria-current="page"
             {%- else %}
                 class="btn btn-primary"
