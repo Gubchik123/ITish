@@ -1,0 +1,59 @@
+{%- extends 'base.html' %}
+
+{%- block title -%} Feedback {%- endblock -%} 
+
+{%- block content_title -%} Feedback {%- endblock -%} 
+
+
+{%- block content -%}
+<div class="d-flex flex-column align-items-center mt-3">
+    <div class="col-md-6 col-sm-12 rounded my-form-bg-color">
+        <form
+            class="text-white py-3 px-3"
+        >  
+            <div class="form-floating mb-3">
+                <input
+                    required
+                    type="text"
+                    name="subject"
+                    id="floatingInput"
+                    class="form-control"
+                    placeholder="Subject"
+                />
+                <label for="floatingInput" class="text-black">Subject</label>
+            </div>
+            <div class="form-floating mb-4">
+                <textarea
+                    required
+                    name="body"
+                    placeholder="Body"
+                    class="form-control"
+                    id="floatingTextarea"
+                    style="height: 150px"
+                ></textarea>
+                <label for="floatingTextarea" class="text-black">Body</label>
+            </div>
+            <div class="text-center">
+                <input
+                    name="send"
+                    value="Send"
+                    type="button"
+                    class="btn btn-success btn-lg"
+                />
+            </div>
+        </form>
+    </div>
+</div>
+{%- endblock content -%}
+
+
+{%- block scripts -%}
+<script>
+    const form = document.forms[0];
+    form.send.addEventListener("click", function () {
+        window.open(
+            `mailto:nikitos.gubchik123@gmail.com?subject=${form.subject.value}&body=${form.body.value}`
+        );
+    });
+</script>
+{%- endblock scripts -%}

@@ -25,6 +25,12 @@ def get_FAQs_page() -> str:
     return funcs.get_FAQs_page()
 
 
+@app.route("/feedback")
+def get_feedback_page() -> str:
+    """For getting the 'Feedback' page"""
+    return funcs.get_feedback_page()
+
+
 @app.errorhandler(401)
 def redirect_to_login_page(error) -> flask.Response:
     """For handling error code 401"""

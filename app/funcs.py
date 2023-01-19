@@ -29,6 +29,11 @@ def get_FAQs_page() -> str:
     return render_template("FAQs.html")
 
 
+def get_feedback_page() -> str:
+    """For rendering the template for the 'Feedback' page"""
+    return render_template("feedback.html")
+
+
 def _get_logout_page_url() -> str:
     """For getting url to the user logout page"""
     return flask.request.url_root[:-1] + flask.url_for("auth.log_out_user")
