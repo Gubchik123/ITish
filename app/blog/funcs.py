@@ -81,8 +81,10 @@ def create_post() -> str:
         if _there_is_post_with_such_(form.post_title.data):
             flask.flash("Error! There is the post with such title!", category="danger")
         else:
-            services._add_post_in_db_with_data_from_(form)
+            post = services._add_post_in_db_with_data_from_(form)
+
             flask.flash("Post has successfully added", category="success")
+            return flask.redirect(flask.url_for("blog.get_post_by_", post_url=post.url))
 
     return render_template("blog/create_post.html", form=form)
 

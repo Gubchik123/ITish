@@ -58,16 +58,16 @@ def _get_all_tags_for_post_from_(form: PostCreateForm | PostEditForm) -> list[Ta
 
 
 @catch_sqlalchemy_errors
-def _add_post_in_db_with_data_from_(form: PostCreateForm) -> None:
+def _add_post_in_db_with_data_from_(form: PostCreateForm) -> Post:
     """For adding a post in database with data from post creating form"""
-    _add_in_db_(
-        Post(
-            title=form.post_title.data,
-            body=form.post_body.data,
-            user_id=current_user.id,
-            tags=_get_all_tags_for_post_from_(form),
-        )
+    post = Post(
+        title=form.post_title.data,
+        body=form.post_body.data,
+        user_id=current_user.id,
+        tags=_get_all_tags_for_post_from_(form),
     )
+    _add_in_db_(post)
+    return post
 
 
 @catch_sqlalchemy_errors
