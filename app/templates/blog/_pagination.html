@@ -1,7 +1,7 @@
 {%- if request.args.get('q', '') %}
     {% set needed_url = "?q=" + request.args.get('q') + "&" %}
 {%- else %}
-    {% set needed_url = "?" %} 
+    {% set needed_url = "?" %}
 {%- endif %}
 
 <nav class="d-flex justify-content-center mt-4">
@@ -18,13 +18,27 @@
 		</li>
 
 		{%- for page in posts.iter_pages(left_edge=1, left_current=1, right_current=1, right_edge=1) %}
+            {%- if page == None %}
+            <li
+                class="page-item disabled"
+            >
+                <a
+                    href=""
+                    class="page-link"
+                >
+                    ...
+                </a>
+            </li>
+            {%- else %}
             <li class="page-item {%- if page == posts.page %} active {%- endif %}">
                 <a
                     class="page-link"
                     href="./{{ needed_url }}page={{ page }}"
-                    >{{ page }}</a
                 >
+                    {{ page }}
+                </a>
             </li>
+            {%- endif %}
 		{%- endfor %}
 
 		<li
