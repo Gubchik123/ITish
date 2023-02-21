@@ -29,10 +29,6 @@ The system consists of the following main functional blocks:
 -   Blog (for working with posts and others that are connected with them);
 -   Profile (for working with user profiles and pages that are connected with them).
 
-#### Database structure
-
-<img title="DB" alt="Database structure image" src="./md_images/db_structure.jpg">
-
 #### Technology stack
 
 -   Backend:
