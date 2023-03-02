@@ -12,6 +12,26 @@
 			content="The blog site to publish posts on the IT topic."
 		/>
 
+        <!-- og:title is empty and social networks will take the page title -->
+        <meta property="og:title" content="">
+        <meta property="og:type" content="Blog site" />
+        <meta property="og:site_name" content="ITish" />
+        <meta
+            property="og:url"
+            content="{{ request.host_url[:-1] }}{{ request.path }}"
+        >
+        <meta
+            property="og:description"
+            content="The blog site to publish posts on the IT topic."
+        >
+        <meta
+            property="og:image"
+            content="{{ url_for('static', filename='images/site_header.png') }}"
+        >
+
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:image:alt" content="ITish header image">
+
 		<title>{%- block title -%}{%- endblock -%} &nbsp;| ITish</title>
 
 		<!-- Site favicon -->
