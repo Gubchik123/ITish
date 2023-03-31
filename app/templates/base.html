@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <meta name="author" content="Nikita Hubariev" />
-        <meta name="keywords" content="Blog, IT, Programming">
+        <meta name="keywords" content="ITish, Nikita Hubariev">
 		<meta
 			name="description"
 			content="The blog site to publish posts on the IT topic."
@@ -307,12 +307,6 @@
 			integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
 		></script>
 
-		<!-- Light dark toggle script -->
-		<script src="{{ url_for('static', filename='js/toggle_theme.js') }}"></script>
-
-        <!-- Scrolling script -->
-        <script src="{{ url_for('static', filename='js/scrolling.js') }}"></script>
-
 		<!-- Scripts for icons from "https://ionic.io/ionicons" -->
 		<script
 			type="module"
@@ -322,6 +316,12 @@
 			nomodule
 			src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
 		></script>
+
+		<!-- Light dark toggle script -->
+		<script src="{{ url_for('static', filename='js/toggle_theme.js') }}" defer></script>
+
+        <!-- Scrolling script -->
+        <script src="{{ url_for('static', filename='js/scrolling.js') }}" defer></script>
 
 		<!-- My scripts and JS files -->
 		{%- block scripts -%}{%- endblock -%}
