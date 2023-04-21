@@ -13,8 +13,8 @@
 {%- endblock styles -%}
 
 {%- block content_title -%}
-{%- if request.args.get("q", "") %} Results {%- else %} All posts ({{ posts_count }}) {%- endif %} 
-{%- endblock -%} 
+{%- if request.args.get("q", "") %} Results {%- else %} All posts ({{ posts_count }}) {%- endif %}
+{%- endblock -%}
 
 {%- block search_form -%}
     {%- if posts.items or request.args.get("q", "")%}
@@ -34,8 +34,8 @@
                 Search
             </button>
         </form>
-    {%- endif %} 
-{%- endblock search_form -%} 
+    {%- endif %}
+{%- endblock search_form -%}
 
 
 {%- block content -%}
@@ -44,40 +44,44 @@
 
 {%- if posts.items %}
 
-    {%- from 'blog/_post_macros.html' import show_all_posts_from_ %} 
+    {%- from 'blog/_post_macros.html' import show_all_posts_from_ %}
     {{ show_all_posts_from_(posts.items, current_user.id) }}
 
-    {%- include 'blog/_pagination.html' %} 
+    {%- if not posts.prev_num and not posts.next_num %}
+        <!-- No pagination, it's only one page -->
+    {%- else %}
+        {%- include 'blog/_pagination.html' %}
+    {%- endif %}
 
 {%- else %}
     {%- from '_alerts_macros.html' import not_dismissible_alert %}
 
     {%- if request.args.get("q", "") %}
-        {{ 
+        {{
             not_dismissible_alert(
-                message="There are not such posts with '" 
+                message="There are not such posts with '"
                         + request.args.get('q', '') + "' yet",
                 category="danger"
-            ) 
+            )
         }}
     {%- else %}
-        {{ 
+        {{
             not_dismissible_alert(
                 message="There are not any posts yet",
                 category="primary"
-            ) 
+            )
         }}
-    {%- endif %} 
+    {%- endif %}
 {%- endif %}
 
-{%- endblock content -%} 
+{%- endblock content -%}
 
 
-{%- block scripts -%}  
+{%- block scripts -%}
 <script>
     function resize_pagination() {
         let pagination = document.querySelector(".pagination");
-    
+
         window.outerWidth >= 992
             ? pagination.classList.add("pagination-lg")
             : pagination.classList.remove("pagination-lg");
@@ -86,10 +90,10 @@
             ? pagination.classList.add("pagination-sm")
             : pagination.classList.remove("pagination-sm");
     }
-    
+
     resize_pagination();
     window.addEventListener("resize", resize_pagination);
 </script>
 
 <script src="{{ url_for('static', filename='js/delete_btn.js') }}"></script>
-{%- endblock scripts -%} 
+{%- endblock scripts -%}
