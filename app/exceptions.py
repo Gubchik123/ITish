@@ -46,8 +46,8 @@ def catch_sqlalchemy_errors(func):
             error=Error(
                 name="DB error",
                 description="""
-                    Sorry for the inconvenience, but an error occurred while 
-                    working with data and databases. Check your Internet 
+                    Sorry for the inconvenience, but an error occurred while
+                    working with data and databases. Check your Internet
                     connection or try later.
                 """,
             ),
@@ -55,7 +55,7 @@ def catch_sqlalchemy_errors(func):
 
         try:
             answer = func(*args, **kwargs)
-        except SQLAlchemyError as e:
+        except Exception as e:
             logger.error(f"Exception with SQLAlchemy: {e}")
         finally:
             return answer
@@ -74,7 +74,7 @@ def catch_flask_error_(flask_exception: TemplateError | RoutingException):
                 error=Error(
                     name="Page error",
                     description="""
-                        Sorry for the inconvenience, but there was an error 
+                        Sorry for the inconvenience, but there was an error
                         retrieving the page. Try again later.
                     """,
                 ),
@@ -101,7 +101,7 @@ def catch_all_other_exceptions(func):
             error=Error(
                 name="Error",
                 description="""
-                    Sorry for the inconvenience, 
+                    Sorry for the inconvenience,
                     but an unexpected error has occurred.
                 """,
             ),
