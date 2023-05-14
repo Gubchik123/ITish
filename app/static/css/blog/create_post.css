@@ -1,1 +1,36 @@
-.note-alert{border-left:8px solid}textarea{height:20vh}.content{min-height:200px}.form-control,.form-range,.form-select{width:40%;min-width:150px}.form-control-color{min-width:30px;max-width:50px}#post_tags{width:90%}.adding_buttons ion-icon{font-size:1.5em}#post_submit,.adding_buttons button{float:left;display:flex;justify-content:space-between;align-items:center}@media screen and (max-width:576px){.adding_buttons button{width:auto;height:35px}}@media screen and (max-width:452px){.element-btns button{float:none;margin-right:0}}
+.note-alert { border-left: 8px solid; }
+
+textarea { height: 20vh; }
+
+.content { min-height: 200px; }
+
+.form-control, 
+.form-range, 
+.form-select { width: 40%; min-width: 150px; }
+
+.form-control-color { min-width: 30px; max-width: 50px; }
+
+#post_tags { width: 90%; }
+
+.adding_buttons ion-icon { font-size: 1.5em; }
+
+.adding_buttons button, #post_submit {
+    float: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media screen and (max-width: 576px) {
+	.adding_buttons button {
+        width: auto;
+		height: 35px;
+	}
+}
+
+@media screen and (max-width: 452px) {
+	.element-btns button {
+        float: none;
+        margin-right: 0;
+    }
+}
