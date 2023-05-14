@@ -1,1 +1,187 @@
-function _get_element_value_from_(e){let t=e.classList[1];return"subtitle1"==t?e.querySelector("h2").innerText:"subtitle2"==t?e.querySelector("h4").innerText:"paragraph"==t?e.querySelector("p").innerText:"link"==t?[e.querySelector("a").innerText,e.querySelector("a").href]:"code"==t?e.querySelector("code").innerText:"image"==t?[e.querySelector("img").src,e.querySelector("img").alt,e.querySelector("img").style.width.slice(0,-1)]:"alert"==t?[e.querySelector("h5").innerText,e.querySelector("span").innerText]:"line"==t?e.querySelector("hr").style.width.slice(0,-1):void 0}function _get_parent_from_(e){for(;!e.classList.toString().includes("element ");)e=e.parentElement;return e}function _delete_(e){if(e=_get_parent_from_(e),"title"==e.id){let t=document.querySelector(".content_block");t.removeChild(e),title.get_form_for_getting_element_data()}else content_block.removeChild(e)}import{title,add_needed_element_with_data_from,get_needed_element_from_}from"../create_post.js";import{check_filling_of_}from"./_processing.js";import{content_block,hidden_post_body_field}from"../_global_variables.js";import{get_div_block}from"./_getting.js";export function get_click_event_on_create_post_btn(e){if(0==content_block.innerHTML.length||content_block.querySelector(".element-form"))e.preventDefault();else for(let e of content_block.querySelectorAll(".element-content")){let t=get_div_block();t.appendChild(e),hidden_post_body_field.value+=t.innerHTML}}export function get_click_event_on_apply_btn(){let e=content_block.querySelector(".element-form");check_filling_of_(e)&&(add_needed_element_with_data_from(e),content_block.removeChild(e))}export function get_click_event_on_cancel_btn(){content_block.removeChild(document.querySelector(".btn.cancel").parentElement)}export function get_click_event_on_edit_btn(e){let t=confirm("Do you really want to edit this element?");if(t){let t=_get_parent_from_(e.target.parentElement),n=t.children[0];t.after(get_needed_element_from_(n.classList[1]).get_form_for_getting_element_data(_get_element_value_from_(n))),set_click_event_for_apply_btn(),set_click_event_for_cancel_btn(),_delete_(t)}}export function get_click_event_on_close_btn(e){let t=confirm("Do you really want to delete this element?");t&&_delete_(e.target.parentElement)}export function get_click_event_on_align_btn(e,t){let n="BUTTON"==e.target.tagName?e.target.parentElement.parentElement:e.target.parentElement.parentElement.parentElement,l=n.previousElementSibling.classList;for(const e of["start","center","end"])if(l.toString().includes(e)){if(e==t)break;n.previousElementSibling.classList=l.toString().replace(new RegExp(`${e}`,"g"),t);break}}export function set_click_event_for_apply_btn(){let e=content_block.querySelector(".btn.apply");e&&e.addEventListener("click",get_click_event_on_apply_btn)}export function set_click_event_for_cancel_btn(){let e=document.querySelector(".btn.cancel");e&&e.addEventListener("click",get_click_event_on_cancel_btn)}export function get_click_event_on_up_btn(e){let t=_get_parent_from_(e.target),n=t.previousElementSibling;n&&n.classList.toString().includes("element ")&&(t.remove(),n.before(t))}export function get_click_event_on_down_btn(e){let t=_get_parent_from_(e.target),n=t.nextElementSibling;n&&n.classList.toString().includes("element ")&&(t.remove(),n.after(t))}export function add_mouse_over_and_leave_event_for_(e){return e.addEventListener("mouseover",function(){e.classList.add("border"),e.classList.add("border-info"),e.querySelector(".element-btns").style.display="flex"}),e.addEventListener("mouseleave",function(){e.classList.remove("border"),e.classList.remove("border-info"),e.querySelector(".element-btns").style.display="none"}),e}
+import {
+	title,
+	add_needed_element_with_data_from,
+	get_needed_element_from_,
+} from "../create_post.js";
+
+import { check_filling_of_ } from "./_processing.js";
+import { content_block, hidden_post_body_field } from "../_global_variables.js";
+import { get_div_block } from "./_getting.js";
+
+export function get_click_event_on_create_post_btn(e) {
+	if (
+		content_block.innerHTML.length != 0 &&
+		!content_block.querySelector(".element-form")
+	) {
+		for (let element_content of content_block.querySelectorAll(
+			".element-content"
+		)) {
+			let element = get_div_block();
+			element.appendChild(element_content);
+			hidden_post_body_field.value += element.innerHTML;
+		}
+	} else e.preventDefault();
+}
+
+export function get_click_event_on_apply_btn() {
+	let element_form = content_block.querySelector(".element-form");
+
+	if (check_filling_of_(element_form)) {
+		add_needed_element_with_data_from(element_form);
+		content_block.removeChild(element_form);
+	}
+}
+
+export function get_click_event_on_cancel_btn() {
+	content_block.removeChild(
+		document.querySelector(".btn.cancel").parentElement
+	);
+}
+
+function _get_element_value_from_(element_content) {
+	let id = element_content.classList[1];
+
+	if (id == "subtitle1") return element_content.querySelector("h2").innerText;
+	else if (id == "subtitle2")
+		return element_content.querySelector("h4").innerText;
+	else if (id == "paragraph")
+		return element_content.querySelector("p").innerText;
+	else if (id == "link")
+		return [
+			element_content.querySelector("a").innerText,
+			element_content.querySelector("a").href,
+		];
+	else if (id == "code")
+		return element_content.querySelector("code").innerText;
+	else if (id == "image")
+		return [
+			element_content.querySelector("img").src,
+			element_content.querySelector("img").alt,
+			element_content.querySelector("img").style.width.slice(0, -1),
+		];
+	else if (id == "alert")
+		return [
+			element_content.querySelector("h5").innerText,
+			element_content.querySelector("span").innerText,
+		];
+	else if (id == "line")
+		return element_content.querySelector("hr").style.width.slice(0, -1);
+}
+
+function _get_parent_from_(element) {
+	while (!element.classList.toString().includes("element "))
+		element = element.parentElement;
+
+	return element;
+}
+
+function _delete_(element) {
+	element = _get_parent_from_(element);
+
+	if (element.id == "title") {
+		let row_content_block = document.querySelector(".content_block");
+		row_content_block.removeChild(element);
+		title.get_form_for_getting_element_data();
+	} else content_block.removeChild(element);
+}
+
+export function get_click_event_on_edit_btn(e) {
+	let answer = confirm("Do you really want to edit this element?");
+	if (answer) {
+		let element = _get_parent_from_(e.target.parentElement);
+		let element_content = element.children[0];
+
+		element.after(
+			get_needed_element_from_(
+				element_content.classList[1]
+			).get_form_for_getting_element_data(
+				_get_element_value_from_(element_content)
+			)
+		);
+
+		set_click_event_for_apply_btn();
+		set_click_event_for_cancel_btn();
+
+		_delete_(element);
+	}
+}
+
+export function get_click_event_on_close_btn(e) {
+	let answer = confirm("Do you really want to delete this element?");
+	if (answer) _delete_(e.target.parentElement);
+}
+
+export function get_click_event_on_align_btn(e, align) {
+	let element_btns_block =
+		e.target.tagName == "BUTTON"
+			? e.target.parentElement.parentElement
+			: e.target.parentElement.parentElement.parentElement;
+
+	let class_list = element_btns_block.previousElementSibling.classList;
+
+	for (const position of ["start", "center", "end"]) {
+		if (class_list.toString().includes(position)) {
+			if (position == align) break;
+			element_btns_block.previousElementSibling.classList = class_list
+				.toString()
+				.replace(new RegExp(`${position}`, "g"), align);
+			break;
+		}
+	}
+}
+
+export function set_click_event_for_apply_btn() {
+	let apply_btn = content_block.querySelector(".btn.apply");
+	if (apply_btn)
+		apply_btn.addEventListener("click", get_click_event_on_apply_btn);
+}
+
+export function set_click_event_for_cancel_btn() {
+	let cancel_btn = document.querySelector(".btn.cancel");
+	if (cancel_btn)
+		cancel_btn.addEventListener("click", get_click_event_on_cancel_btn);
+}
+
+export function get_click_event_on_up_btn(e) {
+	let element = _get_parent_from_(e.target);
+	let previous_element = element.previousElementSibling;
+
+	if (
+		previous_element &&
+		previous_element.classList.toString().includes("element ")
+	) {
+		element.remove();
+		previous_element.before(element);
+	}
+}
+
+export function get_click_event_on_down_btn(e) {
+	let element = _get_parent_from_(e.target);
+	let previous_element = element.nextElementSibling;
+
+	if (
+		previous_element &&
+		previous_element.classList.toString().includes("element ")
+	) {
+		element.remove();
+		previous_element.after(element);
+	}
+}
+
+export function add_mouse_over_and_leave_event_for_(block) {
+	block.addEventListener("mouseover", function () {
+		block.classList.add("border");
+		block.classList.add("border-info");
+
+		block.querySelector(".element-btns").style.display = "flex";
+	});
+
+	block.addEventListener("mouseleave", function () {
+		block.classList.remove("border");
+		block.classList.remove("border-info");
+
+		block.querySelector(".element-btns").style.display = "none";
+	});
+
+	return block;
+}

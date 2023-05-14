@@ -1,1 +1,179 @@
-function _get_btn_with_icon(t,e,n="",o=2){let _=`btn ${n} btn-${e} btn-sm mb-2 me-${o} `;return _+="float_left d-flex justify-content-center align-items-center",get_btn_with_(`<ion-icon name='${t}'></ion-icon>`,_)}import{get_click_event_on_up_btn,get_click_event_on_down_btn,get_click_event_on_edit_btn,get_click_event_on_close_btn,get_click_event_on_align_btn}from"./_events.js";import{set_for_}from"./_processing.js";import{content_block}from"../_global_variables.js";export function get_input_area_(t,e,n=""){let o=document.createElement(t);return o.value=n,o.classList="form-control me-2 mb-2",set_for_(o,e),o}export function get_div_block(){return document.createElement("div")}export function get_element_form_block(){let t=get_div_block();return t.classList="element-form my-3 w-100",t}export function get_btn_with_(t,e){let n=document.createElement("button");return n.innerHTML=t,n.classList=e,n}export function get_apply_btn(){return _get_btn_with_icon("checkmark","success","apply")}export function get_cancel_btn(){let t=_get_btn_with_icon("close","danger","cancel");return t.classList.remove("float_left"),t}export function get_edit_btn(){let t=_get_btn_with_icon("pencil","primary","none");return t.addEventListener("click",get_click_event_on_edit_btn),t}export function get_left_btn(){let t=_get_btn_with_icon("chevron-back-circle-outline","info");return t.addEventListener("click",function(t){get_click_event_on_align_btn(t,"start")}),t}export function get_center_btn(){let t=_get_btn_with_icon("ellipsis-horizontal-circle-outline","info");return t.addEventListener("click",function(t){get_click_event_on_align_btn(t,"center")}),t}export function get_right_btn(){let t=_get_btn_with_icon("chevron-forward-circle-outline","info");return t.addEventListener("click",function(t){get_click_event_on_align_btn(t,"end")}),t}export function get_up_btn(){let t=_get_btn_with_icon("chevron-up-outline","info");return t.addEventListener("click",get_click_event_on_up_btn),t}export function get_down_btn(){let t=_get_btn_with_icon("chevron-down-outline","info");return t.addEventListener("click",get_click_event_on_down_btn),t}export function get_close_btn(){let t=_get_btn_with_icon("trash-outline","danger","",0);return t.addEventListener("click",get_click_event_on_close_btn),t}export function get_color_input(t=""){let e=document.createElement("input");return e.value=t,e.type="color",e.style.width="50px",e.title="Choose future text color",e.classList="form-control form-control-color mb-2 me-2 float_left",e}export function get_range_input_with_label_(t,e=""){let n=document.createElement("span");n.innerHTML=`${t} <br>`;let o=document.createElement("input");o.value=e,o.type="range",o.classList="form-range",o.min="1",o.max="100";let _=get_div_block();return _.appendChild(n),_.appendChild(o),_}export function get_select_color_block(){let t=document.createElement("select");return t.classList="form-select",t.innerHTML='\n        <option value="secondary" selected>Secondary (gray)</option>\n        <option value="primary">Primary (blue)</option>\n        <option value="success">Success (green)</option>\n        <option value="info">Info (lightblue)</option>\n        <option value="warning">Warning (yellow)</option>\n        <option value="danger">Danger (red)</option>\n    ',t}export function get_block_with_fields(t=[],e){let n=get_div_block();n.classList="w-100 mb-3";for(const e of t)n.appendChild(get_input_area_(e.tag,e.placeholder,e.value));return n.appendChild(e),n}export function get_element_data_from_form_control_and_(t){let e=content_block.querySelectorAll(".form-control");return{first:e[0].value,second:e[1].value,third:content_block.querySelector(t).value}}
+import {
+    get_click_event_on_up_btn,
+    get_click_event_on_down_btn,
+    get_click_event_on_edit_btn,
+	get_click_event_on_close_btn,
+	get_click_event_on_align_btn,
+} from "./_events.js";
+import { set_for_ } from "./_processing.js";
+import { content_block } from "../_global_variables.js";
+
+export function get_input_area_(
+	tag,
+	placeholder,
+	value = ""
+) {
+	let input_area = document.createElement(tag);
+	input_area.value = value;
+	input_area.classList = "form-control me-2 mb-2";
+
+	set_for_(input_area, placeholder);
+
+	return input_area;
+}
+
+export function get_div_block() {
+	return document.createElement("div");
+}
+
+export function get_element_form_block() {
+	let block = get_div_block();
+	block.classList = "element-form my-3 w-100";
+	return block;
+}
+
+export function get_btn_with_(inner_html, classList) {
+	let button = document.createElement("button");
+	button.innerHTML = inner_html;
+	button.classList = classList;
+
+	return button;
+}
+
+function _get_btn_with_icon(icon_name, color_name, type = "", me=2) {
+	let classes = `btn ${type} btn-${color_name} btn-sm mb-2 me-${me} `;
+	classes += `float_left d-flex justify-content-center align-items-center`;
+
+	return get_btn_with_(`<ion-icon name='${icon_name}'></ion-icon>`, classes);
+}
+
+export function get_apply_btn() {
+	return _get_btn_with_icon("checkmark", "success", "apply");
+}
+
+export function get_cancel_btn() {
+	let button = _get_btn_with_icon("close", "danger", "cancel");
+    button.classList.remove("float_left");
+    return button;
+}
+
+export function get_edit_btn() {
+	let button = _get_btn_with_icon("pencil", "primary", "none");
+    button.addEventListener("click", get_click_event_on_edit_btn);
+    return button;
+}
+
+export function get_left_btn() {
+	let button = _get_btn_with_icon("chevron-back-circle-outline", "info");
+	button.addEventListener("click", function (e) {
+		get_click_event_on_align_btn(e, "start");
+	});
+	return button;
+}
+
+export function get_center_btn() {
+	let button = _get_btn_with_icon(
+		"ellipsis-horizontal-circle-outline",
+		"info"
+	);
+	button.addEventListener("click", function (e) {
+		get_click_event_on_align_btn(e, "center");
+	});
+	return button;
+}
+
+export function get_right_btn() {
+	let button = _get_btn_with_icon("chevron-forward-circle-outline", "info");
+	button.addEventListener("click", function (e) {
+		get_click_event_on_align_btn(e, "end");
+	});
+	return button;
+}
+
+export function get_up_btn() {
+	let button = _get_btn_with_icon("chevron-up-outline", "info");
+	button.addEventListener("click", get_click_event_on_up_btn);
+	return button;
+}
+
+export function get_down_btn() {
+	let button = _get_btn_with_icon("chevron-down-outline", "info");
+	button.addEventListener("click", get_click_event_on_down_btn);
+	return button;
+}
+
+export function get_close_btn() {
+	let close_btn = _get_btn_with_icon("trash-outline", "danger", "", 0);
+	close_btn.addEventListener("click", get_click_event_on_close_btn);
+	return close_btn;
+}
+
+export function get_color_input(value = "") {
+	let color_field = document.createElement("input");
+	color_field.value = value;
+	color_field.type = "color";
+	color_field.style.width = "50px";
+	color_field.title = "Choose future text color";
+	color_field.classList =
+		"form-control form-control-color mb-2 me-2 float_left";
+
+	return color_field;
+}
+
+export function get_range_input_with_label_(label, value = "") {
+	let range_input_label = document.createElement("span");
+	range_input_label.innerHTML = `${label} <br>`;
+
+	let range_input = document.createElement("input");
+	range_input.value = value;
+	range_input.type = "range";
+	range_input.classList = "form-range";
+	range_input.min = "1";
+	range_input.max = "100";
+
+	let range_block = get_div_block();
+	range_block.appendChild(range_input_label);
+	range_block.appendChild(range_input);
+
+	return range_block;
+}
+
+export function get_select_color_block() {
+	let select = document.createElement("select");
+	select.classList = "form-select";
+	select.innerHTML = `
+        <option value="secondary" selected>Secondary (gray)</option>
+        <option value="primary">Primary (blue)</option>
+        <option value="success">Success (green)</option>
+        <option value="info">Info (lightblue)</option>
+        <option value="warning">Warning (yellow)</option>
+        <option value="danger">Danger (red)</option>
+    `;
+	return select;
+}
+
+export function get_block_with_fields(input_areas = [], adding_element) {
+	let block_with_fields = get_div_block();
+	block_with_fields.classList = "w-100 mb-3";
+	for (const input of input_areas) {
+		block_with_fields.appendChild(
+			get_input_area_(
+				input.tag,
+				input.placeholder,
+				input.value
+			)
+		);
+	}
+	block_with_fields.appendChild(adding_element);
+	return block_with_fields;
+}
+
+export function get_element_data_from_form_control_and_(class_) {
+	let form_controls = content_block.querySelectorAll(".form-control");
+
+	return {
+		first: form_controls[0].value,
+		second: form_controls[1].value,
+		third: content_block.querySelector(class_).value,
+	};
+}

@@ -1,1 +1,5 @@
-for(const e of document.querySelectorAll(".delete-btn"))e.addEventListener("click",function(e){let t=confirm("Do you really want to delete this item?");t||e.preventDefault()});
+for (const btn of document.querySelectorAll(".delete-btn"))
+	btn.addEventListener("click", function (e) {
+		let answer = confirm("Do you really want to delete this item?");
+		if (!answer) e.preventDefault();
+	});
