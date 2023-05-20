@@ -1,15 +1,15 @@
 /* CSS variables */
 :root {
 	--my-text-color: #2f3542;
-	--my-body-bg-color: #eee;
-    --my-form-bg-color: var(--bs-secondary);
-	--my-panel-bg-color: #2f3542;
+	--my-body-bg-color: #cfdbe2;
+    --my-form-bg-color: #646568;
+	--my-panel-bg-color: #182747;
 }
 :root[theme="dark"] {
 	--my-text-color: rgb(240, 240, 240);
-	--my-body-bg-color: var(--bs-secondary);
-    --my-form-bg-color: #2f3542;
-	--my-panel-bg-color: var(--bs-dark);
+	--my-body-bg-color: #404258;
+    --my-form-bg-color: #4f5c64;
+	--my-panel-bg-color: #1E2022;
 }
 
 .my-text-color { color: var(--my-text-color); }
