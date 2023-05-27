@@ -9,6 +9,11 @@ on:
     branches:
       - production
   workflow_dispatch:
+  
+env:
+  ADMIN_PASSWORD: root_admin
+  SECRET_KEY: f9c892db30724a08a9f69deaa535179c
+  DATABASE_PRODUCTION_URI: mysql://gubchik123:Gub4ik31@db4free.net/itish_db
 
 jobs:
   build:
