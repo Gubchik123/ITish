@@ -1,10 +1,10 @@
-<a href="https://gubchik123.pythonanywhere.com/" target="_blank"><img title="ITish" alt="Header image" src="./md_images/readme_header.png"></a>
+<a href="https://itish.azurewebsites.net" target="_blank"><img title="ITish" alt="Header image" src="./md_images/readme_header.png"></a>
 
 _Blog site to practice working with the Flask framework and provide anyone the site to publish posts_
 
 ### Demo
 
-Click **<a href="https://gubchik123.pythonanywhere.com/" target="_blank">here</a>** to open ITish blog site
+Click **<a href="https://itish.azurewebsites.net" target="_blank">here</a>** to open ITish blog site
 
 <img title="Demo" alt="Demo image" src="./md_images/demo.jpg">
 
