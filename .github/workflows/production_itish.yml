@@ -13,7 +13,7 @@ on:
 env:
   ADMIN_PASSWORD: root_admin
   SECRET_KEY: f9c892db30724a08a9f69deaa535179c
-  DATABASE_PRODUCTION_URI: mysql://gubchik123:Gub4ik31@db4free.net/itish_db
+  DATABASE_PRODUCTION_URI: mysql://gubchik:Gub4ik31@db4free.net:3306/itish_db2
 
 jobs:
   build:
