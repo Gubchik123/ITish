@@ -1,6 +1,6 @@
 <a href="https://itish.live" target="_blank"><img title="ITish" alt="Header image" src="./md_images/readme_header.png"></a>
 
-_Blog site to practice working with the Flask framework and provide anyone the site to publish posts_
+_Blog site to publish posts on the IT topic_
 
 ### Demo
 
