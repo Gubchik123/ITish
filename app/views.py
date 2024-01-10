@@ -37,7 +37,7 @@ def get_robots_txt() -> str:
     return funcs.get_robots_txt()
 
 
-@app.route("/update_server", method=["POST"])
+@app.route("/update_server", methods=["POST"])
 def update_server_webhook() -> str:
     """For updating the server with a webhook."""
     return funcs.update_server_webhook()
