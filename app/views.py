@@ -31,6 +31,12 @@ def get_feedback_page() -> str:
     return funcs.get_feedback_page()
 
 
+@app.route("/robots.txt")
+def get_robots_txt() -> str:
+    """For getting special content to stop bots from crawling."""
+    return funcs.get_robots_txt()
+
+
 @app.errorhandler(401)
 def redirect_to_login_page(error) -> flask.Response:
     """For handling error code 401"""
