@@ -1,4 +1,6 @@
 import os 
+import hmac
+import hashlib
 import subprocess
 
 import flask
@@ -46,8 +48,28 @@ def get_robots_txt() -> str:
     """.replace("        ", "").strip()
 
 
+def _is_valid_signature(x_hub_signature, data, private_key):
+    """
+    For checking if the signature is valid
+    :param x_hub_signature and data: The signature from the webhook payload header
+    :param private_key: The webhook secret
+    :return: True if the signature is valid, False otherwise
+    """
+    hash_algorithm, github_signature = x_hub_signature.split('=', 1)
+    algorithm = hashlib.__dict__.get(hash_algorithm)
+    encoded_key = bytes(private_key, 'latin-1')
+    mac = hmac.new(encoded_key, msg=data, digestmod=algorithm)
+    return hmac.compare_digest(mac.hexdigest(), github_signature)
+
+
 def update_server_webhook() -> str:
     """For updating the server with a webhook."""
+    x_hub_signature = flask.request.headers.get("X-Hub-Signature")
+    w_secret = os.getenv("WEBHOOK_SECRET")
+    if x_hub_signature is None:
+        return "No signature given", 401
+    if not _is_valid_signature(x_hub_signature, flask.request.data, w_secret):
+        return "Invalid signature", 401
     os.chdir(BASE_DIR)
     subprocess.run(["git", "pull"])
     return "Updated PythonAnywhere successfully", 200
