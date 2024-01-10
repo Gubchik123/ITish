@@ -1,7 +1,11 @@
+import os 
+import subprocess
+
 import flask
 from jinja2.exceptions import TemplateError
 from werkzeug.routing.exceptions import RoutingException
 
+from .config import BASE_DIR
 from .exceptions import catch_flask_error_, catch_all_other_exceptions
 
 
@@ -40,6 +44,13 @@ def get_robots_txt() -> str:
         User-agent: *
         Disallow: /
     """.replace("        ", "").strip()
+
+
+def update_server_webhook() -> str:
+    """For updating the server with a webhook."""
+    os.chdir(BASE_DIR)
+    subprocess.run(["git", "pull"])
+    return "Updated PythonAnywhere successfully", 200
 
 
 def _get_logout_page_url() -> str:

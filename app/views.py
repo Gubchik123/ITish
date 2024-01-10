@@ -37,6 +37,12 @@ def get_robots_txt() -> str:
     return funcs.get_robots_txt()
 
 
+@app.route("/update_server", method=["POST"])
+def update_server_webhook() -> str:
+    """For updating the server with a webhook."""
+    return funcs.update_server_webhook()
+
+
 @app.errorhandler(401)
 def redirect_to_login_page(error) -> flask.Response:
     """For handling error code 401"""
