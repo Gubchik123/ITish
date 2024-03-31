@@ -44,3 +44,8 @@ The system consists of the following main functional blocks:
     -   HTML & CSS;
     -   JavaScript;
     -   Bootstrap 5.
+
+            
+### License
+
+[ITish](https://github.com/Gubchik123/ITish) is licensed under the [MIT License](https://github.com/Gubchik123/ITish/blob/master/LICENSE.md).
