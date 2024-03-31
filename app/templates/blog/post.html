@@ -12,6 +12,8 @@
 
     .item_author a { color: var(--my-text-color); }
 
+    .note-alert { border-left: 8px solid; }
+
     .share-links .links { font-size: 1.5em; }
     
     @media screen and (max-width: 576px) {
@@ -79,6 +81,15 @@
 {%- from 'blog/_post_macros.html' import show_info_about_ %}
 {{ show_info_about_(post) }}
 <hr class="mt-3">
+
+<details class="mb-3">
+    <summary class="fs-4">Table of Contents</summary>
+    <div
+        role="alert"
+        id="navigation-nav-content"
+        class="note-alert alert alert-secondary border-left pt-4 fs-5"
+    ></div>
+</details>
 
 {{ post.body | safe }}
 
@@ -175,9 +186,13 @@
 </script>
 
 <script
-type="module"
-src="{{ url_for('blog.get_js_file', filename='blog/post.js') }}"
+    defer
+    type="module"
+    src="{{ url_for('blog.get_js_file', filename='blog/post.js') }}"
 ></script>
 
-<script src="{{ url_for('static', filename='js/delete_btn.js') }}"></script>
+<script 
+    defer 
+    src="{{ url_for('static', filename='js/delete_btn.js') }}"
+></script>
 {%- endblock scripts -%} 
