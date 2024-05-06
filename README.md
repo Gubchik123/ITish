@@ -1,10 +1,10 @@
-<a href="https://itish.live" target="_blank"><img title="ITish" alt="Header image" src="./md_images/readme_header.png"></a>
+<a href="https://itish.site" target="_blank"><img title="ITish" alt="Header image" src="./md_images/readme_header.png"></a>
 
 _Blog site to publish posts on the IT topic_
 
 ### Demo
 
-Click **<a href="https://itish.live" target="_blank">here</a>** to open ITish blog site
+Click **<a href="https://itish.site" target="_blank">here</a>** to open ITish blog site
 
 <img title="Demo" alt="Demo image" src="./md_images/demo.jpg">
 
